@@ -3,13 +3,13 @@
     <p class="title">
       <i class="iconfont icon-hotfill" />
       <strong>
-        HOT_ARTICLE_LIST_TITLE
+        HOT
       </strong>
     </p>
     <ul class="article-list" key="list">
       <li
-        v-for="item in 10"
-        :key="item"
+        v-for="item in hotArticles"
+        :key="item.id"
         class="item"
       >
         <span class="index"></span>
@@ -17,7 +17,7 @@
           class="title"
           to="/"
         >
-          HOT_ARTICLE_LIST_TITLE
+          {{ item.title }}
         </router-link>
       </li>
     </ul>
@@ -25,13 +25,14 @@
 </template>
 
 <script>
-  import LANGUAGE_KEYS from '../language/key'
   export default {
     name: 'pc-aside-article',
-    data () {
-      return {
-        isFetching: false,
-        LANGUAGE_KEYS
+    mounted() {
+      this.$store.dispatch('article/loadHotArticles')
+    },
+    computed: {
+      hotArticles: function () {
+        return this.$store.state.article.hotArticles
       }
     }
   }

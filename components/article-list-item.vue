@@ -7,25 +7,25 @@
     />
     <div class="item-content">
       <div class="item-thumb">
-        <router-link to="/article">
-            <span
-              class="item-oirigin self"
-            >
-              Origin
-            </span>
+        <NuxtLink :to="`/article/${article.id}`">
+          <span
+            class="item-oirigin self"
+          >
+            Origin
+          </span>
           <img
             class="item-thumb-img"
-            src="article.jpg"
-            alt="">
-        </router-link>
+            :src="article.src"
+            :alt="article.title">
+        </NuxtLink>
       </div>
       <div class="item-body">
         <h5 class="item-title">
-          <router-link
-            to="/article"
+          <NuxtLink
+            :to="`/article/${article.id}`"
           >
-            articletitle
-          </router-link>
+            {{ article.title }}
+          </NuxtLink>
         </h5>
         <p
           class="item-description"
@@ -71,11 +71,12 @@
 
   export default {
     name: 'ArticleListItem',
-    computed: {
-      isDark: function () {
-        return this.$store.state.theme === 'dark'
+    props: {
+      article: {
+        type: Object,
+        required: true,
       }
-    }
+    },
   }
 </script>
 

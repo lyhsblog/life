@@ -60,12 +60,12 @@
   import Share from "../components/widget-share";
   import Wallpaper from "../components/widget-wallpaper-main";
   import Toolbox from "../components/widget-toolbox";
-  import PcFooter from "../components/layout-pc-footer";
-  import LayoutMobileNav from "../components/layout-mobile-nav";
-  import PcRight from "../components/layout-pc-right-index";
-  import LayoutPcNav from "../components/layout-pc-nav";
-  import LayoutMobileHeader from "../components/layout-mobile-header";
-  import LayoutPcHeader from "../components/layout-pc-header";
+  import PcFooter from "./layout-pc-footer";
+  import LayoutMobileNav from "./layout-mobile-nav";
+  import PcRight from "./layout-pc-right-index";
+  import LayoutPcNav from "./layout-pc-nav";
+  import LayoutMobileHeader from "./layout-mobile-header";
+  import LayoutPcHeader from "./layout-pc-header";
   export default {
     components: {
       LayoutPcHeader,

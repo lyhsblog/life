@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ArticleList from "../../components/archive-list";
+import ArticleList from "../../components/article-list";
 import ArchiveListHeader from "../../components/archive-header";
 
 export default {

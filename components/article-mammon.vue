@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import AdsenseResponsive from "../../components/adsense-responsive.vue";
+  import AdsenseResponsive from "./adsense-responsive.vue";
   export default {
     name: 'ArticleMammon',
     components: {

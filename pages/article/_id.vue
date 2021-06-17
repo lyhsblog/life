@@ -20,11 +20,11 @@
 
 <script>
 
-  import ArticleContent from "./content";
-  import ArticleMammon from "./mammon";
-  import ArticleShare from "./share";
-  import ArticleMeta from "./meta";
-  import ArticleRelated from "./related";
+  import ArticleContent from "../../components/article-content";
+  import ArticleMammon from "../../components/article-mammon";
+  import ArticleShare from "../../components/article-share";
+  import ArticleMeta from "../../components/article-meta";
+  import ArticleRelated from "../../components/article-related";
   export default {
     name: 'ArticleDetail',
     components: {

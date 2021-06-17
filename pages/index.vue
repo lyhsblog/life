@@ -1,7 +1,7 @@
 <template>
   <div class="index-page">
     <archive-carrousel
-      :articles="articles"
+      :articles="articleList"
       :fetching="false"
     />
     <archive-announcement
@@ -9,10 +9,7 @@
       :fetching="false"
     />
     <article-list
-      :mammon="false"
-      :fetching="false"
-      :articles="articles"
-      :pagination="pagination"
+      :articles="articleList"
     />
   </div>
 </template>
@@ -20,34 +17,17 @@
 <script>
   import ArchiveCarrousel from "../components/archive-carrousel";
   import ArchiveAnnouncement from "../components/archive-announcement";
-  import ArticleList from "../components/archive-list";
+  import ArticleList from "../components/article-list";
   export default {
     name: 'Index',
     components: {ArticleList, ArchiveAnnouncement, ArchiveCarrousel},
+    computed: {
+      articleList: function () {
+        return this.$store.state.article.articleList
+      }
+    },
     data() {
       return {
-        articles: [
-          {
-            ad: false,
-            url: '/article/1',
-            src: '/article/1.jpg',
-            thumb: '/article/1.png',
-            title: 'articletitle',
-            description: 'iamdesc1'
-          },
-          {
-            ad: false,
-            url: '/article/1',
-            src: '/article/1.jpg',
-            thumb: '/article/1.png',
-            title: 'articletitle',
-            description: 'iamdesc2'
-          }
-
-        ],
-        pagination: {
-
-        },
         announcements: [
           {
             'content': '12223311'
@@ -66,7 +46,9 @@
           }
         ]
       }
-    }
-
+    },
+    mounted() {
+      this.$store.dispatch('article/loadArticleList')
+    },
   }
 </script>

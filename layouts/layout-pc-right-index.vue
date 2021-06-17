@@ -33,11 +33,11 @@
 </template>
 
 <script>
+  import PcAsideCalendar from "./layout-calendar";
   import LANGUAGE_KEYS from '../language/key'
   import PcAsideArticle from "./layout-pc-right-article";
   import PcAsideSearch from "./layout-pc-right-search";
   import PcAsideMammon from "./layout-pc-right-mammon";
-  import PcAsideCalendar from "./widget-calendar";
   import PcAsideTag from "./layout-pc-right-tag";
   import PcAsideTool from "./layout-pc-right-tool";
 

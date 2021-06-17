@@ -8,10 +8,7 @@
   >
     <!-- list -->
     <div class="article-list">
-      <article-list-item />
-      <article-list-item />
-      <article-list-item />
-      <article-list-item />
+      <article-list-item :key="article.id" :article="article" v-for="article in articles" />
     </div>
 
     <!-- loadmore -->
@@ -30,10 +27,13 @@
 </template>
 
 <script>
-  import ArticleListItem from "./archive-list-item";
+  import ArticleListItem from "./article-list-item";
 
   export default {
     name: 'ArticleList',
+    props: {
+      articles: Array
+    },
     components: { ArticleListItem },
     computed: {
       isDark: function () {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import Share from "../../components/widget-share";
+  import Share from "./widget-share";
   export default {
     name: 'ArticleShare',
     components: {

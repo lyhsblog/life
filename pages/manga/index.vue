@@ -44,7 +44,7 @@
 
 <script>
 import ArchiveListHeader from "../../components/archive-header";
-import ArticleList from "../../components/archive-list";
+import ArticleList from "../../components/article-list";
 export default {
   name: "MangaIndex",
   components: {
