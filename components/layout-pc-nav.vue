@@ -8,7 +8,31 @@
       <router-link class="item" to="/article">
         <i class="iconfont icon-thinking"></i>
         <span class="text">
-          BLOG
+          CODE
+        </span>
+      </router-link>
+      <router-link class="item" to="/video">
+        <i class="iconfont icon-lens"></i>
+        <span class="text">
+          ME
+        </span>
+      </router-link>
+      <router-link class="item" to="/article">
+        <i class="iconfont icon-thinking"></i>
+        <span class="text">
+          LIFE
+        </span>
+      </router-link>
+      <router-link class="item" to="/article">
+        <i class="iconfont icon-thinking"></i>
+        <span class="text">
+          NEWS
+        </span>
+      </router-link>
+      <router-link class="item" to="/video">
+        <i class="iconfont icon-lens"></i>
+        <span class="text">
+          VLOG
         </span>
       </router-link>
       <router-link class="item" to="/manga">
@@ -17,10 +41,10 @@
           MANGA
         </span>
       </router-link>
-      <router-link class="item" to="/video">
-        <i class="iconfont icon-lens"></i>
+      <router-link class="item" to="/manga">
+        <i class="iconfont icon-thinking"></i>
         <span class="text">
-          VLOG
+          VIDEO
         </span>
       </router-link>
       <div v-for="(ad, index) in ads" :key="index">
