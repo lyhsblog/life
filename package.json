@@ -1,0 +1,29 @@
+{
+  "name": "life",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "bezier-easing": "^2.1.0",
+    "core-js": "^3.9.1",
+    "nuxt": "^2.15.3",
+    "prettier": "^2.3.1",
+    "swiper": "5.4.5",
+    "ts-node": "^10.0.0",
+    "vue-awesome-swiper": "^4.1.1"
+  },
+  "devDependencies": {
+    "@nuxt/typescript": "^2.8.1",
+    "fibers": "^5.0.0",
+    "node-sass": "^6.0.0",
+    "pug": "^3.0.2",
+    "pug-plain-loader": "^1.1.0",
+    "sass": "1.32.6",
+    "sass-loader": "^10.2.0"
+  }
+}
