@@ -6,67 +6,101 @@
       dark: isDark
     }"
   >
-    <div
-      key="swiper"
-      class="swiper"
-      v-swiper="swiperOption"
+    <placeholder
+      :data="articles.length"
+      :loading="fetching"
     >
-      <div class="swiper-wrapper">
-        <div
-          class="swiper-slide"
-          v-for="(article, index) in articles"
-          :key="index"
-        >
+      <template #placeholder>
+        <empty class="article-empty" key="empty">
+          ARTICLE_PLACEHOLDER
+        </empty>
+      </template>
+      <template #loading>
+        <div class="article-skeleton" key="skeleton">
+          <div class="title">
+            <skeleton-line />
+          </div>
           <div class="content">
-            <template v-if="article.ad">
-              <a class="link" :href="article.url">
-                <img :src="article.src" :alt="article.title">
-                <div class="title">
-                  <div class="background"></div>
-                  <div class="prospect">
-                        <span
-                          class="text"
-                          :style="{ backgroundImage: article.thumb }"
-                        >{{ article.title }}</span>
-                  </div>
-                </div>
-                <span class="ad-symbol">
-                      <i18n :lkey="LANGUAGE_KEYS.AD" />
-                    </span>
-              </a>
-            </template>
-            <template v-else>
-              <router-link to="/" class="link">
-                <img
-                  :src="article.thumb"
-                  :alt="article.title"
-                  draggable="false"
-                >
-                <div class="title">
-                  <div class="background"></div>
-                  <div class="prospect">
-                        <span
-                          class="text"
-                          :style="{ backgroundImage: article.thumb }"
-                        >{{ article.title }}</span>
-                  </div>
-                </div>
-              </router-link>
-            </template>
+            <div class="first">
+              <skeleton-line />
+            </div>
+            <responsive>
+              <skeleton-paragraph :lines="5" />
+            </responsive>
           </div>
         </div>
-      </div>
-      <div class="swiper-pagination"></div>
-    </div>
+      </template>
+      <template #default>
+        <div
+          key="swiper"
+          class="swiper"
+          v-swiper="swiperOption"
+        >
+          <div class="swiper-wrapper">
+            <div
+              class="swiper-slide"
+              v-for="(article, index) in articles"
+              :key="index"
+            >
+              <div class="content">
+                <template v-if="article.ad">
+                  <a class="link" :href="article.url">
+                    <img :src="article.src" :alt="article.title">
+                    <div class="title">
+                      <div class="background"></div>
+                      <div class="prospect">
+                        <span
+                          class="text"
+                          :style="{ backgroundImage: article.thumb }"
+                        >{{ article.title }}</span>
+                      </div>
+                    </div>
+                    <span class="ad-symbol">
+                      <i18n :lkey="LANGUAGE_KEYS.AD" />
+                    </span>
+                  </a>
+                </template>
+                <template v-else>
+                  <router-link to="/" class="link">
+                    <img
+                      :src="article.thumb"
+                      :alt="article.title"
+                      draggable="false"
+                    >
+                    <div class="title">
+                      <div class="background"></div>
+                      <div class="prospect">
+                        <span
+                          class="text"
+                          :style="{ backgroundImage: article.thumb }"
+                        >{{ article.title }}</span>
+                      </div>
+                    </div>
+                  </router-link>
+                </template>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </template>
+    </placeholder>
+
   </div>
 </template>
 
 <script>
   import LANGUAGE_KEYS from "../language/key";
   import { directive } from "vue-awesome-swiper";
+  import Placeholder from "./widget-placeholder";
+  import Empty from "./widget-empty";
+  import SkeletonLine from "./skeleton/line";
+  import SkeletonParagraph from "./skeleton/paragraph";
+  import Responsive from "./widget-responsive"
 
   export default {
     name: 'ArchiveCarrousel',
+    components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive},
     directives: {
       swiper: directive,
     },

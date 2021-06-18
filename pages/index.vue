@@ -2,14 +2,15 @@
   <div class="index-page">
     <archive-carrousel
       :articles="articleList"
-      :fetching="false"
+      :fetching="fetching"
     />
     <archive-announcement
       :announcements="announcements"
-      :fetching="false"
+      :fetching="true"
     />
     <article-list
       :articles="articleList"
+      :fetching="fetching"
     />
   </div>
 </template>
@@ -28,6 +29,7 @@
     },
     data() {
       return {
+        fetching: true,
         announcements: [
           {
             'content': '12223311'
@@ -48,7 +50,27 @@
       }
     },
     mounted() {
-      this.$store.dispatch('article/loadArticleList')
+      this.$store.dispatch('article/loadArticleList', [
+        {
+          id: 1,
+          ad: false,
+          url: '/article/1',
+          src: '/article/1.jpg',
+          thumb: '/article/1.png',
+          title: 'articletitle1',
+          description: 'iamdesc1'
+        },
+        {
+          id: 2,
+          ad: false,
+          url: '/article/1',
+          src: '/article/1.jpg',
+          thumb: '/article/1.png',
+          title: 'articletitle2',
+          description: 'iamdesc2'
+        }
+      ])
+      this.fetching = false
     },
   }
 </script>

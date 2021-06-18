@@ -35,26 +35,7 @@ export const actions = {
       }
     ])
   },
-  loadArticleList(state) {
-    state.commit('addArticleList', [
-      {
-        id: 1,
-        ad: false,
-        url: '/article/1',
-        src: '/article/1.jpg',
-        thumb: '/article/1.png',
-        title: 'articletitle1',
-        description: 'iamdesc1'
-      },
-      {
-        id: 2,
-        ad: false,
-        url: '/article/1',
-        src: '/article/1.jpg',
-        thumb: '/article/1.png',
-        title: 'articletitle2',
-        description: 'iamdesc2'
-      }
-    ])
+  loadArticleList(state, data) {
+    state.commit('addArticleList', data)
   }
 }

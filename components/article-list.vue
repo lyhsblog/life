@@ -8,7 +8,43 @@
   >
     <!-- list -->
     <div class="article-list">
-      <article-list-item :key="article.id" :article="article" v-for="article in articles" />
+      <placeholder
+        :data="articles.length"
+        :loading="fetching"
+      >
+        <template #loading>
+          <ul class="article-list-skeleton" key="skeleton">
+            <li v-for="item in 5" :key="item" class="item">
+              <div class="thumb">
+                <skeleton-base />
+              </div>
+              <div class="content">
+                <div class="title">
+                  <skeleton-line />
+                </div>
+                <div class="description">
+                  <skeleton-paragraph :lines="4" />
+                </div>
+              </div>
+            </li>
+          </ul>
+        </template>
+        <template #placeholder>
+          <empty
+            class="empty"
+            i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
+          />
+        </template>
+        <template #default>
+          <transition-group
+            key="list"
+            name="list-fade"
+            tag="div"
+          >
+            <article-list-item :key="article.id" :article="article" v-for="article in articles" />
+          </transition-group>
+        </template>
+      </placeholder>
     </div>
 
     <!-- loadmore -->
@@ -28,13 +64,17 @@
 
 <script>
   import ArticleListItem from "./article-list-item";
-
+  import Placeholder from "./widget-placeholder";
+  import SkeletonParagraph from "./skeleton/paragraph";
+  import SkeletonLine from "./skeleton/line";
+  import SkeletonBase from "./skeleton/base"
   export default {
     name: 'ArticleList',
     props: {
-      articles: Array
+      articles: Array,
+      fetching: Boolean,
     },
-    components: { ArticleListItem },
+    components: { ArticleListItem, Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph },
     computed: {
       isDark: function () {
         return this.$store.state.theme === 'dark'

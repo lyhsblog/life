@@ -6,55 +6,79 @@
       dark: isDark
     }"
   >
-    <div class="warpper" key="warpper">
-      <div
-        class="background"
-        :data-content="announcements[0].content"
-      />
-      <div class="title">
+    <placeholder
+      :data="announcements.length"
+      :loading="fetching"
+    >
+      <template #placeholder>
+        <empty class="announcement-empty" key="empty">
+          ARTICLE_PLACEHOLDER
+        </empty>
+      </template>
+      <template #loading>
+        <div class="announcement-skeleton" key="skeleton">
+          <div class="left">
+            <skeleton-line />
+          </div>
+          <div class="right">
+            <skeleton-line />
+          </div>
+        </div>
+      </template>
+      <template #default>
+        <div class="wrapper" key="wrapper">
+          <div
+            class="background"
+            :data-content="announcements[0].content"
+          />
+          <div class="title">
             <span
               class="icon-box"
               :style="{ transform: `rotate(-${activeIndex * 90}deg)` }"
             >
               <i class="iconfont icon-windmill" />
             </span>
-      </div>
-      <div class="swiper-box">
-        <div v-swiper="swiperOption" class="swiper" @transition-start="handleSwiperTransitionStart">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" :key="an.content" v-for="an in announcements">
-              <div class="content" v-html="1111111" />
-              <div class="date">2021/06/10</div>
+          </div>
+          <div class="swiper-box">
+            <div v-swiper="swiperOption" class="swiper" @transition-start="handleSwiperTransitionStart">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide" :key="an.content" v-for="an in announcements">
+                  <div class="content" v-html="1111111" />
+                  <div class="date">2021/06/10</div>
+                </div>
+              </div>
+            </div>
+            <div class="navigation">
+              <div
+                class="button prev"
+                :class="{ disabled: activeIndex === 0 }"
+                @click="prevSlide"
+              >
+                <i class="iconfont icon-announcement-prev" />
+              </div>
+              <div
+                class="button next"
+                :class="{ disabled: activeIndex === announcements.length - 1 }"
+                @click="nextSlide"
+              >
+                <i class="iconfont icon-announcement-next" />
+              </div>
             </div>
           </div>
         </div>
-        <div class="navigation">
-          <div
-            class="button prev"
-            :class="{ disabled: activeIndex === 0 }"
-            @click="prevSlide"
-          >
-            <i class="iconfont icon-announcement-prev" />
-          </div>
-          <div
-            class="button next"
-            :class="{ disabled: activeIndex === announcements.length - 1 }"
-            @click="nextSlide"
-          >
-            <i class="iconfont icon-announcement-next" />
-          </div>
-        </div>
-      </div>
-    </div>
+      </template>
+    </placeholder>
   </div>
 </template>
 
 <script>
-  import LANGUAGE_KEYS from "../language/key";
   import { directive } from "vue-awesome-swiper";
+  import Placeholder from "./widget-placeholder";
+  import SkeletonLine from "./skeleton/line";
 
   export default {
     name: 'ArchiveAnnouncement',
+    components: {SkeletonLine, Placeholder},
     directives: {
       swiper: directive,
     },
@@ -86,7 +110,6 @@
       const handleSwiperTransitionStart = () => this.activeIndex = this.$swiper.activeIndex || 0
 
       return {
-        LANGUAGE_KEYS,
         swiperOption,
         activeIndex: 0,
         prevSlide,
