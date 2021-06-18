@@ -1,16 +1,42 @@
 <template>
   <div class="share-module">
-    <share class="article-share" />
+    <placeholder :loading="fetching">
+      <template #loading>
+        <div class="skeleton">
+          <skeleton-base
+            v-for="item in skeletonCount"
+            :key="item"
+            :radius="0"
+            :style="{
+              width: `calc((100% - (1em * ${skeletonCount - 1})) / ${skeletonCount})`
+            }"
+          />
+        </div>
+      </template>
+      <template #default>
+        <share class="article-share" />
+      </template>
+    </placeholder>
   </div>
 </template>
 
 <script>
   import Share from "./widget-share";
+  import Placeholder from "./widget-placeholder";
+  import SkeletonBase from "./skeleton/base";
   export default {
     name: 'ArticleShare',
-    components: {
-      Share
+    props: {
+      fetching: Boolean
     },
+    components: {
+      Share, Placeholder, SkeletonBase,
+    },
+    data() {
+      return {
+        skeletonCount: 5
+      }
+    }
   }
 </script>
 

@@ -1,19 +1,37 @@
 <template>
   <div class="mammon">
-    <adsense-responsive
-      key="adsense"
-      class="mammon-box"
-      ins-class="mammon-ins"
-    />
+    <placeholder :loading="fetching">
+      <template #loading>
+        <skeleton-paragraph
+          key="skeleton"
+          class="skeleton"
+          line-height="1em"
+          :lines="4"
+        />
+      </template>
+      <template #default>
+        <adsense-responsive
+          key="adsense"
+          class="mammon-box"
+          ins-class="mammon-ins"
+        />
+      </template>
+    </placeholder>
   </div>
 </template>
 
 <script>
   import AdsenseResponsive from "./adsense-responsive.vue";
+  import Placeholder from "./widget-placeholder";
+  import SkeletonLine from "./skeleton/line";
+  import SkeletonParagraph from "./skeleton/paragraph";
   export default {
     name: 'ArticleMammon',
+    props: {
+      fetching: Boolean
+    },
     components: {
-      AdsenseResponsive
+      AdsenseResponsive, Placeholder, SkeletonLine, SkeletonParagraph
     },
   }
 </script>

@@ -23,6 +23,18 @@
           LIFE
         </span>
       </router-link>
+      <router-link class="item" to="/video">
+        <i class="iconfont icon-lens"></i>
+        <span class="text">
+          TRAP
+        </span>
+      </router-link>
+      <router-link class="item" to="/video">
+        <i class="iconfont icon-lens"></i>
+        <span class="text">
+          RAIN
+        </span>
+      </router-link>
       <router-link class="item" to="/article">
         <i class="iconfont icon-thinking"></i>
         <span class="text">

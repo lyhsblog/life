@@ -4,10 +4,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { ITagMap } from '/@/store/tag'
-import { getTagArchiveRoute } from './route'
-
-export default (text: string, tagMap: ITagMap) => {
+export default (text, tagMap) => {
   // 构造正则
   const tagNames = Object.keys(tagMap).sort((prev, next) => next.length - prev.length)
   const tagRegexp = eval(`/${tagNames.join('|')}/ig`)
@@ -25,7 +22,7 @@ export default (text: string, tagMap: ITagMap) => {
       if (!foundTag || text[0] === '#') return tag
 
       const slug = foundTag.slug
-      const path = getTagArchiveRoute(slug)
+      const path = '/tag'
       const command = `window.$app.config.globalProperties.$router.push({ path: \'${path}\' });return false`
       return `<a href=\"${path}\" title=\"${foundTag.description}\" onclick=\"${command}\">${tag}</a>`
     })

@@ -1,81 +1,129 @@
 <template>
-  <div
-    class="metas"
-    key="content"
-  >
-    <p class="item">
-      <i18n
-        zh="本文于 "
-        en="Article created at "
-      />
-      <router-link
-        class="date-link"
-        title="title"
-        to="/"
+  <placeholder :loading="fetching">
+    <template #loading>
+      <div class="metas-skeleton" key="skeleton" :class="{ mobile: false }">
+        <skeleton-paragraph
+          :align="true"
+          :lines="4"
+          line-height="1.2em"
+        />
+      </div>
+    </template>
+    <template #default>
+      <div
+        class="metas"
+        key="content"
+        :class="{ mobile: false }"
+        v-if="article"
       >
-        data title
-      </router-link>
-      <i18n
-        zh="发布在 "
-        en="in category "
-      />
-      <span
-        class="category-link"
-      >
-        <router-link
-          to="/"
-          title="catedesc"
-        >
-          catename
-        </router-link>
-        <span>
-          ,
-        </span>
-      </span>
-      <span>
-        catename
-      </span>
-      <span class="separator">|</span>
-      views
-    </p>
-    <p class="item">
-          <span class="title">
-            tagname
-          </span>
-      <span
-        class="tag-link"
-      >
+        <p class="item">
+          <i18n
+            zh="本文于 "
+            en="Article created at "
+          />
+          <router-link
+            class="date-link"
+            :title="getDateTitle(article.create_at)"
+            :to="getDateLink(article.create_at)"
+          >
+            {{ getDateTitle(article.create_at) }}
+          </router-link>
+          发布在(in category)
+          <span
+            v-if="article.category"
+            class="category-link"
+            v-for="(category, index) in article.category"
+            :key="index"
+          >
             <router-link
-              to="/"
-              title="title"
+              :to="getCategoryArchiveRoute(category.slug)"
+              :title="category.description || category.name"
             >
-              tagname
+              <i18n :zh="category.name" :en="category.slug" />
             </router-link>
-            <span>
-              tagname
+            <span v-if="article.category[index + 1]">
+              ,
             </span>
           </span>
-    </p>
-    <p class="item">
-      <span class="title">
-        Article address:
-      </span>
-      <span class="site-url" @click="copyArticleUrl">
-        articleUrl
-      </span>
-    </p>
-    <div class="item">
-      <span class="title">版权声明：</span>
-      <a href="https://creativecommons.org/licenses/by-nc/3.0/cn/deed.zh">
-        自由转载 - 署名 - 非商业性使用
-      </a>
-    </div>
-  </div>
+          <span v-if="article.category && !article.category.length">
+            未知分类下 (no catgory)
+          </span>
+          <span class="separator">|</span>
+          <responsive>
+            <template #desktop>
+              当前已被围观 10000 次
+            </template>
+            <template #mobile>10000 views.</template>
+          </responsive>
+        </p>
+        <p class="item" v-if="article.tag">
+          <span class="title">
+            <i18n
+              zh="相关标签："
+              en="Related tags:"
+            />
+          </span>
+          <span
+            class="tag-link"
+            v-for="(tag, index) in article.tag"
+            :key="index"
+          >
+            <router-link
+              :to="getTagArchiveRoute(tag.slug)"
+              :title="tag.description || tag.name"
+            >
+              <i18n :zh="tag.name" :en="tag.slug" />
+            </router-link>
+            <span v-if="article.tag[index + 1]">
+              <i18n zh="、" en="," />
+            </span>
+          </span>
+        </p>
+        <p class="item">
+          <span class="title">
+            永久地址(Article address)：
+          </span>
+          <span class="site-url" @click="copyArticleUrl">
+            {{ articleUrl }}
+          </span>
+        </p>
+        <div class="item">
+          <span class="title">版权声明：</span>
+          <a href="https://creativecommons.org/licenses/by-nc/3.0/cn/deed.zh">
+            自由转载 - 署名 - 非商业性使用
+          </a>
+        </div>
+      </div>
+    </template>
+  </placeholder>
 </template>
 
 <script>
+  import Placeholder from "./widget-placeholder";
+  import Responsive from "./widget-responsive";
+  import SkeletonParagraph from "./skeleton/paragraph";
+  import { humanizeYMD } from "../transforms/moment"
   export default {
     name: 'ArticleMeta',
+    props: {
+      article: Object,
+      fetching: Boolean
+    },
+    components: {Placeholder, SkeletonParagraph, Responsive},
+    methods: {
+      getDateTitle (date) {
+        return humanizeYMD(date, 'zh')
+      },
+      getDateLink(date) {
+        return 'datalink'
+      },
+      getCategoryArchiveRoute(cate) {
+        return 'Categorylink'
+      },
+      getTagArchiveRoute(tag) {
+        return 'tagroute'
+      }
+    }
   }
 </script>
 

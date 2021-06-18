@@ -1,85 +1,76 @@
 <template>
   <div class="related">
-    <ul class="articles" key="articles">
-      <li
-        :class="{ disabled: false }"
-        class="item"
-      >
-        <router-link
-          class="item-article"
-          to="/"
-        >
-          <div class="thumb"/>
-          <div class="title">title</div>
-        </router-link>
-      </li>
-      <li
-        :class="{ disabled: false }"
-        class="item"
-      >
-        <router-link
-          class="item-article"
-          to="/"
-        >
-          <div class="thumb"/>
-          <div class="title">title</div>
-        </router-link>
-      </li>
-      <li
-        :class="{ disabled: false }"
-        class="item"
-      >
-        <router-link
-          class="item-article"
-          to="/"
-        >
-          <div class="thumb"/>
-          <div class="title">title</div>
-        </router-link>
-      </li>
-      <li
-        :class="{ disabled: false }"
-        class="item"
-      >
-        <router-link
-          class="item-article"
-          to="/"
-        >
-          <div class="thumb"/>
-          <div class="title">title</div>
-        </router-link>
-      </li>
-      <li
-        :class="{ disabled: false }"
-        class="item"
-      >
-        <router-link
-          class="item-article"
-          to="/"
-        >
-          <div class="thumb"/>
-          <div class="title">title</div>
-        </router-link>
-      </li>
-      <li
-        :class="{ disabled: false }"
-        class="item"
-      >
-        <router-link
-          class="item-article"
-          to="/"
-        >
-          <div class="thumb"/>
-          <div class="title">title</div>
-        </router-link>
-      </li>
-    </ul>
+    <placeholder
+      :loading="fetching"
+      :data="!!articles.length"
+    >
+      <template #loading>
+<!--        <skeleton-paragraph-->
+<!--          v-if="isMobile"-->
+<!--          class="skeleton"-->
+<!--          line-height="1em"-->
+<!--          :lines="4"-->
+<!--        />-->
+<!--        <ul class="skeleton-list" v-else>-->
+<!--          <skeleton-base-->
+<!--            class="article"-->
+<!--            v-for="item in 4"-->
+<!--            :key="item"-->
+<!--          />-->
+<!--        </ul>-->
+        <ul class="skeleton-list">
+          <skeleton-base
+            class="article"
+            v-for="item in 4"
+            :key="item"
+          />
+        </ul>
+      </template>
+      <template #default>
+        <ul class="articles" key="articles">
+          <li
+            v-for="(article, index) in articles.slice(0, 6)"
+            :class="{ disabled: article.disabled }"
+            :key="index"
+            class="item"
+          >
+            <router-link
+              class="item-article"
+              :title="article.title"
+              :to="getArticleDetailRoute(article.id)"
+            >
+              <div
+                class="thumb"
+                :style="{
+                  backgroundImage: `url(${article.thumb})`
+                }"
+              />
+              <div class="title">{{ article.title }}</div>
+            </router-link>
+          </li>
+        </ul>
+      </template>
+    </placeholder>
   </div>
 </template>
 
 <script>
+  import Placeholder from "./widget-placeholder";
+  import SkeletonBase from "./skeleton/base";
+  import SkeletonParagraph from "./skeleton/paragraph";
+
   export default {
     name: 'ArticleRelated',
+    props: {
+      fetching: Boolean,
+      articles: Array
+    },
+    components: {Placeholder, SkeletonBase, SkeletonParagraph},
+    methods: {
+      getArticleDetailRoute(id) {
+        return 'articleurl'
+      }
+    }
   }
 </script>
 

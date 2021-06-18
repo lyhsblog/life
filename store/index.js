@@ -1,7 +1,7 @@
 export const state = () => ({
   slideOpened: false,
   searchFor: 'manga',
-  theme: 'default',
+  theme: 'dark',
   barraging: false,
 })
 

@@ -1,19 +1,28 @@
 <template>
   <div class="article-page">
     <div class="module">
-      <article-content />
+      <article-content
+        :fetching="fetching"
+        :article="article"
+      />
     </div>
     <div class="module">
-      <article-mammon />
+      <article-mammon :fetching="fetching" />
     </div>
     <div class="module">
-      <article-share />
+      <article-share :fetching="fetching" />
     </div>
     <div class="module">
-      <article-meta />
+      <article-meta
+        :fetching="fetching"
+        :article="article"
+      />
     </div>
     <div class="releted">
-      <article-related />
+      <article-related
+        :fetching="fetching"
+        :articles="relatedArticles"
+      />
     </div>
   </div>
 </template>
@@ -35,18 +44,30 @@
       ArticleContent
     },
     data() {
-      const article = {
-        fetching: true,
-        data: {
-
-        }
-      }
-      const relatedArticles = []
-
       return {
-        article,
-        relatedArticles
+        fetching: true,
       }
+    },
+    computed: {
+      article: function () {
+        return this.$store.state.article.article
+      },
+      relatedArticles: function () {
+        return this.$store.state.article.relatedArticles
+      }
+    },
+    mounted() {
+      this.$store.commit("article/setArticle", {
+        id: 1,
+        ad: false,
+        url: '/article/1',
+        src: '/article/1.jpg',
+        thumb: '/article/1.png',
+        title: 'articletitle1',
+        description: 'iamdesc1',
+        content: '# Hsldfjldsfjl'
+      })
+      this.fetching = false
     }
   }
 </script>

@@ -55,8 +55,8 @@
           id: 1,
           ad: false,
           url: '/article/1',
-          src: '/article/1.jpg',
-          thumb: '/article/1.png',
+          src: '/images/03-15-code-review.webp',
+          thumb: '/images/03-15-code-review.webp',
           title: 'articletitle1',
           description: 'iamdesc1'
         },
@@ -64,8 +64,17 @@
           id: 2,
           ad: false,
           url: '/article/1',
-          src: '/article/1.jpg',
-          thumb: '/article/1.png',
+          src: '/images/2020-08-14-sea-1.webp',
+          thumb: '/images/2020-08-14-sea-1.webp',
+          title: 'articletitle2',
+          description: 'iamdesc2'
+        },
+        {
+          id: 3,
+          ad: false,
+          url: '/article/1',
+          src: '/images/done-ok.webp',
+          thumb: '/images/done-ok.webp',
           title: 'articletitle2',
           description: 'iamdesc2'
         }

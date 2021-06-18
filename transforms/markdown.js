@@ -3,15 +3,12 @@
  * @module transformer/markdown
  * @author Surmon <https://github.com/surmon-china>
  */
-
-import marked from 'marked'
-import API_CONFIG from '/@/config/api.config'
-import { META } from '/@/config/app.config'
-import { ITagMap } from '/@/store/tag'
-import { LOZAD_CLASS_NAME } from '/@/services/lozad'
-import highlight from '/@/services/highlight'
-import relink from '/@/transforms/relink'
-
+import marked from "marked"
+import { META } from "../config/app.config"
+import API_CONFIG from '../config/api.config'
+import { LOZAD_CLASS_NAME } from '../service/lozad'
+import highlight from '../service/highlight'
+import relink from "./relink";
 /*
   TODO: 渲染器问题
   - 数据原则：
@@ -136,20 +133,14 @@ customRenderer.code = function (code, lang, escaped) {
     `
 }
 
-export interface IRenderOption {
-  tagMap?: ITagMap
-  relink?: boolean
-  html?: boolean
-}
-
-export const markdownToHTML = (markdown: string, options?: IRenderOption) => {
+export const markdownToHTML = (markdown, options) => {
   if (!markdown || typeof markdown !== 'string') {
     return ''
   }
 
   // relink
   customRenderer.text = options?.relink && options?.tagMap
-    ? text => relink(text, options.tagMap as ITagMap)
+    ? text => relink(text, options.tagMap)
     : text => text
 
   return marked(markdown, {
