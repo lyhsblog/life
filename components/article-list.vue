@@ -9,7 +9,7 @@
     <!-- list -->
     <div class="article-list">
       <placeholder
-        :data="articles.length"
+        :data="articleList.numberOfElements"
         :loading="fetching"
       >
         <template #loading>
@@ -34,6 +34,7 @@
             class="empty"
             i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
           />
+          <empty
         </template>
         <template #default>
           <transition-group
@@ -41,7 +42,7 @@
             name="list-fade"
             tag="div"
           >
-            <article-list-item :key="article.id" :article="article" v-for="article in articles" />
+            <article-list-item :key="article.id" :article="article" v-for="article in articleList.content" />
           </transition-group>
         </template>
       </placeholder>
@@ -51,7 +52,8 @@
     <div class="article-load">
       <button
         class="loadmore-button"
-        :disabled="true"
+        :disabled="articleList.last"
+        @click="loadArticleList"
       >
         <span class="icon">
           <i class="iconfont icon-peachblossom"></i>
@@ -68,17 +70,78 @@
   import SkeletonParagraph from "./skeleton/paragraph";
   import SkeletonLine from "./skeleton/line";
   import SkeletonBase from "./skeleton/base"
+  import Empty from "./widget-empty"
   export default {
     name: 'ArticleList',
-    props: {
-      articles: Array,
-      fetching: Boolean,
+    components: { ArticleListItem, Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty },
+    data() {
+      return {
+        fetching: false,
+        articleList: {
+          content: [],
+          empty: true,
+          first: true,
+          last: false,
+          number: -1,
+          numberOfElements: 0,
+          totalElements: 0,
+          totalPages: 0,
+        },
+      }
     },
-    components: { ArticleListItem, Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph },
     computed: {
       isDark: function () {
         return this.$store.state.theme === 'dark'
-      }
+      },
+    },
+    mounted() {
+      this.loadArticleList()
+      this.initSearch()
+    },
+    methods: {
+      async loadArticleList () {
+        const articleList = this.articleList
+        if(!articleList.last || articleList.number === -1 || true) {
+          this.fetching = true
+          const articles = await this.$axios.$get('/article', {
+            params: {
+              page: articleList.number + 1,
+            }
+          })
+          articleList.content.push(...articles.content)
+          articleList.empty = articles.empty
+          articleList.first = articles.first
+          articleList.last = articles.last
+          articleList.number = articles.number
+          articleList.numberOfElements = articles
+          articleList.totalElements = articles.totalElements
+          articleList.totalPages = articles.totalElements
+          this.fetching = false
+        }
+      },
+      async initSearch() {
+        this.$store.commit('changeSearchCall', this.search)
+      },
+      async search(parmas) {
+        const articleList = this.articleList = {
+          content: []
+        }
+        this.fetching = true
+        const articles = await this.$axios.$get('/article', {
+          params: {
+            ...parmas
+          }
+        })
+        articleList.content.push(...articles.content)
+        articleList.empty = articles.empty
+        articleList.first = articles.first
+        articleList.last = articles.last
+        articleList.number = articles.number
+        articleList.numberOfElements = articles
+        articleList.totalElements = articles.totalElements
+        articleList.totalPages = articles.totalElements
+        this.fetching = false
+      },
     }
   }
 </script>

@@ -1,17 +1,11 @@
 <template>
   <div class="index-page">
-    <archive-carrousel
-      :articles="articleList"
-      :fetching="fetching"
-    />
+    <archive-carrousel />
     <archive-announcement
       :announcements="announcements"
-      :fetching="true"
-    />
-    <article-list
-      :articles="articleList"
       :fetching="fetching"
     />
+    <article-list />
   </div>
 </template>
 
@@ -22,14 +16,9 @@
   export default {
     name: 'Index',
     components: {ArticleList, ArchiveAnnouncement, ArchiveCarrousel},
-    computed: {
-      articleList: function () {
-        return this.$store.state.article.articleList
-      }
-    },
     data() {
       return {
-        fetching: true,
+        fetching: false,
         announcements: [
           {
             'content': '12223311'
@@ -50,36 +39,21 @@
       }
     },
     mounted() {
-      this.$store.dispatch('article/loadArticleList', [
-        {
-          id: 1,
-          ad: false,
-          url: '/article/1',
-          src: '/images/03-15-code-review.webp',
-          thumb: '/images/03-15-code-review.webp',
-          title: 'articletitle1',
-          description: 'iamdesc1'
-        },
-        {
-          id: 2,
-          ad: false,
-          url: '/article/1',
-          src: '/images/2020-08-14-sea-1.webp',
-          thumb: '/images/2020-08-14-sea-1.webp',
-          title: 'articletitle2',
-          description: 'iamdesc2'
-        },
-        {
-          id: 3,
-          ad: false,
-          url: '/article/1',
-          src: '/images/done-ok.webp',
-          thumb: '/images/done-ok.webp',
-          title: 'articletitle2',
-          description: 'iamdesc2'
-        }
-      ])
-      this.fetching = false
+      this.loadHot()
     },
+    methods: {
+      async loadHot() {
+        this.$store.commit("LayoutPcRightArticle.js/fetching", true)
+        const res = await this.$axios.get("/article/related")
+        if(!res.data.empty) {
+          for (const item of res.data.content) {
+            item.url = "/article/"+item.id
+          }
+        }
+        this.$store.commit("LayoutPcRightArticle.js/cleanHotArticle")
+        this.$store.commit("LayoutPcRightArticle.js/addHotArticle", res.data.content)
+        this.$store.commit("LayoutPcRightArticle.js/fetching", false)
+      }
+    }
   }
 </script>

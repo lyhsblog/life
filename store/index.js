@@ -1,13 +1,13 @@
 export const state = () => ({
   slideOpened: false,
-  searchFor: 'manga',
+  searchCall: () => '',
   theme: 'dark',
   barraging: false,
 })
 
 export const mutations = {
-  changeSearchFor(state, searchFor) {
-    state.searchFor = searchFor
+  changeSearchCall(state, callback) {
+    state.searchCall = callback
   },
   changeSlideOpened(state, slideOpened) {
     state.slideOpened = slideOpened

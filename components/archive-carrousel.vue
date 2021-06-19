@@ -7,8 +7,8 @@
     }"
   >
     <placeholder
-      :data="articles.length"
       :loading="fetching"
+      :data="recommendedList.length"
     >
       <template #placeholder>
         <empty class="article-empty" key="empty">
@@ -39,32 +39,32 @@
           <div class="swiper-wrapper">
             <div
               class="swiper-slide"
-              v-for="(article, index) in articles"
+              v-for="(article, index) in recommendedList"
               :key="index"
             >
               <div class="content">
                 <template v-if="article.ad">
-                  <a class="link" :href="article.url">
-                    <img :src="article.src" :alt="article.title">
-                    <div class="title">
-                      <div class="background"></div>
-                      <div class="prospect">
-                        <span
-                          class="text"
-                          :style="{ backgroundImage: article.thumb }"
-                        >{{ article.title }}</span>
-                      </div>
-                    </div>
-                    <span class="ad-symbol">
-                      <i18n :lkey="LANGUAGE_KEYS.AD" />
-                    </span>
-                  </a>
+<!--                  <a class="link" :href="`/article/`${article.id}">-->
+<!--                    <img :src="article.cover" :alt="article.name">-->
+<!--                    <div class="title">-->
+<!--                      <div class="background"></div>-->
+<!--                      <div class="prospect">-->
+<!--                        <span-->
+<!--                          class="text"-->
+<!--                          :style="{ backgroundImage: article.thumb }"-->
+<!--                        >{{ article.title }}</span>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <span class="ad-symbol">-->
+<!--                      AD-->
+<!--                    </span>-->
+<!--                  </a>-->
                 </template>
                 <template v-else>
-                  <router-link to="/" class="link">
+                  <router-link :to="`/article/${article.id}`" class="link">
                     <img
-                      :src="article.thumb"
-                      :alt="article.title"
+                      :src="article.cover"
+                      :alt="article.name"
                       draggable="false"
                     >
                     <div class="title">
@@ -72,8 +72,8 @@
                       <div class="prospect">
                         <span
                           class="text"
-                          :style="{ backgroundImage: article.thumb }"
-                        >{{ article.title }}</span>
+                          :style="{ backgroundImage: `url('${article.cover}')` }"
+                        >{{ article.name }}</span>
                       </div>
                     </div>
                   </router-link>
@@ -90,7 +90,6 @@
 </template>
 
 <script>
-  import LANGUAGE_KEYS from "../language/key";
   import { directive } from "vue-awesome-swiper";
   import Placeholder from "./widget-placeholder";
   import Empty from "./widget-empty";
@@ -104,45 +103,46 @@
     directives: {
       swiper: directive,
     },
-    props: {
-      articles: {
-        type: Array,
-        required: true
-      },
-      fetching: {
-        type: Boolean,
-        required: true
-      }
-    },
     data() {
-      const swiperOption = {
-        autoplay: {
-          delay: 3500,
-          disableOnInteraction: false
-        },
-        pagination: {
-          clickable: true,
-          el: '.swiper-pagination'
-        },
-        setWrapperSize: true,
-        mousewheel: true,
-        observeParents: true,
-        // 禁用 PC 拖动手指样式
-        grabCursor: false,
-        // 禁用 PC 拖动
-        simulateTouch: false,
-        preloadImages: false,
-        lazy: true
-      }
       return {
-        LANGUAGE_KEYS,
-        swiperOption,
+        fetching: true,
+        recommendedList: [],
+        swiperOption: {
+          autoplay: {
+            delay: 3500,
+            disableOnInteraction: false
+          },
+          pagination: {
+            clickable: true,
+            el: '.swiper-pagination'
+          },
+          setWrapperSize: true,
+          mousewheel: true,
+          observeParents: true,
+          // 禁用 PC 拖动手指样式
+          grabCursor: false,
+          // 禁用 PC 拖动
+          simulateTouch: false,
+          preloadImages: false,
+          lazy: true
+        },
       }
     },
     computed: {
       isDark: function () {
         return this.$store.state.theme === 'dark'
       }
+    },
+    mounted() {
+      this.loadRecommendedList()
+    },
+    methods: {
+      async loadRecommendedList () {
+        this.fetching = true
+        const recommendedList = await this.$axios.get("/article/related")
+        this.recommendedList.push(...recommendedList.data.content)
+        this.fetching = false
+      },
     }
   }
 </script>

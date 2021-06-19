@@ -8,16 +8,16 @@
     </p>
     <ul class="article-list" key="list">
       <li
-        v-for="item in hotArticles"
+        v-for="item in hots"
         :key="item.id"
         class="item"
       >
         <span class="index"></span>
         <router-link
           class="title"
-          to="/"
+          :to="item.url"
         >
-          {{ item.title }}
+          {{ item.name }}
         </router-link>
       </li>
     </ul>
@@ -27,12 +27,9 @@
 <script>
   export default {
     name: 'pc-aside-article',
-    mounted() {
-      this.$store.dispatch('article/loadHotArticles')
-    },
     computed: {
-      hotArticles: function () {
-        return this.$store.state.article.hotArticles
+      hots: function () {
+        return this.$store.state.LayoutPcRightArticle.hots
       }
     }
   }

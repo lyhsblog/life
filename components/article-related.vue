@@ -29,23 +29,23 @@
       <template #default>
         <ul class="articles" key="articles">
           <li
-            v-for="(article, index) in articles.slice(0, 6)"
+            v-for="(article, index) in articles.slice(0, 4)"
             :class="{ disabled: article.disabled }"
             :key="index"
             class="item"
           >
             <router-link
               class="item-article"
-              :title="article.title"
-              :to="getArticleDetailRoute(article.id)"
+              :title="article.name"
+              :to="`${article.id}`"
             >
               <div
                 class="thumb"
                 :style="{
-                  backgroundImage: `url(${article.thumb})`
+                  backgroundImage: `url('/${article.cover}')`
                 }"
               />
-              <div class="title">{{ article.title }}</div>
+              <div class="title">{{ article.name }}</div>
             </router-link>
           </li>
         </ul>
@@ -66,11 +66,6 @@
       articles: Array
     },
     components: {Placeholder, SkeletonBase, SkeletonParagraph},
-    methods: {
-      getArticleDetailRoute(id) {
-        return 'articleurl'
-      }
-    }
   }
 </script>
 

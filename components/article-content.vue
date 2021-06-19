@@ -11,7 +11,7 @@
           self: true,
         }"
       >
-        isOriginal
+        OG
       </div>
     </transition>
     <placeholder
@@ -30,7 +30,7 @@
       </template>
       <template #default>
         <div class="knowledge" key="knowledge">
-          <h2 class="title">{{ article.title }}</h2>
+          <h2 class="title">{{ article.name }}</h2>
           <div
             class="markdown-html"
             :id="contentElementIds.default"

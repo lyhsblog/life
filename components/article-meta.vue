@@ -23,37 +23,21 @@
           />
           <router-link
             class="date-link"
-            :title="getDateTitle(article.create_at)"
-            :to="getDateLink(article.create_at)"
+            :title="getDateTitle(article.createTime)"
+            :to="getDateLink(article.createTime)"
           >
-            {{ getDateTitle(article.create_at) }}
+            {{ getDateTitle(article.createTime) }}
           </router-link>
-          发布在(in category)
-          <span
-            v-if="article.category"
-            class="category-link"
-            v-for="(category, index) in article.category"
-            :key="index"
-          >
-            <router-link
-              :to="getCategoryArchiveRoute(category.slug)"
-              :title="category.description || category.name"
-            >
-              <i18n :zh="category.name" :en="category.slug" />
-            </router-link>
-            <span v-if="article.category[index + 1]">
-              ,
-            </span>
-          </span>
-          <span v-if="article.category && !article.category.length">
-            未知分类下 (no catgory)
+          发布在:
+          <span>
+            未知分类下
           </span>
           <span class="separator">|</span>
           <responsive>
             <template #desktop>
-              当前已被围观 10000 次
+              当前已被围观 {{article.clicks}} 次
             </template>
-            <template #mobile>10000 views.</template>
+            <template #mobile>{{article.clicks}} views.</template>
           </responsive>
         </p>
         <p class="item" v-if="article.tag">
@@ -81,7 +65,7 @@
         </p>
         <p class="item">
           <span class="title">
-            永久地址(Article address)：
+            永久地址：
           </span>
           <span class="site-url" @click="copyArticleUrl">
             {{ articleUrl }}

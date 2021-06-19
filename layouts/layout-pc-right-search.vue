@@ -3,7 +3,7 @@
     <div class="search-box">
       <input
         id="keyword"
-        v-model.trim="keyword"
+        v-model.trim="keywords"
         required
         type="search"
         name="search"
@@ -54,17 +54,14 @@
           }
         ],
         isZhLang: true,
-        handleSearch: () => ''
+        keywords: ''
       }
     },
-    mounted() {
-      this.$store.commit('changeSearchFor', 'video')
-    },
-    computed: {
-      keyword () {
-        return this.$store.state.searchFor
+    methods: {
+      handleSearch: function () {
+        this.$store.state.searchCall({searchword: this.keywords})
       }
-    },
+    }
   }
 </script>
 

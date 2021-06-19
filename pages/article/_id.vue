@@ -43,31 +43,38 @@
       ArticleMammon,
       ArticleContent
     },
+
     data() {
       return {
         fetching: true,
-      }
-    },
-    computed: {
-      article: function () {
-        return this.$store.state.article.article
-      },
-      relatedArticles: function () {
-        return this.$store.state.article.relatedArticles
+        article: {
+          id: 1,
+          ad: false,
+          url: '/article/1',
+          src: '/article/1.jpg',
+          thumb: '/article/1.png',
+          title: 'articletitle1',
+          description: 'iamdesc1',
+          content: ''
+        },
+        relatedArticles: []
       }
     },
     mounted() {
-      this.$store.commit("article/setArticle", {
-        id: 1,
-        ad: false,
-        url: '/article/1',
-        src: '/article/1.jpg',
-        thumb: '/article/1.png',
-        title: 'articletitle1',
-        description: 'iamdesc1',
-        content: '# Hsldfjldsfjl'
-      })
-      this.fetching = false
+      this.fetchArticle()
+    },
+    methods: {
+      async fetchArticle() {
+        this.fetching = true
+        const id = this.$route.params.id
+        const res = await this.$axios.get("/article/"+id)
+        this.article = res.data
+        const relatedArticle = await this.$axios.get("/article/related")
+        this.relatedArticles.push(...relatedArticle.data.content)
+        setTimeout(() => {
+          this.fetching = false
+        }, 1000)
+      }
     }
   }
 </script>

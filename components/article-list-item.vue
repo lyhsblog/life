@@ -15,8 +15,8 @@
           </span>
           <img
             class="item-thumb-img"
-            :src="article.src"
-            :alt="article.title">
+            :src="article.cover"
+            :alt="article.name">
         </NuxtLink>
       </div>
       <div class="item-body">
@@ -24,13 +24,13 @@
           <NuxtLink
             :to="`/article/${article.id}`"
           >
-            {{ article.title }}
+            {{ article.name }}
           </NuxtLink>
         </h5>
         <p
           class="item-description"
           style="-webkit-box-orient: vertical;"
-          v-html="'description'"
+          v-html="article.description || 'No description'"
         ></p>
         <div class="item-meta">
           <span class="date">
@@ -39,7 +39,7 @@
           </span>
           <span class="views">
             <i class="iconfont icon-eye"></i>
-            <span>0</span>
+            <span>{{article.clicks || 0}}</span>
           </span>
           <span class="comments">
             <i class="iconfont icon-comment"></i>
@@ -47,18 +47,18 @@
           </span>
           <span class="likes">
             <i class="iconfont icon-heart"></i>
-            <span>0</span>
+            <span>{{article.likes || 0}}</span>
           </span>
           <span class="tags">
             <i class="iconfont icon-tag"></i>
-            <span>0</span>
+            <span>{{article.tags.length}}</span>
           </span>
           <span class="categories">
             <i class="iconfont icon-list"></i>
             <router-link
               to="/"
             >
-              category
+              {{article.category || 'No category'}}
             </router-link>
           </span>
         </div>
