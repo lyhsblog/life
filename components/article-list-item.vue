@@ -58,7 +58,7 @@
             <router-link
               to="/"
             >
-              {{article.category || 'No category'}}
+              {{article.category.name || 'No category'}}
             </router-link>
           </span>
         </div>

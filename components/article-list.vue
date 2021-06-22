@@ -77,6 +77,7 @@
     data() {
       return {
         fetching: false,
+        category: '',
         articleList: {
           content: [],
           empty: true,
@@ -95,10 +96,14 @@
       },
     },
     mounted() {
-      this.loadArticleList()
-      this.initSearch()
+      this.init()
     },
     methods: {
+      init() {
+        this.category = this.$route.params.category
+        this.loadArticleList()
+        this.initSearch()
+      },
       async loadArticleList () {
         const articleList = this.articleList
         if(!articleList.last || articleList.number === -1 || true) {
@@ -106,6 +111,7 @@
           const articles = await this.$axios.$get('/article', {
             params: {
               page: articleList.number + 1,
+              category: this.category
             }
           })
           articleList.content.push(...articles.content)
@@ -116,7 +122,9 @@
           articleList.numberOfElements = articles.content.size
           articleList.totalElements = articles.totalElements
           articleList.totalPages = articles.totalElements
-          this.fetching = false
+          setTimeout(() => {
+            this.fetching = false
+          }, 1000)
         }
       },
       async initSearch() {
@@ -140,8 +148,19 @@
         articleList.numberOfElements = articles.content.size
         articleList.totalElements = articles.totalElements
         articleList.totalPages = articles.totalElements
-        this.fetching = false
+        setTimeout(() => {
+          this.fetching = false
+        }, 1000)
       },
+    },
+    watch: {
+      '$route'(to, from) {
+        if (to.fullPath !== from.fullPath) {
+          this.$nextTick(() => {
+            this.init()
+          })
+        }
+      }
     }
   }
 </script>

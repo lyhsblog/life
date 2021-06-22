@@ -52,7 +52,9 @@
         }
         this.$store.commit("LayoutPcRightArticle/cleanHotArticle")
         this.$store.commit("LayoutPcRightArticle/addHotArticle", res.data.content)
-        this.$store.commit("LayoutPcRightArticle/fetching", false)
+        setTimeout(() => {
+          this.$store.commit("LayoutPcRightArticle/fetching", false)
+        }, 1000)
       }
     }
   }

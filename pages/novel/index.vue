@@ -183,7 +183,9 @@
           novelList.numberOfElements = novels.content.size
           novelList.totalElements = novels.totalElements
           novelList.totalPages = novels.totalElements
-          this.fetching = false
+          setTimeout(() => {
+            this.fetching = false
+          }, 1000)
         }
       },
       async loadHot() {
@@ -196,7 +198,9 @@
         }
         this.$store.commit("LayoutPcRightArticle/cleanHotArticle")
         this.$store.commit("LayoutPcRightArticle/addHotArticle", res.data.content)
-        this.$store.commit("LayoutPcRightArticle/fetching", false)
+        setTimeout(() => {
+          this.$store.commit("LayoutPcRightArticle/fetching", false)
+        }, 1000)
       },
       async initSearch() {
         this.$store.commit('changeSearchCall', this.search)
@@ -219,7 +223,9 @@
         novelList.numberOfElements = novels.content.size
         novelList.totalElements = novels.totalElements
         novelList.totalPages = novels.totalElements
-        this.fetching = false
+        setTimeout(() => {
+          this.fetching = false
+        }, 1000)
       },
     }
   }

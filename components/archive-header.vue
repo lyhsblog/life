@@ -1,10 +1,12 @@
 <template>
   <div class="header mobile">
-    <div class="background"/>
+    <div class="background" :style="{
+        backgroundImage: `url(${category.cover || ''})`
+      }"/>
     <div class="content">
       <div class="logo">
         <transition name="module" mode="out-in">
-          <i key="date" class="iconfont"></i>
+          <i key="date" class="iconfont" :class="category.icon || ''"></i>
         </transition>
       </div>
       <div class="title">
@@ -21,6 +23,32 @@
 <script>
   export default {
     name: 'archive-list-header',
+    data() {
+      return {
+        fetching: true,
+        category: {
+          id: 'this is id',
+          name: 'this is name',
+          cover: 'this is cover',
+          description: 'this is description'
+        }
+      }
+    },
+    mounted() {
+      this.init()
+    },
+    methods: {
+      init() {
+        this.category.name = this.$route.params.category
+        this.loadCategory()
+      },
+      async loadCategory() {
+        this.fetching = true
+        const res = await this.$axios.get(`/article/category/${this.category.name}`)
+        this.category = res.data
+        this.fetching = false
+      }
+    }
   }
 </script>
 

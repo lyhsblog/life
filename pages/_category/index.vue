@@ -15,6 +15,25 @@ export default {
     ArticleList,
     ArchiveListHeader
   },
+  mounted() {
+    this.loadHot()
+  },
+  methods: {
+    async loadHot() {
+      this.$store.commit("LayoutPcRightArticle/fetching", true)
+      const res = await this.$axios.get("/article/related")
+      if(!res.data.empty) {
+        for (const item of res.data.content) {
+          item.url = "/article/"+item.id
+        }
+      }
+      this.$store.commit("LayoutPcRightArticle/cleanHotArticle")
+      this.$store.commit("LayoutPcRightArticle/addHotArticle", res.data.content)
+      setTimeout(() => {
+        this.$store.commit("LayoutPcRightArticle/fetching", false)
+      }, 1000)
+    }
+  }
 }
 </script>
 

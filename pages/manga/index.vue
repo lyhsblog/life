@@ -108,7 +108,9 @@ export default {
         mangaList.numberOfElements = mangas.content.size
         mangaList.totalElements = mangas.totalElements
         mangaList.totalPages = mangas.totalElements
-        this.fetching = false
+        setTimeout(() => {
+          this.fetching = false
+        }, 1000)
       }
     },
     async loadHot() {
@@ -121,7 +123,9 @@ export default {
       }
       this.$store.commit("LayoutPcRightArticle/cleanHotArticle")
       this.$store.commit("LayoutPcRightArticle/addHotArticle", res.data.content)
-      this.$store.commit("LayoutPcRightArticle/fetching", false)
+      setTimeout(() => {
+        this.$store.commit("LayoutPcRightArticle/fetching", false)
+      }, 1000)
     },
     async initSearch() {
       this.$store.commit('changeSearchCall', this.search)
@@ -144,7 +148,9 @@ export default {
       mangaList.numberOfElements = mangas.content.size
       mangaList.totalElements = mangas.totalElements
       mangaList.totalPages = mangas.totalElements
-      this.fetching = false
+      setTimeout(() => {
+        this.fetching = false
+      }, 1000)
     },
   }
 }
