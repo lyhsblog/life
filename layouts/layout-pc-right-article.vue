@@ -6,30 +6,59 @@
         HOT
       </strong>
     </p>
-    <ul class="article-list" key="list">
-      <li
-        v-for="item in hots"
-        :key="item.id"
-        class="item"
-      >
-        <span class="index"></span>
-        <router-link
-          class="title"
-          :to="item.url"
-        >
-          {{ item.name }}
-        </router-link>
-      </li>
-    </ul>
+    <placeholder
+      :data="hots.length"
+      :loading="fetching"
+    >
+      <template #loading>
+        <ul class="article-list-skeleton" key="list">
+          <li v-for="item in 10" :key="item" class="item">
+            <skeleton-paragraph :lines="1" />
+          </li>
+        </ul>
+      </template>
+      <template #placeholder>
+        <empty
+          class="empty"
+          i18n-ley="NO DATA"
+        />
+      </template>
+      <template #default>
+        <ul class="article-list" key="list">
+          <li
+            v-for="item in hots"
+            :key="item.id"
+            class="item"
+          >
+            <span class="index"></span>
+            <router-link
+              class="title"
+              :to="item.url"
+            >
+              {{ item.name }}
+            </router-link>
+          </li>
+        </ul>
+      </template>
+    </placeholder>
   </div>
 </template>
 
 <script>
+  import Placeholder from "../components/widget-placeholder";
+  import SkeletonLine from "../components/skeleton/line";
+  import SkeletonParagraph from "../components/skeleton/paragraph";
+  import Empty from "../components/widget-empty";
+
   export default {
     name: 'pc-aside-article',
+    components: { Placeholder, SkeletonLine, SkeletonParagraph, Empty },
     computed: {
       hots: function () {
         return this.$store.state.LayoutPcRightArticle.hots
+      },
+      fetching: function () {
+        return this.$store.state.LayoutPcRightArticle.fetching
       }
     }
   }
@@ -57,12 +86,12 @@
 
     .article-list-skeleton {
       list-style: none;
-      padding: $gap;
+      padding: $sm-gap;
       margin: 0;
 
       .item {
-        height: 1em;
-        margin-bottom: $gap;
+        height: 1.9em;
+        margin-bottom: $sm-gap;
         &:last-child {
           margin-bottom: 0;
         }

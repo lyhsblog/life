@@ -1,4 +1,7 @@
 export default {
+  server: {
+    host: '0.0.0.0' // default: localhost
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'life',
@@ -41,7 +44,7 @@ export default {
 
   publicRuntimeConfig: {
     axios: {
-      baseURL: 'http://localhost:8000/api/cms'
+      baseURL: 'http://192.168.1.214:8000/api'
     }
   },
 

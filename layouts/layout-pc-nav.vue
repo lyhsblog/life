@@ -5,43 +5,25 @@
         <i class="iconfont icon-home"></i>
         <span class="text">HOME</span>
       </router-link>
-      <router-link class="item" to="/article">
-        <i class="iconfont icon-thinking"></i>
+      <router-link class="item" to="/code">
+        <i class="iconfont icon-code"></i>
         <span class="text">
           CODE
         </span>
       </router-link>
-      <router-link class="item" to="/video">
-        <i class="iconfont icon-lens"></i>
-        <span class="text">
-          ME
-        </span>
-      </router-link>
-      <router-link class="item" to="/article">
+      <router-link class="item" to="/life">
         <i class="iconfont icon-thinking"></i>
         <span class="text">
           LIFE
         </span>
       </router-link>
-      <router-link class="item" to="/video">
-        <i class="iconfont icon-lens"></i>
-        <span class="text">
-          TRAP
-        </span>
-      </router-link>
-      <router-link class="item" to="/video">
-        <i class="iconfont icon-lens"></i>
-        <span class="text">
-          RAIN
-        </span>
-      </router-link>
-      <router-link class="item" to="/article">
+      <router-link class="item" to="/news">
         <i class="iconfont icon-thinking"></i>
         <span class="text">
           NEWS
         </span>
       </router-link>
-      <router-link class="item" to="/video">
+      <router-link class="item" to="/vlog">
         <i class="iconfont icon-lens"></i>
         <span class="text">
           VLOG
@@ -50,13 +32,19 @@
       <router-link class="item" to="/manga">
         <i class="iconfont icon-thinking"></i>
         <span class="text">
-          MANGA
+          MANGA(18+)
         </span>
       </router-link>
-      <router-link class="item" to="/manga">
+      <router-link class="item" to="/av">
         <i class="iconfont icon-thinking"></i>
         <span class="text">
-          VIDEO
+          VIDEO(18+)
+        </span>
+      </router-link>
+      <router-link class="item" to="/novel">
+        <i class="iconfont icon-lens"></i>
+        <span class="text">
+          NOVEL(18+)
         </span>
       </router-link>
       <div v-for="(ad, index) in ads" :key="index">
@@ -81,6 +69,12 @@
         </a>
       </div>
       <span class="separator"></span>
+      <router-link class="item" to="/me">
+        <i class="iconfont icon-user"></i>
+        <span class="text">
+          ME
+        </span>
+      </router-link>
       <router-link class="item app" to="/">
         <i class="iconfont icon-app"></i>
         <span class="text">
@@ -194,8 +188,7 @@
         &:last-child {
           margin-bottom: 0;
         }
-
-        &.link-active {
+        &.nuxt-link-active {
           color: $primary;
           background-color: $module-bg-lighter;
 

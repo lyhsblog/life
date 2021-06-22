@@ -1,7 +1,7 @@
 export const state = () => ({
   slideOpened: false,
   searchCall: () => '',
-  theme: 'dark',
+  theme: 'default',
   barraging: false,
 })
 

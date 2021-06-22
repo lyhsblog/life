@@ -82,10 +82,9 @@
 
 <style lang="scss" scoped>
   @import '/assets/styles/init.scss';
-
   .article-list-item {
     position: relative;
-    margin-bottom: $lg-gap;
+    margin-bottom: $gap;
     @include radius-box($sm-radius);
 
     &:last-child {
@@ -93,6 +92,7 @@
     }
 
     .item-background {
+      display: none;
       position: absolute;
       width: 100%;
       height: 100%;
@@ -107,8 +107,8 @@
       $padding: $sm-gap;
       $content-height: $height - ($padding * 2);
       display: block;
-      height: $height;
-      padding: $padding;
+      height: auto;
+      padding: $sm-gap $gap;
       overflow: hidden;
       @include common-bg-module($transition-time-fast);
 
@@ -126,6 +126,7 @@
       }
 
       > .item-thumb {
+        display: none;
         float: left;
         width: 15rem;
         height: $content-height;
@@ -176,8 +177,8 @@
 
       > .item-body {
         float: right;
-        width: 32rem;
-        height: $content-height;
+        width: 100%;
+        height: auto;
 
         > .item-title {
           margin-top: 3px;
@@ -199,9 +200,8 @@
         }
 
         > .item-description {
-          height: 5rem;
-          margin: 0;
-          margin-bottom: $xs-gap;
+          height: auto;
+          margin: 0 0 .5em;
           line-height: 1.8em;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -260,25 +260,34 @@
         }
       }
     }
-
-
-    &.mobile {
-      margin-bottom: $gap;
+    @media (min-width: 1024px) {
+      margin-bottom: $lg-gap;
       &:last-child {
         margin: 0;
       }
+      .item-background {
+        display: block;
+      }
 
       > .item-content {
-        height: auto;
-        padding: $sm-gap $gap;
+        $height: $gap * 11;
+        $padding: $sm-gap;
+        $content-height: $height - ($padding * 2);
+        display: block;
+        height: $height;
+        padding: $padding;
+
+        > .item-thumb {
+          display: block;
+        }
 
         > .item-body {
-          width: 100%;
-          height: auto;
+          width: 32rem;
+          height: $content-height;
 
           > .item-description {
-            height: auto;
-            margin-bottom: .5em;
+            height: 5rem;
+            margin: 0 0 $xs-gap;
           }
         }
       }

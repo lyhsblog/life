@@ -1,7 +1,7 @@
 <template>
-  <div class="manga-index dark">
+  <div class="video-index dark">
     <placeholder
-      :data="mangaList.numberOfElements"
+      :data="avList.numberOfElements"
       :loading="fetching"
     >
       <template #loading>
@@ -29,31 +29,31 @@
       </template>
       <template #default>
         <div class="related">
-          <ul class="articles" key="mangas">
+          <ul class="articles" key="avs">
             <li
               class="item"
-              v-for="manga in mangaList.content"
-              :key="manga.id"
+              v-for="av in avList.content"
+              :key="av.id"
             >
               <router-link
                 class="item-article"
-                :to="`/manga/${manga.id}`"
+                :to="`/manga/${av.id}`"
               >
                 <div
                   class="thumb"
                   :style="{
-                  backgroundImage: `url('${manga.cover}')`
+                  backgroundImage: `url('${av.cover}')`
                 }"
                 />
-                <div class="title">{{manga.name}}</div>
+                <div class="title">{{av.name}}</div>
               </router-link>
             </li>
           </ul>
           <div class="article-load">
             <button
               class="loadmore-button"
-              :disabled="mangaList.last"
-              @click="loadMangaList"
+              :disabled="avList.last"
+              @click="loadAvList"
             >
                   <span class="icon">
                     <i class="iconfont icon-peachblossom"></i>
@@ -73,41 +73,40 @@ import SkeletonLine from "../../components/skeleton/line";
 import SkeletonBase from "../../components/skeleton/base";
 import SkeletonParagraph from "../../components/skeleton/paragraph";
 import Empty from "../../components/widget-empty";
-
 export default {
   name: "MangaIndex",
   components: { Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty },
   data() {
     return {
       fetching: true,
-      mangaList: {
+      avList: {
         content: []
       },
     }
   },
   mounted() {
-    this.loadMangaList()
+    this.loadAvList()
     this.loadHot()
     this.initSearch()
   },
   methods: {
-    async loadMangaList () {
-      const mangaList = this.mangaList
-      if(!mangaList.last || mangaList.number === -1 || true) {
+    async loadAvList () {
+      const avList = this.avList
+      if(!avList.last || avList.number === -1 || true) {
         this.fetching = true
-        const mangas = await this.$axios.$get('/manga', {
+        const avs = await this.$axios.$get('/manga', {
           params: {
-            page: mangaList.number + 1,
+            page: avList.number + 1,
           }
         })
-        mangaList.content.push(...mangas.content)
-        mangaList.empty = mangas.empty
-        mangaList.first = mangas.first
-        mangaList.last = mangas.last
-        mangaList.number = mangas.number
-        mangaList.numberOfElements = mangas.content.size
-        mangaList.totalElements = mangas.totalElements
-        mangaList.totalPages = mangas.totalElements
+        avList.content.push(...avs.content)
+        avList.empty = avs.empty
+        avList.first = avs.first
+        avList.last = avs.last
+        avList.number = avs.number
+        avList.numberOfElements = avs.content.size
+        avList.totalElements = avs.totalElements
+        avList.totalPages = avs.totalElements
         this.fetching = false
       }
     },
@@ -127,23 +126,23 @@ export default {
       this.$store.commit('changeSearchCall', this.search)
     },
     async search(parmas) {
-      const mangaList = this.mangaList = {
+      const avList = this.avList = {
         content: []
       }
       this.fetching = true
-      const mangas = await this.$axios.$get('/manga', {
+      const avs = await this.$axios.$get('/manga', {
         params: {
           ...parmas
         }
       })
-      mangaList.content.push(...mangas.content)
-      mangaList.empty = mangas.empty
-      mangaList.first = mangas.first
-      mangaList.last = mangas.last
-      mangaList.number = mangas.number
-      mangaList.numberOfElements = mangas.content.size
-      mangaList.totalElements = mangas.totalElements
-      mangaList.totalPages = mangas.totalElements
+      avList.content.push(...avs.content)
+      avList.empty = avs.empty
+      avList.first = avs.first
+      avList.last = avs.last
+      avList.number = avs.number
+      avList.numberOfElements = avs.content.size
+      avList.totalElements = avs.totalElements
+      avList.totalPages = avs.totalElements
       this.fetching = false
     },
   }
@@ -153,7 +152,7 @@ export default {
 <style lang="scss">
 @import '/assets/styles/init.scss';
 
-.manga-index {
+.video-index {
   .article-list-skeleton {
     padding: 0;
     margin: 0;
@@ -213,15 +212,14 @@ export default {
     .articles {
       list-style: none;
       padding: 0;
-      margin: 0;
       width: 100%;
       overflow: hidden;
-      margin-bottom: -$gap;
+      margin-bottom: 0 0 -$gap;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       .item {
-        width: calc((100% - #{$gap}) / 3);
+        width: calc((100% - #{$gap}) / 2);
         margin-bottom: $gap;
         @include radius-box($sm-radius);
         @include common-bg-module();
@@ -240,7 +238,7 @@ export default {
 
           .thumb {
             width: 100%;
-            height: 10.5rem;
+            height: 8rem;
             background-color: $module-bg-darker-2;
             background-size: cover;
             background-position: 50% 40%;
@@ -277,9 +275,9 @@ export default {
     @media (min-width: 1024px) {
       .articles {
         .item {
-          width: calc((100% - #{$gap * 3}) / 4);
+          width: calc((100% - #{$gap * 3}) / 3);
           .thumb {
-            height: 15rem !important;
+            height: 9rem !important;
           }
         }
       }

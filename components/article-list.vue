@@ -113,7 +113,7 @@
           articleList.first = articles.first
           articleList.last = articles.last
           articleList.number = articles.number
-          articleList.numberOfElements = articles
+          articleList.numberOfElements = articles.content.size
           articleList.totalElements = articles.totalElements
           articleList.totalPages = articles.totalElements
           this.fetching = false
@@ -137,7 +137,7 @@
         articleList.first = articles.first
         articleList.last = articles.last
         articleList.number = articles.number
-        articleList.numberOfElements = articles
+        articleList.numberOfElements = articles.content.size
         articleList.totalElements = articles.totalElements
         articleList.totalPages = articles.totalElements
         this.fetching = false

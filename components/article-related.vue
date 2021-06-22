@@ -99,11 +99,11 @@
       width: 100%;
       overflow: hidden;
       margin-bottom: -$gap;
-
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
       .item {
-        float: left;
-        width: calc((100% - #{$gap * 2}) / 3);
-        margin-right: $gap;
+        width: calc((100% - #{$gap}) / 2);
         margin-bottom: $gap;
         @include radius-box($sm-radius);
         @include common-bg-module();
@@ -111,11 +111,6 @@
         &.disabled {
           pointer-events: none;
           opacity: .8;
-        }
-
-        &:nth-child(3n) {
-          margin-right: 0;
-          margin-bottom: 0;
         }
 
         .item-article {
@@ -127,7 +122,7 @@
 
           .thumb {
             width: 100%;
-            height: 7.4rem;
+            height: 6rem;
             background-color: $module-bg-darker-2;
             background-size: cover;
             background-position: 50% 40%;
@@ -161,19 +156,12 @@
       }
     }
 
-    &.mobile {
+    @media (min-width: 1024px) {
       .articles {
         .item {
-          width: calc((100% - #{$gap}) / 2);
-          margin-right: $gap;
-          margin-bottom: $gap;
-          &:nth-child(2n) {
-            margin-right: 0;
-            margin-bottom: 0;
-          }
-
+          width: calc((100% - #{$gap * 2}) / 3);
           .thumb {
-            height: 6rem;
+            height: 7.4rem;
           }
         }
       }
