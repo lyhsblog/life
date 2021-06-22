@@ -5,31 +5,32 @@
       :data="!!articles.length"
     >
       <template #loading>
-<!--        <skeleton-paragraph-->
-<!--          v-if="isMobile"-->
-<!--          class="skeleton"-->
-<!--          line-height="1em"-->
-<!--          :lines="4"-->
-<!--        />-->
-<!--        <ul class="skeleton-list" v-else>-->
-<!--          <skeleton-base-->
-<!--            class="article"-->
-<!--            v-for="item in 4"-->
-<!--            :key="item"-->
-<!--          />-->
-<!--        </ul>-->
-        <ul class="skeleton-list">
-          <skeleton-base
-            class="article"
-            v-for="item in 4"
-            :key="item"
+        <div>
+          <skeleton-paragraph
+            class="skeleton"
+            line-height="1em"
+            :lines="4"
           />
-        </ul>
+          <!--        <ul class="skeleton-list" v-else>-->
+          <!--          <skeleton-base-->
+          <!--            class="article"-->
+          <!--            v-for="item in 4"-->
+          <!--            :key="item"-->
+          <!--          />-->
+          <!--        </ul>-->
+          <ul class="skeleton-list">
+            <skeleton-base
+              class="article"
+              v-for="item in 6"
+              :key="item"
+            />
+          </ul>
+        </div>
       </template>
       <template #default>
         <ul class="articles" key="articles">
           <li
-            v-for="(article, index) in articles.slice(0, 4)"
+            v-for="(article, index) in articles.slice(0, 6)"
             :class="{ disabled: article.disabled }"
             :key="index"
             class="item"

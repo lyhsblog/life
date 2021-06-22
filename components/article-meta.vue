@@ -17,10 +17,7 @@
         v-if="article"
       >
         <p class="item">
-          <i18n
-            zh="本文于 "
-            en="Article created at "
-          />
+          Article created at
           <router-link
             class="date-link"
             :title="getDateTitle(article.createTime)"
@@ -94,6 +91,11 @@
       fetching: Boolean
     },
     components: {Placeholder, SkeletonParagraph, Responsive},
+    data() {
+      return {
+        articleUrl: ''
+      }
+    },
     methods: {
       getDateTitle (date) {
         return humanizeYMD(date, 'zh')
@@ -106,6 +108,9 @@
       },
       getTagArchiveRoute(tag) {
         return 'tagroute'
+      },
+      copyArticleUrl() {
+        return "#"
       }
     }
   }

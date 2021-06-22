@@ -100,7 +100,8 @@ export default {
         return this.isLongFormContent && !this.longFormRenderState.rendered
       },
       content: function() {
-        const content = this.article?.content
+        const regex = /(\r\n)+/ig
+        const content = this.article?.content.replaceAll(regex, "\r\n\r\n")
         const result = {
           default: '',
           leftover: ''
@@ -137,15 +138,16 @@ export default {
         const lastH3Index = shortContent.lastIndexOf('\n###')
         const lastCodeIndex = shortContent.lastIndexOf('\n\n```')
         const lastLineIndex = shortContent.lastIndexOf('\n\n**')
-        return Math.max(lastH4Index, lastH3Index, lastCodeIndex, lastLineIndex)
+        const lastPLineIndex = shortContent.lastIndexOf('\r\n')
+        return Math.max(lastH4Index, lastH3Index, lastCodeIndex, lastLineIndex, lastPLineIndex)
       },
       handleRenderMore: function() {
         this.longFormRenderState.rendering = true
-        this.nextTick(() => {
+        this.$nextTick(() => {
           setTimeout(() => {
             this.longFormRenderState.rendered = true
             this.longFormRenderState.rendering = false
-          }, 0)
+          }, 1000)
         })
       },
       observeLozad: function(elementId) {

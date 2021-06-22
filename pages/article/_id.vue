@@ -69,7 +69,7 @@
         const id = this.$route.params.id
         const res = await this.$axios.get("/article/"+id)
         this.article = res.data
-        const relatedArticle = await this.$axios.get("/article/related")
+        const relatedArticle = await this.$axios.get(`/article/${id}/related`)
         this.relatedArticles.push(...relatedArticle.data.content)
         setTimeout(() => {
           this.fetching = false

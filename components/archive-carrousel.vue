@@ -139,7 +139,7 @@
     methods: {
       async loadRecommendedList () {
         this.fetching = true
-        const recommendedList = await this.$axios.get("/article/related")
+        const recommendedList = await this.$axios.get("/article/hots")
         this.recommendedList.push(...recommendedList.data.content)
         this.fetching = false
       },

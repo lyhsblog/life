@@ -21,7 +21,7 @@ export default {
   methods: {
     async loadHot() {
       this.$store.commit("LayoutPcRightArticle/fetching", true)
-      const res = await this.$axios.get("/article/related")
+      const res = await this.$axios.get("/article/hots")
       if(!res.data.empty) {
         for (const item of res.data.content) {
           item.url = "/article/"+item.id
