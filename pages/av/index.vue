@@ -86,7 +86,6 @@ export default {
   },
   mounted() {
     this.loadAvList()
-    this.loadHot()
     this.initSearch()
   },
   methods: {
@@ -109,18 +108,6 @@ export default {
         avList.totalPages = avs.totalElements
         this.fetching = false
       }
-    },
-    async loadHot() {
-      this.$store.commit("LayoutPcRightArticle/fetching", true)
-      const res = await this.$axios.get("/manga/hots")
-      if(!res.data.empty) {
-        for (const item of res.data.content) {
-          item.url = "/manga/"+item.id
-        }
-      }
-      this.$store.commit("LayoutPcRightArticle/cleanHotArticle")
-      this.$store.commit("LayoutPcRightArticle/addHotArticle", res.data.content)
-      this.$store.commit("LayoutPcRightArticle/fetching", false)
     },
     async initSearch() {
       this.$store.commit('changeSearchCall', this.search)

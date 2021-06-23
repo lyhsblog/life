@@ -53,12 +53,65 @@
   export default {
     name: 'pc-aside-article',
     components: { Placeholder, SkeletonLine, SkeletonParagraph, Empty },
-    computed: {
-      hots: function () {
-        return this.$store.state.LayoutPcRightArticle.hots
+    data() {
+      return {
+        fetching: true,
+        hots: []
+      }
+    },
+    mounted() {
+      this.init()
+    },
+    methods: {
+      init() {
+        const route = this.$route
+        switch (route.name) {
+          case "index":
+            this.path = "/article"
+            break
+          case "category":
+            this.path = "/article"
+            break
+          case "manga":
+            this.path = "/manga"
+            break
+          case "novel":
+            this.path = "/novel"
+            break
+          case "av":
+            this.path = "/av"
+            break
+          case "vlog":
+            this.path = "/vlog"
+            break
+          default:
+            this.path = "/article"
+        }
+
+        this.loadTags()
       },
-      fetching: function () {
-        return this.$store.state.LayoutPcRightArticle.fetching
+      async loadTags() {
+        this.fetching = true
+        const res = await this.$axios.get(`${this.path}/hots`)
+        if(!res.data.empty) {
+          for (const item of res.data.content) {
+            item.url = `${this.path}/${item.id}`
+          }
+        }
+        this.hots = []
+        this.hots.push(...res.data.content)
+        setTimeout(() => {
+          this.fetching = false
+        }, 1000)
+      }
+    },
+    watch: {
+      '$route'(to, from) {
+        if (to.fullPath !== from.fullPath) {
+          this.$nextTick(() => {
+            this.init()
+          })
+        }
       }
     }
   }

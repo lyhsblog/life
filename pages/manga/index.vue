@@ -87,7 +87,6 @@ export default {
   },
   mounted() {
     this.loadMangaList()
-    this.loadHot()
     this.initSearch()
   },
   methods: {
@@ -112,20 +111,6 @@ export default {
           this.fetching = false
         }, 1000)
       }
-    },
-    async loadHot() {
-      this.$store.commit("LayoutPcRightArticle/fetching", true)
-      const res = await this.$axios.get("/manga/hots")
-      if(!res.data.empty) {
-        for (const item of res.data.content) {
-          item.url = "/manga/"+item.id
-        }
-      }
-      this.$store.commit("LayoutPcRightArticle/cleanHotArticle")
-      this.$store.commit("LayoutPcRightArticle/addHotArticle", res.data.content)
-      setTimeout(() => {
-        this.$store.commit("LayoutPcRightArticle/fetching", false)
-      }, 1000)
     },
     async initSearch() {
       this.$store.commit('changeSearchCall', this.search)

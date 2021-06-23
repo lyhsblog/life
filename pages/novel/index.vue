@@ -163,7 +163,6 @@
     methods: {
       init() {
         this.loadNovelList()
-        this.loadHot()
         this.initSearch()
       },
       async loadNovelList() {
@@ -187,20 +186,6 @@
             this.fetching = false
           }, 1000)
         }
-      },
-      async loadHot() {
-        this.$store.commit("LayoutPcRightArticle/fetching", true)
-        const res = await this.$axios.get("/novel/hots")
-        if(!res.data.empty) {
-          for (const item of res.data.content) {
-            item.url = "/novel/"+item.id
-          }
-        }
-        this.$store.commit("LayoutPcRightArticle/cleanHotArticle")
-        this.$store.commit("LayoutPcRightArticle/addHotArticle", res.data.content)
-        setTimeout(() => {
-          this.$store.commit("LayoutPcRightArticle/fetching", false)
-        }, 1000)
       },
       async initSearch() {
         this.$store.commit('changeSearchCall', this.search)

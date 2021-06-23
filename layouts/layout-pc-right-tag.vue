@@ -19,49 +19,61 @@
 </template>
 
 <script>
-  import LANGUAGE_KEYS from "../language/key";
 
   export default {
     name: 'PcAsideTag',
     data() {
-      const tags = [
-        {
-          description: 'tagdesc',
-          name: 'tagname',
-          slug: 'slug',
-          count: 1,
-        },
-        {
-          description: 'tagdesc',
-          name: 'tagname',
-          slug: 'slug'
-        },
-        {
-          description: 'tagdesc',
-          name: 'tagname',
-          slug: 'slug'
-        },
-        {
-          description: 'tagdesc',
-          name: 'tagname',
-          slug: 'slug'
-        },
-        {
-          description: 'tagdesc',
-          name: 'tagname',
-          slug: 'slug'
-        },
-        {
-          description: 'tagdesc',
-          name: 'tagname',
-          slug: 'slug'
-        },
-
-      ]
-
       return {
-        LANGUAGE_KEYS,
-        tags,
+        fetching: true,
+        path: '',
+        tags: [],
+      }
+    },
+    mounted() {
+      this.init()
+    },
+    methods: {
+      init() {
+        const route = this.$route
+        switch (route.name) {
+          case "index":
+            this.path = "/article"
+                break
+          case "category":
+            this.path = "/article"
+                break
+          case "manga":
+            this.path = "/manga"
+                break
+          case "novel":
+            this.path = "/novel"
+                break
+          case "av":
+            this.path = "/av"
+                break
+          case "vlog":
+            this.path = "/vlog"
+                break
+          default:
+            this.path = "/article"
+        }
+
+        this.loadTags()
+      },
+      async loadTags() {
+        this.fetching = true
+        const res = await this.$axios.get(`${this.path}/tags`)
+        this.tags.push(...res.data)
+        this.fetching = false
+      }
+    },
+    watch: {
+      '$route'(to, from) {
+        if (to.fullPath !== from.fullPath) {
+          this.$nextTick(() => {
+            this.init()
+          })
+        }
       }
     }
   }
