@@ -27,7 +27,7 @@
       <div class="module">
         <pc-aside-tag />
       </div>
-      <pc-aside-tool />
+<!--      <pc-aside-tool />-->
     </div>
   </div>
 </template>

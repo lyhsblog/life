@@ -102,18 +102,31 @@
       init() {
         this.category = this.$route.params.category
         this.loadArticleList()
-        this.initSearch()
       },
       async loadArticleList () {
         const articleList = this.articleList
         if(!articleList.last || articleList.number === -1 || true) {
           this.fetching = true
+
+          const params = {
+            ...this.$route.query,
+            category: this.category
+          };
+          if(this.$route.query) {
+            params.page = 0
+          }else {
+            params.page = articleList.number + 1
+          }
+
           const articles = await this.$axios.$get('/article', {
             params: {
-              page: articleList.number + 1,
-              category: this.category
+              ...params
             }
           })
+
+          if(this.$route.query) {
+            articleList.content = []
+          }
           articleList.content.push(...articles.content)
           articleList.empty = articles.empty
           articleList.first = articles.first
@@ -126,32 +139,7 @@
             this.fetching = false
           }, 1000)
         }
-      },
-      async initSearch() {
-        this.$store.commit('changeSearchCall', this.search)
-      },
-      async search(parmas) {
-        const articleList = this.articleList = {
-          content: []
-        }
-        this.fetching = true
-        const articles = await this.$axios.$get('/article', {
-          params: {
-            ...parmas
-          }
-        })
-        articleList.content.push(...articles.content)
-        articleList.empty = articles.empty
-        articleList.first = articles.first
-        articleList.last = articles.last
-        articleList.number = articles.number
-        articleList.numberOfElements = articles.content.size
-        articleList.totalElements = articles.totalElements
-        articleList.totalPages = articles.totalElements
-        setTimeout(() => {
-          this.fetching = false
-        }, 1000)
-      },
+      }
     },
     watch: {
       '$route'(to, from) {

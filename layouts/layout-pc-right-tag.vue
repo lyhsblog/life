@@ -10,9 +10,9 @@
       >
         <i class="iconfont" :class="'icon-tag'" />
         <span class="name">
-              tagname
-              <span class="count">({{ tag.count || 0 }})</span>
-            </span>
+          {{tag.name}}
+<!--          <span class="count">({{ tag.count || 0 }})</span>-->
+        </span>
       </router-link>
     </div>
   </div>
@@ -63,6 +63,7 @@
       async loadTags() {
         this.fetching = true
         const res = await this.$axios.get(`${this.path}/tags`)
+        this.tags = []
         this.tags.push(...res.data)
         this.fetching = false
       }

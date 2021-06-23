@@ -86,18 +86,32 @@ export default {
   },
   mounted() {
     this.loadAvList()
-    this.initSearch()
   },
   methods: {
     async loadAvList () {
       const avList = this.avList
       if(!avList.last || avList.number === -1 || true) {
         this.fetching = true
+
+        const params = {
+          ...this.$route.query
+        };
+        if(this.$route.query) {
+          params.page = 0
+        }else {
+          params.page = avList.number + 1
+        }
+
         const avs = await this.$axios.$get('/manga', {
           params: {
-            page: avList.number + 1,
+            ...params
           }
         })
+
+        if(this.$route.query) {
+          avList.content = []
+        }
+
         avList.content.push(...avs.content)
         avList.empty = avs.empty
         avList.first = avs.first
@@ -108,30 +122,16 @@ export default {
         avList.totalPages = avs.totalElements
         this.fetching = false
       }
-    },
-    async initSearch() {
-      this.$store.commit('changeSearchCall', this.search)
-    },
-    async search(parmas) {
-      const avList = this.avList = {
-        content: []
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      if (to.fullPath !== from.fullPath) {
+        this.$nextTick(() => {
+          this.init()
+        })
       }
-      this.fetching = true
-      const avs = await this.$axios.$get('/manga', {
-        params: {
-          ...parmas
-        }
-      })
-      avList.content.push(...avs.content)
-      avList.empty = avs.empty
-      avList.first = avs.first
-      avList.last = avs.last
-      avList.number = avs.number
-      avList.numberOfElements = avs.content.size
-      avList.totalElements = avs.totalElements
-      avList.totalPages = avs.totalElements
-      this.fetching = false
-    },
+    }
   }
 }
 </script>

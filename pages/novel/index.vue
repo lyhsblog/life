@@ -163,17 +163,31 @@
     methods: {
       init() {
         this.loadNovelList()
-        this.initSearch()
       },
       async loadNovelList() {
         const novelList = this.novelList
         if(!novelList.last || novelList.number === -1 || true) {
           this.fetching = true
+
+          const params = {
+            ...this.$route.query
+          };
+          if(this.$route.query) {
+            params.page = 0
+          }else {
+            params.page = novelList.number + 1
+          }
+
           const novels = await this.$axios.$get('/novel', {
             params: {
-              page: novelList.number + 1,
+              ...params
             }
           })
+
+          if(this.$route.query) {
+            novelList.content = []
+          }
+
           novelList.content.push(...novels.content)
           novelList.empty = novels.empty
           novelList.first = novels.first
@@ -186,32 +200,16 @@
             this.fetching = false
           }, 1000)
         }
-      },
-      async initSearch() {
-        this.$store.commit('changeSearchCall', this.search)
-      },
-      async search(parmas) {
-        const novelList = this.novelList = {
-          content: []
+      }
+    },
+    watch: {
+      '$route'(to, from) {
+        if (to.fullPath !== from.fullPath) {
+          this.$nextTick(() => {
+            this.init()
+          })
         }
-        this.fetching = true
-        const novels = await this.$axios.$get('/novel', {
-          params: {
-            ...parmas
-          }
-        })
-        novelList.content.push(...novels.content)
-        novelList.empty = novels.empty
-        novelList.first = novels.first
-        novelList.last = novels.last
-        novelList.number = novels.number
-        novelList.numberOfElements = novels.content.size
-        novelList.totalElements = novels.totalElements
-        novelList.totalPages = novels.totalElements
-        setTimeout(() => {
-          this.fetching = false
-        }, 1000)
-      },
+      }
     }
   }
 </script>

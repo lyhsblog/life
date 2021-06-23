@@ -81,24 +81,40 @@ export default {
     return {
       fetching: true,
       mangaList: {
-        content: []
+        content: [],
+        number: -1,
       },
     }
   },
   mounted() {
-    this.loadMangaList()
-    this.initSearch()
+    this.init()
   },
   methods: {
+    init() {
+      this.loadMangaList()
+    },
     async loadMangaList () {
       const mangaList = this.mangaList
       if(!mangaList.last || mangaList.number === -1 || true) {
         this.fetching = true
+
+        const params = {
+          ...this.$route.query
+        };
+        if(this.$route.query) {
+          params.page = 0
+        }else {
+          params.page = mangaList.number + 1
+        }
+
         const mangas = await this.$axios.$get('/manga', {
           params: {
-            page: mangaList.number + 1,
+            ...params
           }
         })
+        if(this.$route.query) {
+          mangaList.content= []
+        }
         mangaList.content.push(...mangas.content)
         mangaList.empty = mangas.empty
         mangaList.first = mangas.first
@@ -111,32 +127,16 @@ export default {
           this.fetching = false
         }, 1000)
       }
-    },
-    async initSearch() {
-      this.$store.commit('changeSearchCall', this.search)
-    },
-    async search(parmas) {
-      const mangaList = this.mangaList = {
-        content: []
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      if (to.fullPath !== from.fullPath) {
+        this.$nextTick(() => {
+          this.init()
+        })
       }
-      this.fetching = true
-      const mangas = await this.$axios.$get('/manga', {
-        params: {
-          ...parmas
-        }
-      })
-      mangaList.content.push(...mangas.content)
-      mangaList.empty = mangas.empty
-      mangaList.first = mangas.first
-      mangaList.last = mangas.last
-      mangaList.number = mangas.number
-      mangaList.numberOfElements = mangas.content.size
-      mangaList.totalElements = mangas.totalElements
-      mangaList.totalPages = mangas.totalElements
-      setTimeout(() => {
-        this.fetching = false
-      }, 1000)
-    },
+    }
   }
 }
 </script>

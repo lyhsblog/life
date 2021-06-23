@@ -57,11 +57,52 @@
         keywords: ''
       }
     },
+    mounted() {
+      this.init()
+    },
     methods: {
+      init() {
+        const route = this.$route
+        switch (route.name) {
+          case "index":
+            this.path = "/"
+            break
+          case "category":
+            this.path = "/"
+            break
+          case "manga":
+            this.path = "/manga"
+            break
+          case "novel":
+            this.path = "/novel"
+            break
+          case "av":
+            this.path = "/av"
+            break
+          case "vlog":
+            this.path = "/vlog"
+            break
+          default:
+            this.path = "/"
+        }
+      },
       handleSearch: function () {
-        this.$store.state.searchCall({searchword: this.keywords})
+        this.$router.push({path: this.path, query: {
+            searchword: this.keywords
+          }
+        })
+      }
+    },
+    watch: {
+      '$route'(to, from) {
+        if (to.fullPath !== from.fullPath) {
+          this.$nextTick(() => {
+            this.init()
+          })
+        }
       }
     }
+
   }
 </script>
 
