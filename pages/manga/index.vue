@@ -53,7 +53,7 @@
             <button
               class="loadmore-button"
               :disabled="mangaList.last"
-              @click="loadMangaList"
+              @click="loadMangaList(mangaList.number + 1)"
             >
                   <span class="icon">
                     <i class="iconfont icon-peachblossom"></i>
@@ -76,6 +76,19 @@ import Empty from "../../components/widget-empty";
 
 export default {
   name: "MangaIndex",
+  head() {
+    return  {
+      title: 'MANGA-567WATCH',
+      meta: [
+        { charset: 'utf-8' },
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'index for manga'
+        }
+      ],
+    }
+  },
   components: { Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty },
   data() {
     return {
@@ -91,30 +104,21 @@ export default {
   },
   methods: {
     init() {
+      this.mangaList.content = []
       this.loadMangaList()
     },
-    async loadMangaList () {
+    async loadMangaList (page = 0) {
       const mangaList = this.mangaList
       if(!mangaList.last || mangaList.number === -1 || true) {
         this.fetching = true
 
-        const params = {
-          ...this.$route.query
-        };
-        if(this.$route.query) {
-          params.page = 0
-        }else {
-          params.page = mangaList.number + 1
-        }
-
         const mangas = await this.$axios.$get('/manga', {
           params: {
-            ...params
+            ...this.$route.query,
+            page: page
           }
         })
-        if(this.$route.query) {
-          mangaList.content= []
-        }
+
         mangaList.content.push(...mangas.content)
         mangaList.empty = mangas.empty
         mangaList.first = mangas.first

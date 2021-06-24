@@ -34,7 +34,6 @@
             class="empty"
             i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
           />
-          <empty
         </template>
         <template #default>
           <transition-group
@@ -53,7 +52,7 @@
       <button
         class="loadmore-button"
         :disabled="articleList.last"
-        @click="loadArticleList"
+        @click="loadArticleList(articleList.number + 1)"
       >
         <span class="icon">
           <i class="iconfont icon-peachblossom"></i>
@@ -101,32 +100,22 @@
     methods: {
       init() {
         this.category = this.$route.params.category
+        this.articleList.content = []
         this.loadArticleList()
       },
-      async loadArticleList () {
+      async loadArticleList (page = 0) {
         const articleList = this.articleList
-        if(!articleList.last || articleList.number === -1 || true) {
+        if(!articleList.last || articleList.number === -1) {
           this.fetching = true
-
-          const params = {
-            ...this.$route.query,
-            category: this.category
-          };
-          if(this.$route.query) {
-            params.page = 0
-          }else {
-            params.page = articleList.number + 1
-          }
 
           const articles = await this.$axios.$get('/article', {
             params: {
-              ...params
+              ...this.$route.query,
+              category: this.category,
+              page: page
             }
           })
 
-          if(this.$route.query) {
-            articleList.content = []
-          }
           articleList.content.push(...articles.content)
           articleList.empty = articles.empty
           articleList.first = articles.first

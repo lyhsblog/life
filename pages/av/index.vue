@@ -53,7 +53,7 @@
             <button
               class="loadmore-button"
               :disabled="avList.last"
-              @click="loadAvList"
+              @click="loadAvList(avList.number + 1)"
             >
                   <span class="icon">
                     <i class="iconfont icon-peachblossom"></i>
@@ -75,6 +75,19 @@ import SkeletonParagraph from "../../components/skeleton/paragraph";
 import Empty from "../../components/widget-empty";
 export default {
   name: "MangaIndex",
+  head() {
+    return  {
+      title: 'NOVEL-567WATCH',
+      meta: [
+        { charset: 'utf-8' },
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'index for adult video'
+        }
+      ],
+    }
+  },
   components: { Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty },
   data() {
     return {
@@ -85,32 +98,24 @@ export default {
     }
   },
   mounted() {
-    this.loadAvList()
+    this.init()
   },
   methods: {
-    async loadAvList () {
+    init() {
+      this.avList.content = []
+      this.loadAvList()
+    },
+    async loadAvList (page = 0) {
       const avList = this.avList
-      if(!avList.last || avList.number === -1 || true) {
+      if(!avList.last || avList.number === -1) {
         this.fetching = true
-
-        const params = {
-          ...this.$route.query
-        };
-        if(this.$route.query) {
-          params.page = 0
-        }else {
-          params.page = avList.number + 1
-        }
 
         const avs = await this.$axios.$get('/manga', {
           params: {
-            ...params
+            ...this.$route.query,
+            page: page
           }
         })
-
-        if(this.$route.query) {
-          avList.content = []
-        }
 
         avList.content.push(...avs.content)
         avList.empty = avs.empty

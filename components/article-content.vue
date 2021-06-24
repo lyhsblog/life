@@ -72,6 +72,19 @@ import { markdownToHTML } from '../transforms/markdown'
 
 export default {
     name: 'ArticleContent',
+    // head() {
+    //   return  {
+    //     title: this.article.title,
+    //     meta: [
+    //       { charset: 'utf-8' },
+    //       {
+    //         hid: 'description',
+    //         name: 'description',
+    //         content: this.article.description
+    //       }
+    //     ],
+    //   }
+    // },
     components: {Placeholder, SkeletonLine, SkeletonParagraph},
     props: {
       fetching: Boolean,

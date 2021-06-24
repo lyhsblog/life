@@ -6,18 +6,18 @@
         :article="article"
       />
     </div>
-    <div class="module">
-      <article-mammon :fetching="fetching" />
-    </div>
+<!--    <div class="module">-->
+<!--      <article-mammon :fetching="fetching" />-->
+<!--    </div>-->
     <div class="module">
       <article-share :fetching="fetching" />
     </div>
-    <div class="module">
-      <article-meta
-        :fetching="fetching"
-        :article="article"
-      />
-    </div>
+<!--    <div class="module">-->
+<!--      <article-meta-->
+<!--        :fetching="fetching"-->
+<!--        :article="article"-->
+<!--      />-->
+<!--    </div>-->
     <div class="releted">
       <article-related
         :fetching="fetching"
@@ -36,6 +36,19 @@
   import ArticleRelated from "../../components/article-related";
   export default {
     name: 'ArticleDetail',
+    head() {
+      return  {
+        title: this.article.name,
+        meta: [
+          { charset: 'utf-8' },
+          {
+            hid: 'description',
+            name: 'description',
+            content: this.article.description
+          }
+        ],
+      }
+    },
     components: {
       ArticleRelated,
       ArticleMeta,

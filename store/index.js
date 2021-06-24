@@ -1,14 +1,10 @@
 export const state = () => ({
   slideOpened: false,
-  searchCall: () => '',
   theme: 'default',
   barraging: false,
 })
 
 export const mutations = {
-  changeSearchCall(state, callback) {
-    state.searchCall = callback
-  },
   changeSlideOpened(state, slideOpened) {
     state.slideOpened = slideOpened
   },

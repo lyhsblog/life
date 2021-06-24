@@ -23,6 +23,19 @@
 <script>
   export default {
     name: 'archive-list-header',
+    head() {
+      return {
+        title: this.category.name,
+        meta: [
+          { charset: 'utf-8' },
+          {
+            hid: 'description',
+            name: "description",
+            content: this.category.description
+          }
+        ],
+      }
+    },
     data() {
       return {
         fetching: true,

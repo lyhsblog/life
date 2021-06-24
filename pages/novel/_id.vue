@@ -29,6 +29,19 @@
   import ArticleRelated from "../../components/article-related";
   export default {
     name: 'NovelDetail',
+    head() {
+      return  {
+        title: `${this.novel.name}-567WATCH`,
+        meta: [
+          { charset: 'utf-8' },
+          {
+            hid: 'description',
+            name: 'description',
+            content: this.novel.description
+          }
+        ],
+      }
+    },
     components: {
       ArticleRelated,
       ArticleShare,

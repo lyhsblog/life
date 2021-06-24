@@ -93,28 +93,28 @@
     data () {
       return {
         ads: [
-          {
-            url: '',
-            icon: 'icon-aliyun',
-            color: '#ff6a00',
-            i18n: {
-              zh: 'zh',
-              en: 'en',
-            },
-            text: 'ALIYUN',
-            hot: true
-          },
-          {
-            url: '',
-            icon: 'icon-jingdong',
-            color: '#e1251b',
-            i18n: {
-              zh: 'zh',
-              en: 'en',
-            },
-            text: 'JD',
-            hot: true
-          }
+          // {
+          //   url: '',
+          //   icon: 'icon-aliyun',
+          //   color: '#ff6a00',
+          //   i18n: {
+          //     zh: 'zh',
+          //     en: 'en',
+          //   },
+          //   text: 'ALIYUN',
+          //   hot: true
+          // },
+          // {
+          //   url: '',
+          //   icon: 'icon-jingdong',
+          //   color: '#e1251b',
+          //   i18n: {
+          //     zh: 'zh',
+          //     en: 'en',
+          //   },
+          //   text: 'JD',
+          //   hot: true
+          // }
         ],
         VALUABLE_LINKS,
         LANGUAGE_KEYS,

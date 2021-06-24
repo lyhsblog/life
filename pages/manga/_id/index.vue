@@ -132,6 +132,19 @@
 <script>
 export default {
   name: "MangaDetailIndex",
+  head() {
+    return  {
+      title: `${this.article.name}-567WATCH`,
+      meta: [
+        { charset: 'utf-8' },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.article.description
+        }
+      ],
+    }
+  },
   data() {
     return {
       fetching: true,

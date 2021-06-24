@@ -29,7 +29,14 @@
 <script>
 export default {
   name: "MangaEpisode",
-  layout: 'nolayout',
+  head() {
+    return  {
+      title: `${this.episode.name}-567WATCH`,
+      meta: [
+        { charset: 'utf-8' },
+      ],
+    }
+  },
   data() {
     return {
       id: 0,

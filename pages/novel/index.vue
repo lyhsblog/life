@@ -120,7 +120,7 @@
         <button
           class="loadmore-button"
           :disabled="novelList.last"
-          @click="loadNovelList"
+          @click="loadNovelList(novelList.number = 1)"
         >
         <span class="icon">
           <i class="iconfont icon-peachblossom"></i>
@@ -143,6 +143,19 @@
   import Empty from "../../components/widget-empty";
   export default {
     name: 'Novel',
+    head() {
+      return  {
+        title: 'NOVEL-567WATCH',
+        meta: [
+          { charset: 'utf-8' },
+          {
+            hid: 'description',
+            name: 'description',
+            content: 'index for novel'
+          }
+        ],
+      }
+    },
     components: {Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty},
     data() {
       return {
@@ -162,31 +175,20 @@
     },
     methods: {
       init() {
+        this.novelList.content = []
         this.loadNovelList()
       },
-      async loadNovelList() {
+      async loadNovelList(page = 0) {
         const novelList = this.novelList
         if(!novelList.last || novelList.number === -1 || true) {
           this.fetching = true
 
-          const params = {
-            ...this.$route.query
-          };
-          if(this.$route.query) {
-            params.page = 0
-          }else {
-            params.page = novelList.number + 1
-          }
-
           const novels = await this.$axios.$get('/novel', {
             params: {
-              ...params
+              ...this.$route.query,
+              page: page
             }
           })
-
-          if(this.$route.query) {
-            novelList.content = []
-          }
 
           novelList.content.push(...novels.content)
           novelList.empty = novels.empty

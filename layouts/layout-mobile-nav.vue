@@ -2,7 +2,7 @@
   <aside class="aside" :class="{ open: open }">
     <div class="aside-user">
       <div class="avatar">
-        <img :src="gravatar" alt="Surmon" />
+        <img :src="gravatar" alt="567WATCH" />
       </div>
       <div class="profile">
         <h3 class="name">Surmon</h3>
@@ -15,48 +15,56 @@
       <nav class="nav-list">
         <router-link to="/" class="item" exact>
           <i class="iconfont icon-home"></i>
-          {{LANGUAGE_KEYS.PAGE_HOME}}
+          HOME
         </router-link>
-        <router-link class="item" to="/1">
+        <router-link class="item" to="/code">
           <i class="iconfont icon-code"></i>
-          {{LANGUAGE_KEYS.CATEGORY_CODE}}
+          CODE
         </router-link>
-        <router-link class="item" to="/2">
+        <router-link class="item" to="/life">
           <i class="iconfont icon-thinking"></i>
-          {{LANGUAGE_KEYS.CATEGORY_INSIGHT}}
+          LIFE
         </router-link>
-        <a class="item" :href="VALUABLE_LINKS.GITHUB">
-          <i class="iconfont icon-github"></i>
-          {{LANGUAGE_KEYS.PAGE_GITHUB}}
-        </a>
-        <router-link class="item" to="/3">
+        <router-link class="item" to="/news">
           <i class="iconfont icon-peachblossom"></i>
-          {{LANGUAGE_KEYS.PAGE_ARCHIVE}}
+          NEWS
         </router-link>
-        <router-link class="item" to="/4">
+        <router-link class="item" to="/vlog">
           <i class="iconfont icon-lens"></i>
-          {{LANGUAGE_KEYS.PAGE_LENS}}
+          VLOG
         </router-link>
-        <router-link class="item" to="/5">
+        <router-link class="item" to="/manga">
           <i class="iconfont icon-user"></i>
-          {{LANGUAGE_KEYS.PAGE_ABOUT}}
+          MANGA
         </router-link>
-        <router-link class="item" to="/6">
-          <i class="iconfont icon-horse"></i>
-          {{LANGUAGE_KEYS.PAGE_JOB}}
+        <router-link class="item" to="/novel">
+          <i class="iconfont icon-user"></i>
+          NOVEL
         </router-link>
-        <router-link class="item" to="/7">
-          <i class="iconfont icon-tool"></i>
-          {{LANGUAGE_KEYS.PAGE_FREELANCER}}
+        <router-link class="item" to="/video">
+          <i class="iconfont icon-user"></i>
+          VIDEO
         </router-link>
-        <router-link class="item guestbook" to="/">
-          <i class="iconfont icon-comment"></i>
-          {{LANGUAGE_KEYS.PAGE_GUESTBOOK}}
+        <router-link class="item" to="/me">
+          <i class="iconfont icon-user"></i>
+          ME
         </router-link>
-        <router-link class="item app link-active" to="/8">
-          <i class="iconfont icon-app"></i>
-          {{LANGUAGE_KEYS.PAGE_APP}}
-        </router-link>
+<!--        <router-link class="item" to="/6">-->
+<!--          <i class="iconfont icon-horse"></i>-->
+<!--          {{LANGUAGE_KEYS.PAGE_JOB}}-->
+<!--        </router-link>-->
+<!--        <router-link class="item" to="/7">-->
+<!--          <i class="iconfont icon-tool"></i>-->
+<!--          {{LANGUAGE_KEYS.PAGE_FREELANCER}}-->
+<!--        </router-link>-->
+<!--        <router-link class="item guestbook" to="/">-->
+<!--          <i class="iconfont icon-comment"></i>-->
+<!--          {{LANGUAGE_KEYS.PAGE_GUESTBOOK}}-->
+<!--        </router-link>-->
+<!--        <router-link class="item app link-active" to="/8">-->
+<!--          <i class="iconfont icon-app"></i>-->
+<!--          {{LANGUAGE_KEYS.PAGE_APP}}-->
+<!--        </router-link>-->
       </nav>
     </div>
   </aside>
