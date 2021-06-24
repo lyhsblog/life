@@ -73,6 +73,7 @@ import SkeletonLine from "../../components/skeleton/line";
 import SkeletonBase from "../../components/skeleton/base";
 import SkeletonParagraph from "../../components/skeleton/paragraph";
 import Empty from "../../components/widget-empty";
+import { nextScreen } from "../../utils/effects"
 
 export default {
   name: "MangaIndex",
@@ -129,6 +130,7 @@ export default {
         mangaList.totalPages = mangas.totalElements
         setTimeout(() => {
           this.fetching = false
+          nextScreen()
         }, 1000)
       }
     }

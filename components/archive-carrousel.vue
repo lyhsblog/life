@@ -12,7 +12,7 @@
     >
       <template #placeholder>
         <empty class="article-empty" key="empty">
-          ARTICLE_PLACEHOLDER
+          NO DATA
         </empty>
       </template>
       <template #loading>
@@ -162,7 +162,7 @@
 
     .article-empty {
       font-size: $font-size-h1;
-      font-weight: bold;
+      font-weight: 400;
     }
 
     .article-skeleton {

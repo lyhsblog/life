@@ -1,8 +1,37 @@
 <template>
   <div id="read">
-    <div class="view-main-1 readForm" id="cp_img">
-      <img v-if="episode.images" v-for="(image, index) in episode.images" :key="index" class="lazy" data-original="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/loading.gif" :src="image" style="min-height: 100px" alt="" />
-    </div>
+    <placeholder
+      :data="episode.images.length"
+      :loading="fetching"
+    >
+      <template #loading>
+        <ul class="article-list-skeleton" key="skeleton">
+          <li v-for="item in 5" :key="item" class="item">
+            <div class="thumb">
+              <skeleton-base />
+            </div>
+            <div class="content">
+              <div class="title">
+                <skeleton-line />
+              </div>
+              <div class="description">
+                <skeleton-paragraph :lines="4" />
+              </div>
+            </div>
+          </li>
+        </ul>
+      </template>
+      <template #placeholder>
+        <empty class="article-empty" key="empty">
+          NO DATA,TRY OTHER MENU
+        </empty>
+      </template>
+      <template #default>
+        <div class="view-main-1 readForm" id="cp_img">
+          <img v-if="episode.images" v-for="(image, index) in episode.images" :key="index" class="lazy" data-original="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/loading.gif" :src="image" style="min-height: 100px" alt="" />
+        </div>
+      </template>
+    </placeholder>
 
     <div class="view-fix-bottom-bar">
       <router-link v-if="eid > 0" :to="`/manga/${id}/${eid - 1}`" class="view-fix-bottom-bar-item ad-button">
@@ -27,8 +56,15 @@
 </template>
 
 <script>
+import SkeletonParagraph from "../../../components/skeleton/paragraph";
+import SkeletonLine from "../../../components/skeleton/line";
+import Placeholder from "../../../components/widget-placeholder";
+import Empty from "../../../components/widget-empty";
+import Responsive from "../../../components/widget-responsive";
+
 export default {
   name: "MangaEpisode",
+  components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive},
   head() {
     return  {
       title: `${this.episode.name}-567WATCH`,
@@ -57,7 +93,8 @@ export default {
         return episode
       }
       return {
-        name: "Name"
+        name: "Name",
+        images: [],
       }
     }
   },
@@ -93,6 +130,44 @@ export default {
 <style lang="scss" scoped>
   @import "https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/css/mstyle.css";
   @import "https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/css/p.css";
+  @import '../../../assets/styles/init';
+  .article-list-skeleton {
+    padding: 0;
+    margin: $gap 0;
+    list-style: none;
+    overflow: hidden;
+
+    .item {
+      display: flex;
+      height: 10rem;
+      padding: $sm-gap;
+      margin-bottom: $lg-gap;
+      @include common-bg-module();
+      @include radius-box($sm-radius);
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .thumb {
+        height: 100%;
+        width: 15rem;
+      }
+
+      .content {
+        margin-left: $lg-gap;
+        flex-grow: 1;
+
+        .title {
+          height: 1.4em;
+          width: 36%;
+        }
+        .description {
+          margin-top: $sm-gap;
+        }
+      }
+    }
+  }
+
   #read {
     .view-fix-bottom-bar {
       display: flex;

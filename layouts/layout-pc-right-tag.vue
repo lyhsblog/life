@@ -1,27 +1,61 @@
 <template>
   <div class="tag">
-    <div class="tag-list" key="list">
-      <router-link
-        class="item"
-        :title="tag.description"
-        to="/"
-        :key="index"
-        v-for="(tag, index) in tags"
-      >
-        <i class="iconfont" :class="'icon-tag'" />
-        <span class="name">
+    <placeholder
+      :data="tags.length"
+      :loading="fetching"
+    >
+      <template #loading>
+        <div class="article-skeleton" key="skeleton">
+          <div class="title">
+            <skeleton-line />
+          </div>
+          <div class="content">
+            <div class="first">
+              <skeleton-line />
+            </div>
+            <responsive>
+              <skeleton-paragraph :lines="5" />
+            </responsive>
+          </div>
+        </div>
+      </template>
+      <template #placeholder>
+        <empty class="article-empty" key="empty">
+          NO DATA,TRY OTHER MENU
+        </empty>
+      </template>
+      <template #default>
+        <div class="tag-list" key="list">
+          <router-link
+            class="item"
+            :title="tag.description"
+            to="/"
+            :key="index"
+            v-for="(tag, index) in tags"
+          >
+            <i class="iconfont" :class="'icon-tag'" />
+            <span class="name">
           {{tag.name}}
-<!--          <span class="count">({{ tag.count || 0 }})</span>-->
+              <!--          <span class="count">({{ tag.count || 0 }})</span>-->
         </span>
-      </router-link>
-    </div>
+          </router-link>
+        </div>
+      </template>
+    </placeholder>
   </div>
 </template>
 
 <script>
 
+  import SkeletonParagraph from "../components/skeleton/paragraph";
+  import SkeletonLine from "../components/skeleton/line";
+  import Placeholder from "../components/widget-placeholder";
+  import Empty from "../components/widget-empty";
+  import Responsive from "../components/widget-responsive";
+
   export default {
     name: 'PcAsideTag',
+    components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive},
     data() {
       return {
         fetching: true,

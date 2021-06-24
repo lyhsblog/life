@@ -2,12 +2,12 @@
   <aside class="aside" :class="{ open: open }">
     <div class="aside-user">
       <div class="avatar">
-        <img :src="gravatar" alt="567WATCH" />
+        <img src="~static/images/avatar.jpg" alt="SHUMON" />
       </div>
       <div class="profile">
-        <h3 class="name">Surmon</h3>
+        <h3 class="name">SHUMON</h3>
         <p class="slogan">
-          {{LANGUAGE_KEYS.APP_SLOGAN}}
+          Because the mountain was there
         </p>
       </div>
     </div>
@@ -174,7 +174,7 @@ export default {
           margin-bottom: 0;
         }
 
-        &.link-active {
+        &.nuxt-link-active {
           color: $primary;
           font-weight: bold;
           background-color: $body-bg;

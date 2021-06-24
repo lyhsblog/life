@@ -1,28 +1,62 @@
 <template>
-  <div class="header mobile">
-    <div class="background" :style="{
+  <placeholder
+    :data="category.id != null"
+    :loading="fetching"
+  >
+    <template #loading>
+      <div class="article-skeleton" key="skeleton">
+        <div class="title">
+          <skeleton-line />
+        </div>
+        <div class="content">
+          <div class="first">
+            <skeleton-line />
+          </div>
+          <responsive>
+            <skeleton-paragraph :lines="5" />
+          </responsive>
+        </div>
+      </div>
+    </template>
+    <template #placeholder>
+      <empty class="article-empty" key="empty">
+        NO DATA,TRY OTHER MENU
+      </empty>
+    </template>
+    <template #default>
+      <div class="header">
+        <div class="background" :style="{
         backgroundImage: `url(${category.cover || ''})`
       }"/>
-    <div class="content">
-      <div class="logo">
-        <transition name="module" mode="out-in">
-          <i key="date" class="iconfont" :class="category.icon || ''"></i>
-        </transition>
+        <div class="content">
+          <div class="logo">
+            <transition name="module" mode="out-in">
+              <i key="date" class="iconfont" :class="category.icon || ''"></i>
+            </transition>
+          </div>
+          <div class="title">
+            <transition name="module" mode="out-in">
+              <h5 class="text">
+                <slot></slot>
+              </h5>
+            </transition>
+          </div>
+        </div>
       </div>
-      <div class="title">
-        <transition name="module" mode="out-in">
-          <h5 class="text">
-            <slot></slot>
-          </h5>
-        </transition>
-      </div>
-    </div>
-  </div>
+    </template>
+  </placeholder>
 </template>
 
 <script>
+  import SkeletonParagraph from "./skeleton/paragraph";
+  import SkeletonLine from "./skeleton/line";
+  import Placeholder from "./widget-placeholder";
+  import Empty from "./widget-empty";
+  import Responsive from "./widget-responsive";
+
   export default {
     name: 'archive-list-header',
+    components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive},
     head() {
       return {
         title: this.category.name,
@@ -67,6 +101,34 @@
 
 <style lang="scss" scoped>
   @import '/assets/styles/init.scss';
+
+  .article-skeleton {
+    background: var(--module-bg);
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+
+    .content {
+      width: 50%;
+      margin-top: 2.6rem;
+      margin-left: 1rem;
+
+      .first {
+        width: 8rem;
+        height: $gap * 2;
+        margin-bottom: $gap;
+      }
+    }
+
+    .title {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      height: 2.6rem;
+      width: 18rem;
+    }
+  }
 
   .header {
     position: relative;

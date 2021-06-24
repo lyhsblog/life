@@ -9,7 +9,7 @@
     <!-- list -->
     <div class="article-list">
       <placeholder
-        :data="articleList.numberOfElements"
+        :data="articleList.content.length"
         :loading="fetching"
       >
         <template #loading>
@@ -30,10 +30,9 @@
           </ul>
         </template>
         <template #placeholder>
-          <empty
-            class="empty"
-            i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
-          />
+          <empty class="article-empty" key="empty">
+            NO DATA,TRY OTHER MENU
+          </empty>
         </template>
         <template #default>
           <transition-group
@@ -70,6 +69,7 @@
   import SkeletonLine from "./skeleton/line";
   import SkeletonBase from "./skeleton/base"
   import Empty from "./widget-empty"
+  import {nextScreen} from "../utils/effects";
   export default {
     name: 'ArticleList',
     components: { ArticleListItem, Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty },
@@ -126,6 +126,7 @@
           articleList.totalPages = articles.totalElements
           setTimeout(() => {
             this.fetching = false
+            nextScreen()
           }, 1000)
         }
       }
@@ -146,6 +147,7 @@
   @import '/assets/styles/init.scss';
 
   .articles {
+    margin-top: $gap;
     .article-list-mammon {
       width: 100%;
       padding: $sm-gap;

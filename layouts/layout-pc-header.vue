@@ -4,7 +4,7 @@
       <div class="header-header">
         <img src="~/static/images/logo.svg" class="header-logo" />
         <span class="header-slogan">
-          567.WATCH
+          Because the mountain was there
         </span>
         <router-link to="/" class="header-link" />
       </div>

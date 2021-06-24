@@ -1,71 +1,99 @@
 <template>
   <div id="manga-detail" :class="{dark: isDark}">
-    <div
-      class="info"
+    <placeholder
+      :data="article.id != null"
+      :loading="fetching"
     >
-      <div
-        class="item-background"
-      />
-      <div class="item-content">
-        <div class="item-thumb">
-          <NuxtLink to="#">
-          <span
-            class="item-oirigin self"
-          >
-            Origin
-          </span>
-            <img
-              class="item-thumb-img"
-              :src="article.cover"
-              :alt="article.name">
-          </NuxtLink>
-        </div>
-        <div class="item-body">
-          <h5 class="item-title">
-            <NuxtLink
-              to="#"
-            >
-              {{ article.name }}
-            </NuxtLink>
-          </h5>
-          <p
-            class="item-description"
-            style="-webkit-box-orient: vertical;"
-            v-html="article.description || 'No description'"
-          ></p>
-          <div class="item-meta">
-            <span class="date">
-              <i class="iconfont icon-clock"></i>
-              <span>a day ago</span>
-            </span>
-            <span class="views">
-              <i class="iconfont icon-eye"></i>
-              <span>{{article.clicks || 0}}</span>
-            </span>
-            <span class="comments">
-              <i class="iconfont icon-comment"></i>
-              <span>0</span>
-            </span>
-            <span class="likes">
-              <i class="iconfont icon-heart"></i>
-              <span>{{article.likes || 0}}</span>
-            </span>
-            <span class="tags">
-              <i class="iconfont icon-tag"></i>
-              <span>{{article.tags.length}}</span>
-            </span>
-            <span class="categories">
-              <i class="iconfont icon-list"></i>
-              <router-link
-                to="/"
-              >
-                {{article.category || 'No category'}}
-              </router-link>
-            </span>
+      <template #loading>
+        <div class="article-skeleton" key="skeleton">
+          <div class="title">
+            <skeleton-line />
+          </div>
+          <div class="content">
+            <div class="first">
+              <skeleton-line />
+            </div>
+            <responsive>
+              <skeleton-paragraph :lines="5" />
+            </responsive>
           </div>
         </div>
-      </div>
-    </div>
+      </template>
+      <template #placeholder>
+        <empty class="article-empty" key="empty">
+          NO DATA,TRY OTHER MENU
+        </empty>
+      </template>
+      <template #default>
+
+          <div
+            class="info"
+          >
+            <div
+              class="item-background"
+            />
+            <div class="item-content">
+              <div class="item-thumb">
+                <NuxtLink to="#">
+            <span
+              class="item-oirigin self"
+            >
+              Origin
+            </span>
+                  <img
+                    class="item-thumb-img"
+                    :src="article.cover"
+                    :alt="article.name">
+                </NuxtLink>
+              </div>
+              <div class="item-body">
+                <h5 class="item-title">
+                  <NuxtLink
+                    to="#"
+                  >
+                    {{ article.name }}
+                  </NuxtLink>
+                </h5>
+                <p
+                  class="item-description"
+                  style="-webkit-box-orient: vertical;"
+                  v-html="article.description || 'No description'"
+                ></p>
+                <div class="item-meta">
+              <span class="date">
+                <i class="iconfont icon-clock"></i>
+                <span>a day ago</span>
+              </span>
+                  <span class="views">
+                <i class="iconfont icon-eye"></i>
+                <span>{{article.clicks || 0}}</span>
+              </span>
+                  <span class="comments">
+                <i class="iconfont icon-comment"></i>
+                <span>0</span>
+              </span>
+                  <span class="likes">
+                <i class="iconfont icon-heart"></i>
+                <span>{{article.likes || 0}}</span>
+              </span>
+                  <span class="tags">
+                <i class="iconfont icon-tag"></i>
+                <span>{{article.tags.length}}</span>
+              </span>
+                  <span class="categories">
+                <i class="iconfont icon-list"></i>
+                <router-link
+                  to="/"
+                >
+                  {{article.category || 'No category'}}
+                </router-link>
+              </span>
+                </div>
+              </div>
+            </div>
+          </div>
+      </template>
+    </placeholder>
     <div class="block-title">
       <button
         class="block-button"
@@ -77,61 +105,127 @@
         <div class="text">EPISODES</div>
       </button>
     </div>
-    <div class="episodes">
-      <ul class="container">
-        <li
-          class="item"
-          v-for="(episode, index) in episodes"
-          :key="episode.id"
-        >
-          <router-link
-            class="link"
-            :to="`/manga/${episode.manga.id}/${index}`"
-          >
-            <div class="title">{{episode.name}}</div>
-          </router-link>
-        </li>
-      </ul>
-    </div>
+    <placeholder
+      :data="episodes.length"
+      :loading="episodesFetching"
+    >
+      <template #loading>
+        <ul class="article-list-skeleton" key="skeleton">
+          <li v-for="item in 5" :key="item" class="item">
+            <div class="thumb">
+              <skeleton-base />
+            </div>
+            <div class="content">
+              <div class="title">
+                <skeleton-line />
+              </div>
+              <div class="description">
+                <skeleton-paragraph :lines="4" />
+              </div>
+            </div>
+          </li>
+        </ul>
+      </template>
+      <template #placeholder>
+        <empty class="article-empty" key="empty">
+          NO DATA,TRY OTHER MENU
+        </empty>
+      </template>
+      <template #default>
+        <div class="episodes">
+          <ul class="container">
+            <li
+              class="item"
+              v-for="(episode, index) in episodes"
+              :key="episode.id"
+            >
+              <router-link
+                class="link"
+                :to="`/manga/${episode.manga.id}/${index}`"
+              >
+                <div class="title">{{episode.name}}</div>
+              </router-link>
+            </li>
+          </ul>
+        </div>
+      </template>
+    </placeholder>
+
     <div class="block-title">
       <button
         class="block-button"
         :disabled="false"
       >
-        <span class="icon">
-          <i class="iconfont icon-peachblossom"></i>
-        </span>
+          <span class="icon">
+            <i class="iconfont icon-peachblossom"></i>
+          </span>
         <div class="text">RELATED</div>
       </button>
     </div>
-    <div class="related">
-      <ul class="container">
-        <li
-          class="item"
-          v-for="manga in related"
-          :key="manga.id"
-        >
-          <router-link
-            class="link"
-            :to="`/manga/${manga.id}`"
-          >
-            <div
-              class="thumb"
-              :style="{
-                  backgroundImage: `url('${manga.cover}')`
-                }"
-            />
-            <div class="title">{{manga.name}}</div>
-          </router-link>
-        </li>
-      </ul>
-    </div>
+    <placeholder
+      :data="related.length"
+      :loading="relatedFetching"
+    >
+      <template #loading>
+        <ul class="article-list-skeleton" key="skeleton">
+          <li v-for="item in 5" :key="item" class="item">
+            <div class="thumb">
+              <skeleton-base />
+            </div>
+            <div class="content">
+              <div class="title">
+                <skeleton-line />
+              </div>
+              <div class="description">
+                <skeleton-paragraph :lines="4" />
+              </div>
+            </div>
+          </li>
+        </ul>
+      </template>
+      <template #placeholder>
+        <empty class="article-empty" key="empty">
+          NO DATA,TRY OTHER MENU
+        </empty>
+      </template>
+      <template #default>
+        <div class="related">
+          <ul class="container">
+            <li
+              class="item"
+              v-for="manga in related"
+              :key="manga.id"
+            >
+              <router-link
+                class="link"
+                :to="`/manga/${manga.id}`"
+              >
+                <div
+                  class="thumb"
+                  :style="{
+                    backgroundImage: `url('${manga.cover}')`
+                  }"
+                />
+                <div class="title">{{manga.name}}</div>
+              </router-link>
+            </li>
+          </ul>
+        </div>
+      </template>
+    </placeholder>
   </div>
 </template>
 
 <script>
+import SkeletonParagraph from "../../../components/skeleton/paragraph";
+import SkeletonLine from "../../../components/skeleton/line";
+import Placeholder from "../../../components/widget-placeholder";
+import Empty from "../../../components/widget-empty";
+import Responsive from "../../../components/widget-responsive";
+
 export default {
   name: "MangaDetailIndex",
+  components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive},
   head() {
     return  {
       title: `${this.article.name}-567WATCH`,
@@ -148,6 +242,8 @@ export default {
   data() {
     return {
       fetching: true,
+      episodesFetching: true,
+      relatedFetching: true,
       article: {
         id: 1,
         cover: '',
@@ -179,16 +275,16 @@ export default {
       this.fetching = false
     },
     async loadEpisodes() {
-      this.fetching = true
+      this.episodesFetching = true
       const episodes = await this.$axios.get("/manga/"+this.$route.params.id+"/episodes")
       this.episodes.push(...episodes.data)
-      this.fetching = false
+      this.episodesFetching = false
     },
     async loadRelated() {
-      this.fetching = true
+      this.relatedFetching = true
       const related = await this.$axios.get("/manga/"+this.$route.params.id+"/related")
       this.related.push(...related.data.content)
-      this.fetching = false
+      this.relatedFetching = false
     },
   }
 }
@@ -196,6 +292,71 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../../assets/styles/init';
+
+.article-list-skeleton {
+  padding: 0;
+  margin: $gap 0;
+  list-style: none;
+  overflow: hidden;
+
+  .item {
+    display: flex;
+    height: 10rem;
+    padding: $sm-gap;
+    margin-bottom: $lg-gap;
+    @include common-bg-module();
+    @include radius-box($sm-radius);
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .thumb {
+      height: 100%;
+      width: 15rem;
+    }
+
+    .content {
+      margin-left: $lg-gap;
+      flex-grow: 1;
+
+      .title {
+        height: 1.4em;
+        width: 36%;
+      }
+      .description {
+        margin-top: $sm-gap;
+      }
+    }
+  }
+}
+
+.article-skeleton {
+  background: var(--module-bg);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+
+  .content {
+    width: 50%;
+    margin-top: 2.6rem;
+    margin-left: 1rem;
+
+    .first {
+      width: 8rem;
+      height: $gap * 2;
+      margin-bottom: $gap;
+    }
+  }
+
+  .title {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    height: 2.6rem;
+    width: 18rem;
+  }
+}
 
 #manga-detail {
   .info {

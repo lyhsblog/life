@@ -133,14 +133,12 @@
 </template>
 
 <script>
-  import ArchiveCarrousel from "../../components/archive-carrousel";
-  import ArchiveAnnouncement from "../../components/archive-announcement";
-  import ArticleList from "../../components/article-list";
   import Placeholder from "../../components/widget-placeholder";
   import SkeletonLine from "../../components/skeleton/line";
   import SkeletonBase from "../../components/skeleton/base";
   import SkeletonParagraph from "../../components/skeleton/paragraph";
   import Empty from "../../components/widget-empty";
+  import {nextScreen} from "../../utils/effects";
   export default {
     name: 'Novel',
     head() {
@@ -200,6 +198,7 @@
           novelList.totalPages = novels.totalElements
           setTimeout(() => {
             this.fetching = false
+            nextScreen()
           }, 1000)
         }
       }
