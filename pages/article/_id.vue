@@ -34,6 +34,7 @@
   import ArticleShare from "../../components/article-share";
   import ArticleMeta from "../../components/article-meta";
   import ArticleRelated from "../../components/article-related";
+
   export default {
     name: 'ArticleDetail',
     head() {
@@ -58,7 +59,7 @@
     },
     data() {
       return {
-        fetching: true,
+        fetching: false,
         article: {
           id: 1,
           ad: false,
@@ -72,28 +73,8 @@
         relatedArticles: []
       }
     },
-    async asyncData({ params, $axios }) {
-      const id = params.id
-      const article = await $axios.$get("/article/"+id)
-      const relatedArticle = await $axios.$get(`/article/${id}/related`)
-      return { article, relatedArticle: [...relatedArticle.content] }
-    },
-    async fetch() {
-      // this.fetching = true
-      // const id = this.$route.params.id
-      // const res = await this.$axios.get("/article/"+id)
-      // this.article = res.data
-      // const relatedArticle = await this.$axios.get(`/article/${id}/related`)
-      // this.relatedArticles.push(...relatedArticle.data.content)
-      // setTimeout(() => {
-      //   this.fetching = false
-      // }, 1000)
-    },
     mounted() {
-      setTimeout(() => {
-        this.fetching = false
-      }, 1000)
-      // this.fetchArticle()
+      this.fetchArticle()
     },
     methods: {
       async fetchArticle() {
@@ -101,8 +82,8 @@
         const id = this.$route.params.id
         const res = await this.$axios.get("/article/"+id)
         this.article = res.data
-        const relatedArticle = await this.$axios.get(`/article/${id}/related`)
-        this.relatedArticles.push(...relatedArticle.data.content)
+        const relatedArticles = await this.$axios.get(`/article/${id}/related`)
+        this.relatedArticles.push(...relatedArticles.data.content)
         setTimeout(() => {
           this.fetching = false
         }, 1000)
