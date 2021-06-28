@@ -51,7 +51,7 @@ export default {
       redirects: [
         {
           from: '/article/*',
-          to: '/:splat',
+          to: '/article/:splat',
           status: 302
         }
       ]
