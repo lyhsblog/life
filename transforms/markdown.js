@@ -82,11 +82,11 @@ customRenderer.link = (href, title, text) => {
 // Image -> popup
 customRenderer.image = (src, title, alt) => {
   // HTTP -> proxy
-  const source = src?.replace(/^http:\/\//gi, `${API_CONFIG.PROXY}/`)
+  const source = encodeURI(src)
+  //class="${LOZAD_CLASS_NAME}"
   return (`
     <img
-      class="${LOZAD_CLASS_NAME}"
-      data-src="${source}"
+      src="${source}"
       title="${title || alt || META.url}"
       alt="${alt || title || source}"
       onclick="window.$popup && window.$popup.vImage('${source}')"

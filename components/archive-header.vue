@@ -26,7 +26,7 @@
     <template #default>
       <div class="header">
         <div class="background" :style="{
-        backgroundImage: `url(${category.cover || ''})`
+        backgroundImage: `url(${encodeURI(category.cover) || ''})`
       }"/>
         <div class="content">
           <div class="logo">

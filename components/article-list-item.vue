@@ -15,7 +15,7 @@
           </span>
           <img
             class="item-thumb-img"
-            :src="article.cover"
+            :src="encodeURI(article.cover) || '/images/2020-08-14-sea-1.webp'"
             :alt="article.name">
         </NuxtLink>
       </div>
@@ -206,7 +206,7 @@
           overflow: hidden;
           text-overflow: ellipsis;
           font-size: $font-size-h6;
-          @include clamp(3);
+          @include clamp(2);
         }
 
         > .item-meta {

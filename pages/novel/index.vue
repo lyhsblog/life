@@ -60,7 +60,7 @@
                       </span>
                       <img
                         class="item-thumb-img"
-                        :src="novel.cover"
+                        :src="novel.cover || '/images/2020-08-14-sea-1.webp'"
                         :alt="novel.name">
                     </NuxtLink>
                   </div>

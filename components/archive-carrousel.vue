@@ -72,7 +72,7 @@
                       <div class="prospect">
                         <span
                           class="text"
-                          :style="{ backgroundImage: `url('${article.cover}')` }"
+                          :style="{ backgroundImage: `url('${encodeURI(article.cover) || '/images/2020-08-14-sea-1.webp' }')` }"
                         >{{ article.name }}</span>
                       </div>
                     </div>
