@@ -56,7 +56,6 @@
       ArticleMammon,
       ArticleContent
     },
-
     data() {
       return {
         fetching: true,
@@ -73,8 +72,28 @@
         relatedArticles: []
       }
     },
+    async asyncData({ params, $axios }) {
+      const id = params.id
+      const article = await $axios.$get("/article/"+id)
+      const relatedArticle = await $axios.$get(`/article/${id}/related`)
+      return { article, relatedArticle: [...relatedArticle.content] }
+    },
+    async fetch() {
+      // this.fetching = true
+      // const id = this.$route.params.id
+      // const res = await this.$axios.get("/article/"+id)
+      // this.article = res.data
+      // const relatedArticle = await this.$axios.get(`/article/${id}/related`)
+      // this.relatedArticles.push(...relatedArticle.data.content)
+      // setTimeout(() => {
+      //   this.fetching = false
+      // }, 1000)
+    },
     mounted() {
-      this.fetchArticle()
+      setTimeout(() => {
+        this.fetching = false
+      }, 1000)
+      // this.fetchArticle()
     },
     methods: {
       async fetchArticle() {
