@@ -51,7 +51,7 @@ export default {
       redirects: [
         {
           from: '/article/*',
-          to: '/article',
+          to: '/',
           status: 302
         }
       ]
