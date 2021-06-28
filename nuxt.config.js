@@ -37,26 +37,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    '@nuxtjs/netlify-files'
   ],
-
-  netlifyFiles: {
-    netlifyToml: {
-      headers: [
-        {
-          for: '/*',
-          values: { 'X-XSS-Protection': '1; mode=block' }
-        }
-      ],
-      redirects: [
-        {
-          from: '/*',
-          to: '/',
-          status: 302
-        }
-      ]
-    }
-  },
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/axios'],

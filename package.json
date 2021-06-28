@@ -21,7 +21,6 @@
     "vue-awesome-swiper": "^4.1.1"
   },
   "devDependencies": {
-    "@nuxtjs/netlify-files": "^1.2.0",
     "fibers": "^5.0.0",
     "node-sass": "^6.0.0",
     "pug": "^3.0.2",
