@@ -57,9 +57,10 @@
       ArticleMammon,
       ArticleContent
     },
+
     data() {
       return {
-        fetching: false,
+        fetching: true,
         article: {
           id: 1,
           ad: false,
