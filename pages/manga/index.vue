@@ -93,23 +93,15 @@ export default {
       query: {}
     }
   },
-  async asyncData({$axios,  query, store}) {
+  async asyncData({$axios,  query}) {
     const mangaList = await $axios.$get('/manga', {
       params: {
         ...query,
       }
     }).then(res => res)
 
-    if (process.server) {
-      // override data
-      store.commit("Manga/setMangaList", mangaList)
-    } else {
-      // push res to store
-      store.commit("Manga/pushMangaList", mangaList)
-    }
-
     return {
-      mangaList: store.state.Manga.mangaList,
+      mangaList,
       query
     }
   },

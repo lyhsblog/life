@@ -22,23 +22,15 @@ export default {
       query: {},
     }
   },
-  async asyncData({$axios, params, query, store}) {
+  async asyncData({$axios, params, query}) {
     const articleList = await $axios.$get('/article', {
       params: {
         ...params,
         ...query,
       }
     }).then(res => res)
-    if (process.server || store.state.CategoryArticleList.cateogry !== params.category) {
-      // override data
-      store.commit("CategoryArticleList/setCategory", params.category)
-      store.commit("CategoryArticleList/setArticleList", articleList)
-    } else {
-      // push res to store
-      store.commit("CategoryArticleList/pushArticleList", articleList)
-    }
     return {
-      articleList:  store.state.CategoryArticleList.articleList,
+      articleList,
       params,
       query,
     }

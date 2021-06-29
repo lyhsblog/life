@@ -162,21 +162,14 @@
         return this.$store.state.theme === 'dark'
       },
     },
-    async asyncData({$axios, query, store}) {
+    async asyncData({$axios, query}) {
       const novelList = await $axios.$get('/novel', {
         params: {
           ...query
         }
       }).then(res => res)
-      if (process.server) {
-        // override data
-        store.commit("Novel/setNovelList", novelList)
-      } else {
-        // push res to store
-        store.commit("Novel/pushNovelList", novelList)
-      }
       return {
-        novelList: store.state.Novel.novelList,
+        novelList,
         query
       }
     },

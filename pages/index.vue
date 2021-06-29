@@ -34,7 +34,7 @@
         query: {},
       }
     },
-    async asyncData({$axios, params, query, store}) {
+    async asyncData({$axios, params, query}) {
       const recommendedList = await $axios.$get("/article/hots").then(res => {
         return res.content
       })
@@ -44,16 +44,9 @@
           ...query,
         }
       }).then(res => res)
-      if (process.server) {
-        // override data
-        store.commit("setArticleList", articleList)
-      } else {
-        // push res to store
-        store.commit("pushArticleList", articleList)
-      }
       return {
         recommendedList,
-        articleList: store.state.articleList,
+        articleList,
         params,
         query
       }
