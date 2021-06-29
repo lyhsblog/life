@@ -2,25 +2,7 @@
   <div class="manga-index dark">
     <placeholder
       :data="mangaList.numberOfElements"
-      :loading="fetching"
     >
-      <template #loading>
-        <ul class="article-list-skeleton" key="skeleton">
-          <li v-for="item in 5" :key="item" class="item">
-            <div class="thumb">
-              <skeleton-base />
-            </div>
-            <div class="content">
-              <div class="title">
-                <skeleton-line />
-              </div>
-              <div class="description">
-                <skeleton-paragraph :lines="4" />
-              </div>
-            </div>
-          </li>
-        </ul>
-      </template>
       <template #placeholder>
         <empty
           class="empty"
@@ -93,57 +75,23 @@ export default {
   components: { Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty },
   data() {
     return {
-      fetching: true,
       mangaList: {
         content: [],
         number: -1,
       },
     }
   },
-  mounted() {
-    this.init()
-  },
-  methods: {
-    init() {
-      this.mangaList.content = []
-      this.loadMangaList()
-    },
-    async loadMangaList (page = 0) {
-      const mangaList = this.mangaList
-      if(!mangaList.last || mangaList.number === -1 || true) {
-        this.fetching = true
+  async fetch() {
+    const mangaList = this.mangaList
+    if(!mangaList.last || mangaList.number === -1) {
 
-        const mangas = await this.$axios.$get('/manga', {
-          params: {
-            ...this.$route.query,
-            page: page
-          }
-        })
-
-        mangaList.content.push(...mangas.content)
-        mangaList.empty = mangas.empty
-        mangaList.first = mangas.first
-        mangaList.last = mangas.last
-        mangaList.number = mangas.number
-        mangaList.numberOfElements = mangas.content.size
-        mangaList.totalElements = mangas.totalElements
-        mangaList.totalPages = mangas.totalElements
-        setTimeout(() => {
-          this.fetching = false
-          nextScreen()
-        }, 1000)
-      }
+      this.mangaList = await this.$axios.$get('/manga', {
+        params: {
+          ...this.$route.query,
+        }
+      }).then(res => res)
     }
   },
-  watch: {
-    '$route'(to, from) {
-      if (to.fullPath !== from.fullPath) {
-        this.$nextTick(() => {
-          this.init()
-        })
-      }
-    }
-  }
 }
 </script>
 

@@ -7,28 +7,12 @@
     }"
   >
     <placeholder
-      :loading="fetching"
       :data="recommendedList.length"
     >
       <template #placeholder>
         <empty class="article-empty" key="empty">
           NO DATA
         </empty>
-      </template>
-      <template #loading>
-        <div class="article-skeleton" key="skeleton">
-          <div class="title">
-            <skeleton-line />
-          </div>
-          <div class="content">
-            <div class="first">
-              <skeleton-line />
-            </div>
-            <responsive>
-              <skeleton-paragraph :lines="5" />
-            </responsive>
-          </div>
-        </div>
       </template>
       <template #default>
         <div
@@ -44,21 +28,9 @@
             >
               <div class="content">
                 <template v-if="article.ad">
-<!--                  <a class="link" :href="`/article/`${article.id}">-->
-<!--                    <img :src="article.cover" :alt="article.name">-->
-<!--                    <div class="title">-->
-<!--                      <div class="background"></div>-->
-<!--                      <div class="prospect">-->
-<!--                        <span-->
-<!--                          class="text"-->
-<!--                          :style="{ backgroundImage: article.thumb }"-->
-<!--                        >{{ article.title }}</span>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                    <span class="ad-symbol">-->
-<!--                      AD-->
-<!--                    </span>-->
-<!--                  </a>-->
+                  <empty class="article-empty" key="empty">
+                    NO DATA
+                  </empty>
                 </template>
                 <template v-else>
                   <router-link :to="`/article/${article.id}`" class="link">
@@ -93,19 +65,16 @@
   import { directive } from "vue-awesome-swiper";
   import Placeholder from "./widget-placeholder";
   import Empty from "./widget-empty";
-  import SkeletonLine from "./skeleton/line";
-  import SkeletonParagraph from "./skeleton/paragraph";
   import Responsive from "./widget-responsive"
 
   export default {
     name: 'ArchiveCarrousel',
-    components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive},
+    components: {Placeholder, Empty, Responsive},
     directives: {
       swiper: directive,
     },
     data() {
       return {
-        fetching: true,
         recommendedList: [],
         swiperOption: {
           autoplay: {
@@ -133,17 +102,11 @@
         return this.$store.state.theme === 'dark'
       }
     },
-    mounted() {
-      this.loadRecommendedList()
+    async fetch() {
+      this.recommendedList = await this.$axios.$get("/article/hots").then(res => {
+        return res.content
+      })
     },
-    methods: {
-      async loadRecommendedList () {
-        this.fetching = true
-        const recommendedList = await this.$axios.get("/article/hots")
-        this.recommendedList.push(...recommendedList.data.content)
-        this.fetching = false
-      },
-    }
   }
 </script>
 

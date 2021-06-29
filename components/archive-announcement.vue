@@ -82,16 +82,6 @@
     directives: {
       swiper: directive,
     },
-    props: {
-      announcements: {
-        type: Array,
-        required: true
-      },
-      fetching: {
-        type: Boolean,
-        required: true
-      }
-    },
     data() {
       const swiperOption = {
         height: 42,
@@ -110,6 +100,24 @@
       const handleSwiperTransitionStart = () => this.activeIndex = this.$swiper.activeIndex || 0
 
       return {
+        fetching: false,
+        announcements: [
+          {
+            'content': '12223311'
+          },
+          {
+            'content': '12223312'
+          },
+          {
+            'content': '12223313'
+          },
+          {
+            'content': '12223314'
+          },
+          {
+            'content': '12223315'
+          }
+        ],
         swiperOption,
         activeIndex: 0,
         prevSlide,

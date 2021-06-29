@@ -2,30 +2,13 @@
   <div id="manga-detail" :class="{dark: isDark}">
     <placeholder
       :data="article.id != null"
-      :loading="fetching"
     >
-      <template #loading>
-        <div class="article-skeleton" key="skeleton">
-          <div class="title">
-            <skeleton-line />
-          </div>
-          <div class="content">
-            <div class="first">
-              <skeleton-line />
-            </div>
-            <responsive>
-              <skeleton-paragraph :lines="5" />
-            </responsive>
-          </div>
-        </div>
-      </template>
       <template #placeholder>
         <empty class="article-empty" key="empty">
           NO DATA,TRY OTHER MENU
         </empty>
       </template>
       <template #default>
-
           <div
             class="info"
           >
@@ -107,25 +90,7 @@
     </div>
     <placeholder
       :data="episodes.length"
-      :loading="episodesFetching"
     >
-      <template #loading>
-        <ul class="article-list-skeleton" key="skeleton">
-          <li v-for="item in 5" :key="item" class="item">
-            <div class="thumb">
-              <skeleton-base />
-            </div>
-            <div class="content">
-              <div class="title">
-                <skeleton-line />
-              </div>
-              <div class="description">
-                <skeleton-paragraph :lines="4" />
-              </div>
-            </div>
-          </li>
-        </ul>
-      </template>
       <template #placeholder>
         <empty class="article-empty" key="empty">
           NO DATA,TRY OTHER MENU
@@ -164,7 +129,7 @@
     </div>
     <placeholder
       :data="related.length"
-      :loading="relatedFetching"
+      :loading="fetching"
     >
       <template #loading>
         <ul class="article-list-skeleton" key="skeleton">
@@ -242,8 +207,6 @@ export default {
   data() {
     return {
       fetching: true,
-      episodesFetching: true,
-      relatedFetching: true,
       article: {
         id: 1,
         cover: '',
@@ -262,29 +225,19 @@ export default {
       return this.$store.state.theme === 'dark'
     }
   },
+  async fetch() {
+    this.article = await this.$axios.$get("/manga/" + this.$route.params.id).then(res => res)
+    this.episodes = await this.$axios.$get("/manga/"+this.$route.params.id+"/episodes").then(res => res)
+  },
   mounted() {
-    this.loadManga()
-    this.loadEpisodes()
     this.loadRelated()
   },
   methods: {
-    async loadManga() {
-      this.fetching = true
-      const article = await this.$axios.get("/manga/"+this.$route.params.id)
-      this.article = article.data
-      this.fetching = false
-    },
-    async loadEpisodes() {
-      this.episodesFetching = true
-      const episodes = await this.$axios.get("/manga/"+this.$route.params.id+"/episodes")
-      this.episodes.push(...episodes.data)
-      this.episodesFetching = false
-    },
     async loadRelated() {
-      this.relatedFetching = true
+      this.fetching = true
       const related = await this.$axios.get("/manga/"+this.$route.params.id+"/related")
       this.related.push(...related.data.content)
-      this.relatedFetching = false
+      this.fetching = false
     },
   }
 }

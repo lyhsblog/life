@@ -11,25 +11,7 @@
       <div class="article-list">
         <placeholder
           :data="novelList.numberOfElements"
-          :loading="fetching"
         >
-          <template #loading>
-            <ul class="article-list-skeleton" key="skeleton">
-              <li v-for="item in 5" :key="item" class="item">
-                <div class="thumb">
-                  <skeleton-base />
-                </div>
-                <div class="content">
-                  <div class="title">
-                    <skeleton-line />
-                  </div>
-                  <div class="description">
-                    <skeleton-paragraph :lines="4" />
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </template>
           <template #placeholder>
             <empty
               class="empty"
@@ -120,7 +102,6 @@
         <button
           class="loadmore-button"
           :disabled="novelList.last"
-          @click="loadNovelList(novelList.number = 1)"
         >
         <span class="icon">
           <i class="iconfont icon-peachblossom"></i>
@@ -157,9 +138,15 @@
     components: {Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty},
     data() {
       return {
-        fetching: false,
         novelList: {
-          content: []
+          content: [],
+          empty: true,
+          first: true,
+          last: false,
+          number: -1,
+          numberOfElements: 0,
+          totalElements: 0,
+          totalPages: 0,
         },
       }
     },
@@ -168,50 +155,13 @@
         return this.$store.state.theme === 'dark'
       },
     },
-    mounted() {
-      this.init()
-    },
-    methods: {
-      init() {
-        this.novelList.content = []
-        this.loadNovelList()
-      },
-      async loadNovelList(page = 0) {
-        const novelList = this.novelList
-        if(!novelList.last || novelList.number === -1 || true) {
-          this.fetching = true
-
-          const novels = await this.$axios.$get('/novel', {
-            params: {
-              ...this.$route.query,
-              page: page
-            }
-          })
-
-          novelList.content.push(...novels.content)
-          novelList.empty = novels.empty
-          novelList.first = novels.first
-          novelList.last = novels.last
-          novelList.number = novels.number
-          novelList.numberOfElements = novels.content.size
-          novelList.totalElements = novels.totalElements
-          novelList.totalPages = novels.totalElements
-          setTimeout(() => {
-            this.fetching = false
-            nextScreen()
-          }, 1000)
+    async fetch() {
+      this.novelList = await this.$axios.$get('/novel', {
+        params: {
+          ...this.$route.query,
         }
-      }
+      }).then(res => res)
     },
-    watch: {
-      '$route'(to, from) {
-        if (to.fullPath !== from.fullPath) {
-          this.$nextTick(() => {
-            this.init()
-          })
-        }
-      }
-    }
   }
 </script>
 

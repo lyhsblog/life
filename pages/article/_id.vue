@@ -2,7 +2,6 @@
   <div class="article-page">
     <div class="module">
       <article-content
-        :fetching="fetching"
         :article="article"
       />
     </div>
@@ -61,30 +60,25 @@
     data() {
       return {
         fetching: true,
-        article: {
-          id: 1,
-          ad: false,
-          url: '/article/1',
-          src: '/article/1.jpg',
-          thumb: '/article/1.png',
-          title: 'articletitle1',
-          description: 'iamdesc1',
-          content: ''
-        },
+        article: {},
         relatedArticles: []
       }
+    },
+    async asyncData({ $axios, params }) {
+      const id = params.id
+      const article = await $axios.$get("/article/"+id).then(res => res)
+      const regex = /(\r\n)+/ig
+      article.content = article.content.replace(regex, "\r\n\r\n")
+      return { article }
     },
     mounted() {
       this.fetchArticle()
     },
     methods: {
       async fetchArticle() {
-        this.fetching = true
         const id = this.$route.params.id
-        const res = await this.$axios.get("/article/"+id)
-        this.article = res.data
-        const relatedArticles = await this.$axios.get(`/article/${id}/related`)
-        this.relatedArticles.push(...relatedArticles.data.content)
+        const relatedArticles = await this.$axios.$get(`/article/${id}/related`)
+        this.relatedArticles.push(...relatedArticles.content)
         setTimeout(() => {
           this.fetching = false
         }, 1000)

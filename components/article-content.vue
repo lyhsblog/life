@@ -5,7 +5,6 @@
   >
     <transition name="module">
       <div
-        v-if="!fetching"
         class="origin"
         :class="{
           self: true,
@@ -14,22 +13,9 @@
         OG
       </div>
     </transition>
-    <placeholder
-      :loading="fetching"
-      @after-enter="handleContentAnimateDone"
-    >
-      <template #loading>
-        <div class="skeleton" key="skeleton">
-          <skeleton-line class="title" />
-          <skeleton-paragraph
-            class="content"
-            :lines="9"
-            line-height="1.2em"
-          />
-        </div>
-      </template>
+    <placeholder @after-enter="handleContentAnimateDone">
       <template #default>
-        <div class="knowledge" key="knowledge">
+        <div class="knowledge">
           <h2 class="title">{{ article.name }}</h2>
           <div
             class="markdown-html"
@@ -71,117 +57,116 @@ import SkeletonParagraph from "./skeleton/paragraph";
 import { markdownToHTML } from '../transforms/markdown'
 
 export default {
-    name: 'ArticleContent',
-    // head() {
-    //   return  {
-    //     title: this.article.title,
-    //     meta: [
-    //       { charset: 'utf-8' },
-    //       {
-    //         hid: 'description',
-    //         name: 'description',
-    //         content: this.article.description
-    //       }
-    //     ],
-    //   }
-    // },
-    components: {Placeholder, SkeletonLine, SkeletonParagraph},
-    props: {
-      fetching: Boolean,
-      article: Object
-    },
-    data() {
-      return {
-        longFormRenderState: {
-          rendering: false,
-          rendered: false,
-        },
-        contentElementIds: {
-          default: 'article-content',
-          leftover: 'more-article-content'
+  name: 'ArticleContent',
+  head() {
+    return  {
+      title: this.article.title,
+      meta: [
+        { charset: 'utf-8' },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.article.description
         }
-      }
-    },
-    mounted() {
-      this.handleContentAnimateDone()
-    },
-    computed: {
-      isLongFormContent: function() {
-        return this.article?.content.length > 13688
+      ],
+    }
+  },
+  components: {Placeholder, SkeletonLine, SkeletonParagraph},
+  props: {
+    article: Object
+  },
+  data() {
+    return {
+      longFormRenderState: {
+        rendering: false,
+        rendered: false,
       },
-      isRenderMoreEnabled: function() {
-        return this.isLongFormContent && !this.longFormRenderState.rendered
+      contentElementIds: {
+        default: 'article-content',
+        leftover: 'more-article-content'
       },
-      content: function() {
-        const regex = /(\r\n)+/ig
-        const content = this.article?.content.replaceAll(regex, "\r\n\r\n")
-        const result = {
-          default: '',
-          leftover: ''
-        }
-
-        if (!content) {
-          return result
-        }
-
-        const parseMarkdown = (content) => {
-          return markdownToHTML(content, {
-            // tagMap: tagMap.value,
-            relink: true,
-            html: true
-          })
-        }
-
-        if (this.isLongFormContent) {
-          const index = this.getContentSplitIndex(content)
-          result.default = parseMarkdown(content.substring(0, index))
-          result.leftover = parseMarkdown(content.substring(index))
-        } else {
-          result.default = parseMarkdown(content)
-          result.leftover = ''
-        }
-        return result
-      }
-    },
-    methods: {
-      getContentSplitIndex: function(content) {
-        // 坐标优先级：H4 -> H3 -> Code -> \n\n
-        const shortContent = content.substring(0, 11688)
-        const lastH4Index = shortContent.lastIndexOf('\n####')
-        const lastH3Index = shortContent.lastIndexOf('\n###')
-        const lastCodeIndex = shortContent.lastIndexOf('\n\n```')
-        const lastLineIndex = shortContent.lastIndexOf('\n\n**')
-        const lastPLineIndex = shortContent.lastIndexOf('\r\n')
-        return Math.max(lastH4Index, lastH3Index, lastCodeIndex, lastLineIndex, lastPLineIndex)
-      },
-      handleRenderMore: function() {
-        this.longFormRenderState.rendering = true
-        this.$nextTick(() => {
-          setTimeout(() => {
-            this.longFormRenderState.rendered = true
-            this.longFormRenderState.rendering = false
-          }, 1000)
-        })
-      },
-      observeLozad: function(elementId) {
-        const element =  this.$refs.element
-        const contentElement = element.value?.querySelector(`#${elementId}`)
-        const lozadElements = contentElement && contentElement.querySelectorAll(`.${LOZAD_CLASS_NAME}`)
-        if (lozadElements?.length) {
-          const lozadObserver = window.$lozad(lozadElements, {
-            loaded: element => element.classList.add(LOADED_CLASS_NAME)
-          })
-          lozadObserver.observe()
-        }
-      },
-      handleContentAnimateDone: function () {
-        this.observeLozad(this.contentElementIds.default)
-      },
-      handleRenderMoreAnimateDone: function () {
-        this.observeLozad(this.contentElementIds.leftover)
+      content: {
+        default: '',
+        leftover: ''
       }
     }
+  },
+  async fetch() {
+    const content = this.article?.content
+    const result = {
+      default: '',
+      leftover: ''
+    }
+
+    if (!content) {
+      return result
+    }
+
+    const parseMarkdown = (content) => {
+      return markdownToHTML(content, {
+        // tagMap: tagMap.value,
+        relink: true,
+        html: true
+      })
+    }
+
+    if (this.isLongFormContent) {
+      const index = this.getContentSplitIndex(content)
+      result.default = parseMarkdown(content.substring(0, index))
+      result.leftover = parseMarkdown(content.substring(index))
+    } else {
+      result.default = parseMarkdown(content)
+      result.leftover = ''
+    }
+    this.content = result
+  },
+  computed: {
+    isLongFormContent: function() {
+      return this.article?.content.length > 13688
+    },
+    isRenderMoreEnabled: function() {
+      return this.isLongFormContent && !this.longFormRenderState.rendered
+    },
+  },
+  methods: {
+    getContentSplitIndex: function(content) {
+      // 坐标优先级：H4 -> H3 -> Code -> \n\n
+      const shortContent = content.substring(0, 11688)
+      const lastH4Index = shortContent.lastIndexOf('\n####')
+      const lastH3Index = shortContent.lastIndexOf('\n###')
+      const lastCodeIndex = shortContent.lastIndexOf('\n\n```')
+      const lastLineIndex = shortContent.lastIndexOf('\n\n**')
+      const lastPLineIndex = shortContent.lastIndexOf('\r\n')
+      return Math.max(lastH4Index, lastH3Index, lastCodeIndex, lastLineIndex, lastPLineIndex)
+    },
+    handleRenderMore: function() {
+      this.longFormRenderState.rendering = true
+      this.$nextTick(() => {
+        setTimeout(() => {
+          this.longFormRenderState.rendered = true
+          this.longFormRenderState.rendering = false
+        }, 1000)
+      })
+    },
+    observeLozad: function(elementId) {
+      const element =  this.$refs.element
+      const contentElement = element.value?.querySelector(`#${elementId}`)
+      const lozadElements = contentElement && contentElement.querySelectorAll(`.${LOZAD_CLASS_NAME}`)
+      if (lozadElements?.length) {
+        const lozadObserver = window.$lozad(lozadElements, {
+          loaded: element => element.classList.add(LOADED_CLASS_NAME)
+        })
+        lozadObserver.observe()
+      }
+    },
+    handleContentAnimateDone: function () {
+      this.observeLozad(this.contentElementIds.default)
+    },
+    handleRenderMoreAnimateDone: function () {
+      this.observeLozad(this.contentElementIds.leftover)
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>

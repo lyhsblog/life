@@ -10,25 +10,7 @@
     <div class="article-list">
       <placeholder
         :data="articleList.content.length"
-        :loading="fetching"
       >
-        <template #loading>
-          <ul class="article-list-skeleton" key="skeleton">
-            <li v-for="item in 5" :key="item" class="item">
-              <div class="thumb">
-                <skeleton-base />
-              </div>
-              <div class="content">
-                <div class="title">
-                  <skeleton-line />
-                </div>
-                <div class="description">
-                  <skeleton-paragraph :lines="4" />
-                </div>
-              </div>
-            </li>
-          </ul>
-        </template>
         <template #placeholder>
           <empty class="article-empty" key="empty">
             NO DATA,TRY OTHER MENU
@@ -51,7 +33,6 @@
       <button
         class="loadmore-button"
         :disabled="articleList.last"
-        @click="loadArticleList(articleList.number + 1)"
       >
         <span class="icon">
           <i class="iconfont icon-peachblossom"></i>
@@ -75,7 +56,6 @@
     components: { ArticleListItem, Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty },
     data() {
       return {
-        fetching: false,
         category: '',
         articleList: {
           content: [],
@@ -94,52 +74,30 @@
         return this.$store.state.theme === 'dark'
       },
     },
-    mounted() {
-      this.init()
+    created() {
+      this.category = this.$route.params.category
     },
-    methods: {
-      init() {
-        this.category = this.$route.params.category
-        this.articleList.content = []
-        this.loadArticleList()
-      },
-      async loadArticleList (page = 0) {
-        const articleList = this.articleList
-        if(!articleList.last || articleList.number === -1) {
-          this.fetching = true
+    async fetch() {
+      let articleList = this.articleList
+      if(!articleList.last || articleList.number === -1) {
 
-          const articles = await this.$axios.$get('/article', {
-            params: {
-              ...this.$route.query,
-              category: this.category,
-              page: page
-            }
-          })
-
-          articleList.content.push(...articles.content)
-          articleList.empty = articles.empty
-          articleList.first = articles.first
-          articleList.last = articles.last
-          articleList.number = articles.number
-          articleList.numberOfElements = articles.content.size
-          articleList.totalElements = articles.totalElements
-          articleList.totalPages = articles.totalElements
-          setTimeout(() => {
-            this.fetching = false
-            nextScreen()
-          }, 1000)
-        }
+        this.articleList = await this.$axios.$get('/article', {
+          params: {
+            ...this.$route.query,
+            category: this.category
+          }
+        }).then(res => res)
       }
     },
-    watch: {
-      '$route'(to, from) {
-        if (to.fullPath !== from.fullPath) {
-          this.$nextTick(() => {
-            this.init()
-          })
-        }
-      }
-    }
+    // watch: {
+    //   '$route'(to, from) {
+    //     if (to.fullPath !== from.fullPath) {
+    //       this.$nextTick(() => {
+    //         this.init()
+    //       })
+    //     }
+    //   }
+    // }
   }
 </script>
 
