@@ -83,6 +83,15 @@ export default {
       VALUABLE_LINKS,
       gravatar: ''
     }
+  },
+  watch: {
+    '$route'(to, from) {
+      if (to.fullPath !== from.fullPath) {
+        this.$nextTick(() => {
+          this.$store.commit("changeSlideOpened", false)
+        })
+      }
+    }
   }
 }
 </script>
