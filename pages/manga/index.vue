@@ -32,15 +32,21 @@
             </li>
           </ul>
           <div class="article-load">
-            <button
-              class="loadmore-button"
-              :disabled="mangaList.last"
-            >
-                  <span class="icon">
-                    <i class="iconfont icon-peachblossom"></i>
-                  </span>
-              <div class="text">LOADMORE</div>
-            </button>
+            <div class="loadmore-button">
+              <span class="icon">
+                <i class="iconfont icon-peachblossom"></i>
+              </span>
+              <NuxtLink
+                class="text"
+                :to="{
+                  path: '/manga',
+                  query: {
+                    ...query,
+                    page: mangaList.number < mangaList.totalPages - 1 ? mangaList.number + 1 : mangaList.number
+                  }
+              }"
+              >LOADMORE</NuxtLink>
+            </div>
           </div>
         </div>
       </template>
@@ -76,20 +82,38 @@ export default {
     return {
       mangaList: {
         content: [],
-        number: -1,
+        empty: true,
+        first: true,
+        last: true,
+        number: 0,
+        numberOfElements: 0,
+        totalElements: 0,
+        totalPages: 0,
       },
+      query: {}
     }
   },
-  async asyncData({$axios, params}) {
+  async asyncData({$axios,  query, store}) {
     const mangaList = await $axios.$get('/manga', {
       params: {
-        ...params,
+        ...query,
       }
     }).then(res => res)
+
+    if (process.server) {
+      // override data
+      store.commit("Manga/setMangaList", mangaList)
+    } else {
+      // push res to store
+      store.commit("Manga/pushMangaList", mangaList)
+    }
+
     return {
-      mangaList
+      mangaList: store.state.Manga.mangaList,
+      query
     }
   },
+  watchQuery: ['page'],
 }
 </script>
 

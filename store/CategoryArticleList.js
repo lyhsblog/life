@@ -1,7 +1,5 @@
 export const state = () => ({
-  slideOpened: false,
-  theme: 'default',
-  barraging: false,
+  category: '',
   articleList: {
     content: [],
     empty:true,
@@ -16,14 +14,8 @@ export const state = () => ({
 })
 
 export const mutations = {
-  changeSlideOpened(state, slideOpened) {
-    state.slideOpened = slideOpened
-  },
-  cahngeTheme(state, theme) {
-    state.theme = theme
-  },
-  changeBarraging(state, barragin) {
-    state.barraging = barragin
+  setCategory(state, category) {
+    state.category = category
   },
   setArticleList(state, articleList) {
     state.articleList = articleList

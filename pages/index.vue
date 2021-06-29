@@ -34,8 +34,7 @@
         query: {},
       }
     },
-    async asyncData({$axios, params, query}) {
-      console.log(query)
+    async asyncData({$axios, params, query, store}) {
       const recommendedList = await $axios.$get("/article/hots").then(res => {
         return res.content
       })
@@ -45,13 +44,20 @@
           ...query,
         }
       }).then(res => res)
+      if (process.server) {
+        // override data
+        store.commit("setArticleList", articleList)
+      } else {
+        // push res to store
+        store.commit("pushArticleList", articleList)
+      }
       return {
         recommendedList,
-        articleList,
+        articleList: store.state.articleList,
         params,
         query
       }
     },
-    watchQuery: ['page']
+    watchQuery: ['page'],
   }
 </script>

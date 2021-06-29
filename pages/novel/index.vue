@@ -99,15 +99,21 @@
 
       <!-- loadmore -->
       <div class="article-load">
-        <button
-          class="loadmore-button"
-          :disabled="novelList.last"
-        >
-        <span class="icon">
-          <i class="iconfont icon-peachblossom"></i>
-        </span>
-          <div class="text">LOADMORE</div>
-        </button>
+        <div class="loadmore-button">
+          <span class="icon">
+            <i class="iconfont icon-peachblossom"></i>
+          </span>
+          <NuxtLink
+            class="text"
+            :to="{
+            path: '/novel',
+            query: {
+              ...query,
+              page: novelList.number < novelList.totalPages - 1 ? novelList.number + 1 : novelList.number
+            }
+        }"
+          >LOADMORE</NuxtLink>
+        </div>
       </div>
     </div>
   </div>
@@ -142,12 +148,13 @@
           content: [],
           empty: true,
           first: true,
-          last: false,
-          number: -1,
+          last: true,
+          number: 0,
           numberOfElements: 0,
           totalElements: 0,
           totalPages: 0,
         },
+        query: {},
       }
     },
     computed: {
@@ -155,16 +162,25 @@
         return this.$store.state.theme === 'dark'
       },
     },
-    async asyncData({$axios, params}) {
+    async asyncData({$axios, query, store}) {
       const novelList = await $axios.$get('/novel', {
         params: {
-          ...params
+          ...query
         }
       }).then(res => res)
+      if (process.server) {
+        // override data
+        store.commit("Novel/setNovelList", novelList)
+      } else {
+        // push res to store
+        store.commit("Novel/pushNovelList", novelList)
+      }
       return {
-        novelList
+        novelList: store.state.Novel.novelList,
+        query
       }
     },
+    watchQuery: ['page'],
   }
 </script>
 
