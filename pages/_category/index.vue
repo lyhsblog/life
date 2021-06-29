@@ -1,7 +1,7 @@
 <template>
   <div class="article-index dark">
     <archive-list-header />
-    <article-list :article-list="articleList" />
+    <article-list :article-list="articleList" :params="params" :query="query" />
   </div>
 </template>
 
@@ -17,19 +17,22 @@ export default {
   },
   data() {
     return {
-      params: {},
       articleList: {},
+      params: {},
+      query: {},
     }
   },
-  async asyncData({$axios, params}) {
+  async asyncData({$axios, params, query}) {
     const articleList = await $axios.$get('/article', {
       params: {
-        ...params
+        ...params,
+        ...query,
       }
     }).then(res => res)
     return {
+      articleList,
       params,
-      articleList
+      query,
     }
   },
 }
@@ -141,74 +144,6 @@ export default {
 
           .thumb {
             height: 6rem;
-          }
-        }
-      }
-    }
-  }
-
-  .article-load {
-    overflow: hidden;
-    z-index: $z-index-normal;
-    @include radius-box($sm-radius);
-    margin-top: 1rem;
-
-    .loadmore-button {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      height: $button-block-height;
-      line-height: $button-block-height;
-      padding-left: $gap * 2;
-      color: $text-reversal;
-      @include common-bg-module($transition-time-fast);
-
-      &[disabled] {
-        opacity: .6;
-      }
-
-      .iconfont {
-        color: $text;
-        @include color-transition();
-      }
-
-      &:hover {
-        .iconfont {
-          color: rgba($red, .6);
-        }
-      }
-
-      > .text {
-        position: relative;
-        height: $button-block-height;
-        padding: 0 ($gap * 2) 0 ($gap * 3);
-        font-family: 'webfont-bolder', DINRegular;
-        text-transform: uppercase;
-        color: $white;
-        background: rgba($red, .6);
-
-        &::before {
-          $size: 1rem;
-          content: '';
-          display: block;
-          position: absolute;
-          width: $size;
-          height: 200%;
-          top: -50%;
-          left: -($size / 2);
-          background: $body-bg;
-          transform: rotate(18deg);
-        }
-      }
-    }
-  }
-
-  &.dark {
-    .article-load {
-      .loadmore-button {
-        .text {
-          &::before {
-            background: $module-bg-darker-1 !important;
           }
         }
       }

@@ -30,15 +30,33 @@
 
     <!-- loadmore -->
     <div class="article-load">
-      <button
+      <div
         class="loadmore-button"
-        :disabled="articleList.last"
       >
+        <NuxtLink
+          class="prev"
+          :to="{
+            path: params.category ? params.category : '/',
+            query: {
+              ...query,
+              page: articleList.number > 0 ? articleList.number - 1 : 0
+            }
+        }"
+        >PREV</NuxtLink>
         <span class="icon">
           <i class="iconfont icon-peachblossom"></i>
         </span>
-        <div class="text">LOADMORE</div>
-      </button>
+        <NuxtLink
+          class="next"
+          :to="{
+            path: params.category ? params.category : '/',
+            query: {
+              ...query,
+              page: articleList.number < articleList.totalPages - 1 ? articleList.number + 1 : articleList.number
+            }
+        }"
+        >NEXT</NuxtLink>
+      </div>
     </div>
   </div>
 </template>
@@ -55,6 +73,14 @@
     name: 'ArticleList',
     components: { ArticleListItem, Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty },
     props: {
+      params: {
+        type: Object,
+        default: {}
+      },
+      query: {
+        type: Object,
+        default: {}
+      },
       articleList: Object
     },
     computed: {
@@ -134,6 +160,7 @@
     }
 
     .article-load {
+      display: flex;
       overflow: hidden;
       z-index: $z-index-normal;
       @include radius-box($sm-radius);
@@ -144,7 +171,7 @@
         width: 100%;
         height: $button-block-height;
         line-height: $button-block-height;
-        padding-left: $gap * 2;
+        //padding-left: $gap * 2;
         color: $text-reversal;
         @include common-bg-module($transition-time-fast);
 
@@ -163,7 +190,30 @@
           }
         }
 
-        > .text {
+        > .prev {
+          position: relative;
+          height: $button-block-height;
+          padding: 0 ($gap * 3) 0 ($gap * 2);
+          font-family: 'webfont-bolder', DINRegular;
+          text-transform: uppercase;
+          color: $white;
+          background: rgba($red, .6);
+
+          &::after {
+            $size: 1rem;
+            content: '';
+            display: block;
+            position: absolute;
+            width: $size;
+            height: 200%;
+            top: -50%;
+            right: -($size / 2);
+            background: $body-bg;
+            transform: rotate(-18deg);
+          }
+        }
+
+        > .next {
           position: relative;
           height: $button-block-height;
           padding: 0 ($gap * 2) 0 ($gap * 3);
@@ -187,11 +237,17 @@
         }
       }
     }
-
+    @media (min-width: 1024px) {
+      .article-load {
+        .prev,.next {
+          min-width: 200px;
+        }
+      }
+    }
     &.dark {
       .article-load {
         .loadmore-button {
-          .text {
+          .next {
             &::before {
               background: $module-bg-darker-1 !important;
             }

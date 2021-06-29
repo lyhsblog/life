@@ -2,7 +2,7 @@
   <div class="index-page">
     <archive-carrousel :recommended-list="recommendedList" />
     <archive-announcement />
-    <article-list :article-list="articleList" />
+    <article-list :article-list="articleList" :params="params" :query="query" />
   </div>
 </template>
 
@@ -30,21 +30,28 @@
       return {
         recommendedList: [],
         articleList: [],
+        params: {},
+        query: {},
       }
     },
-    async asyncData({$axios, params}) {
+    async asyncData({$axios, params, query}) {
+      console.log(query)
       const recommendedList = await $axios.$get("/article/hots").then(res => {
         return res.content
       })
       const articleList = await $axios.$get('/article', {
         params: {
-          ...params
+          ...params,
+          ...query,
         }
       }).then(res => res)
       return {
         recommendedList,
-        articleList
+        articleList,
+        params,
+        query
       }
     },
+    watchQuery: ['page']
   }
 </script>
