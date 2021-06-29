@@ -73,9 +73,11 @@
     directives: {
       swiper: directive,
     },
+    props: {
+      recommendedList: Array
+    },
     data() {
       return {
-        recommendedList: [],
         swiperOption: {
           autoplay: {
             delay: 3500,
@@ -101,11 +103,6 @@
       isDark: function () {
         return this.$store.state.theme === 'dark'
       }
-    },
-    async fetch() {
-      this.recommendedList = await this.$axios.$get("/article/hots").then(res => {
-        return res.content
-      })
     },
   }
 </script>

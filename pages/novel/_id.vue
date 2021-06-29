@@ -2,12 +2,8 @@
   <div class="article-page">
     <div class="module">
       <article-content
-        :fetching="fetching"
         :article="novel"
       />
-    </div>
-    <div class="module">
-      <article-mammon :fetching="fetching" />
     </div>
     <div class="module">
       <article-share :fetching="fetching" />
@@ -52,18 +48,16 @@
     data() {
       return {
         fetching: true,
-        novel: {
-          id: 1,
-          ad: false,
-          url: '/article/1',
-          src: '/article/1.jpg',
-          thumb: '/article/1.png',
-          title: 'articletitle1',
-          description: 'iamdesc1',
-          content: ''
-        },
+        novel: {},
         relatedNovels: []
       }
+    },
+    async asyncData({ $axios, params }) {
+      const id = params.id
+      const novel = await $axios.$get("/novel/"+id).then(res => res)
+      const regex = /(\r\n)+/ig
+      novel.content = novel.content.replace(regex, "\r\n\r\n")
+      return { novel }
     },
     mounted() {
       this.fetchNovel()
@@ -72,9 +66,7 @@
       async fetchNovel() {
         this.fetching = true
         const id = this.$route.params.id
-        const res = await this.$axios.get("/novel/"+id)
-        this.novel = res.data
-        const relatedNovel = await this.$axios.get(`/novel/${this.novel.id}/related`)
+        const relatedNovel = await this.$axios.get(`/novel/${id}/related`)
         this.relatedNovels.push(...relatedNovel.data.content)
         setTimeout(() => {
           this.fetching = false

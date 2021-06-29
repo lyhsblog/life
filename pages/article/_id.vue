@@ -5,18 +5,9 @@
         :article="article"
       />
     </div>
-<!--    <div class="module">-->
-<!--      <article-mammon :fetching="fetching" />-->
-<!--    </div>-->
     <div class="module">
       <article-share :fetching="fetching" />
     </div>
-<!--    <div class="module">-->
-<!--      <article-meta-->
-<!--        :fetching="fetching"-->
-<!--        :article="article"-->
-<!--      />-->
-<!--    </div>-->
     <div class="releted">
       <article-related
         :fetching="fetching"
@@ -68,7 +59,6 @@
       const id = params.id
       const article = await $axios.$get("/article/"+id).then(res => res)
       const regex = /(\r\n)+/ig
-      article.content = article.content.replace(regex, "\r\n\r\n")
       return { article }
     },
     mounted() {

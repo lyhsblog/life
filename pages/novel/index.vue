@@ -155,12 +155,15 @@
         return this.$store.state.theme === 'dark'
       },
     },
-    async fetch() {
-      this.novelList = await this.$axios.$get('/novel', {
+    async asyncData({$axios, params}) {
+      const novelList = await $axios.$get('/novel', {
         params: {
-          ...this.$route.query,
+          ...params
         }
       }).then(res => res)
+      return {
+        novelList
+      }
     },
   }
 </script>

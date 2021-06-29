@@ -54,50 +54,14 @@
   export default {
     name: 'ArticleList',
     components: { ArticleListItem, Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty },
-    data() {
-      return {
-        category: '',
-        articleList: {
-          content: [],
-          empty: true,
-          first: true,
-          last: false,
-          number: -1,
-          numberOfElements: 0,
-          totalElements: 0,
-          totalPages: 0,
-        },
-      }
+    props: {
+      articleList: Object
     },
     computed: {
       isDark: function () {
         return this.$store.state.theme === 'dark'
       },
     },
-    created() {
-      this.category = this.$route.params.category
-    },
-    async fetch() {
-      let articleList = this.articleList
-      if(!articleList.last || articleList.number === -1) {
-
-        this.articleList = await this.$axios.$get('/article', {
-          params: {
-            ...this.$route.query,
-            category: this.category
-          }
-        }).then(res => res)
-      }
-    },
-    // watch: {
-    //   '$route'(to, from) {
-    //     if (to.fullPath !== from.fullPath) {
-    //       this.$nextTick(() => {
-    //         this.init()
-    //       })
-    //     }
-    //   }
-    // }
   }
 </script>
 

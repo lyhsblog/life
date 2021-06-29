@@ -1,7 +1,7 @@
 <template>
   <div class="article-index dark">
     <archive-list-header />
-    <article-list />
+    <article-list :article-list="articleList" />
   </div>
 </template>
 
@@ -14,6 +14,23 @@ export default {
   components: {
     ArticleList,
     ArchiveListHeader
+  },
+  data() {
+    return {
+      params: {},
+      articleList: {},
+    }
+  },
+  async asyncData({$axios, params}) {
+    const articleList = await $axios.$get('/article', {
+      params: {
+        ...params
+      }
+    }).then(res => res)
+    return {
+      params,
+      articleList
+    }
   },
 }
 </script>

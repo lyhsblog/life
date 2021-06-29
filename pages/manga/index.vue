@@ -35,7 +35,6 @@
             <button
               class="loadmore-button"
               :disabled="mangaList.last"
-              @click="loadMangaList(mangaList.number + 1)"
             >
                   <span class="icon">
                     <i class="iconfont icon-peachblossom"></i>
@@ -81,15 +80,14 @@ export default {
       },
     }
   },
-  async fetch() {
-    const mangaList = this.mangaList
-    if(!mangaList.last || mangaList.number === -1) {
-
-      this.mangaList = await this.$axios.$get('/manga', {
-        params: {
-          ...this.$route.query,
-        }
-      }).then(res => res)
+  async asyncData({$axios, params}) {
+    const mangaList = await $axios.$get('/manga', {
+      params: {
+        ...params,
+      }
+    }).then(res => res)
+    return {
+      mangaList
     }
   },
 }

@@ -207,15 +207,7 @@ export default {
   data() {
     return {
       fetching: true,
-      article: {
-        id: 1,
-        cover: '',
-        name: 'name',
-        description: 'desc',
-        click: 123,
-        likes: 3213,
-        tags: []
-      },
+      article: {},
       episodes: [],
       related: [],
     }
@@ -225,9 +217,13 @@ export default {
       return this.$store.state.theme === 'dark'
     }
   },
-  async fetch() {
-    this.article = await this.$axios.$get("/manga/" + this.$route.params.id).then(res => res)
-    this.episodes = await this.$axios.$get("/manga/"+this.$route.params.id+"/episodes").then(res => res)
+  async asyncData({$axios, params}) {
+    const article = await $axios.$get("/manga/" + params.id).then(res => res)
+    const episodes = await $axios.$get("/manga/" + params.id+"/episodes").then(res => res)
+    return {
+      article,
+      episodes
+    }
   },
   mounted() {
     this.loadRelated()
