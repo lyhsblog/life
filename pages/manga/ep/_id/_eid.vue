@@ -116,7 +116,7 @@ export default {
       episode = episodes[eid]
       const images = episode.content.split("\r\n");
       for (let i = 0; i < images.length; i++) {
-        images[i] = 'http://res.567pic.com/manga'+images[i]
+        images[i] = 'https://res.567pic.com/manga'+images[i]
       }
       episode.images = images
     }
