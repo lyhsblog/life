@@ -106,7 +106,7 @@
             >
               <router-link
                 class="link"
-                :to="`/manga/${episode.manga.id}/${index}`"
+                :to="`/manga/ep/${episode.manga.id}/${index}`"
               >
                 <div class="title">{{episode.name}}</div>
               </router-link>

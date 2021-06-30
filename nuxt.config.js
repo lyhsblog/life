@@ -1,4 +1,8 @@
 export default {
+  target: 'static',
+  generate: {
+    fallback: true
+  },
   server: {
     host: 'localhost' // default: localhost
   },
@@ -44,7 +48,7 @@ export default {
 
   publicRuntimeConfig: {
     axios: {
-      baseURL: process.env.NODE_ENV !== 'production' ? 'http://192.168.1.214:8000/api' : 'https://567pic.com/api'
+      baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8000/api' : 'https://567pic.com/api'
     }
   },
 

@@ -1,13 +1,3 @@
 <template>
- <NuxtChild />
+ <Nuxt />
 </template>
-
-<script>
-export default {
-  name: "MangaDetail",
-}
-</script>
-
-<style scoped>
-
-</style>

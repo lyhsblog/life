@@ -35,7 +35,7 @@
                 <template v-else>
                   <router-link :to="`/article/${article.id}`" class="link">
                     <img
-                      :src="article.cover"
+                      :src="article.cover ? `https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${encodeURI(article.cover)}/@webp` : '/images/2020-08-14-sea-1.webp'"
                       :alt="article.name"
                       draggable="false"
                     >
@@ -44,7 +44,7 @@
                       <div class="prospect">
                         <span
                           class="text"
-                          :style="{ backgroundImage: `url('${encodeURI(article.cover) || '/images/2020-08-14-sea-1.webp' }')` }"
+                          :style="{ backgroundImage: article.cover ? `url(https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${encodeURI(article.cover)}/@webp)` : '/images/2020-08-14-sea-1.webp'}"
                         >{{ article.name }}</span>
                       </div>
                     </div>
