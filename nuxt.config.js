@@ -3,6 +3,16 @@ export default {
   generate: {
     fallback: true
   },
+  loading: {
+    color: 'rgba(0, 136, 245, 0.5)',
+    height: '5px',
+    continuous: true,
+  },
+  loadingIndicator: {
+    name: 'circle',
+    color: '#3B8070',
+    background: 'white'
+  },
   server: {
     host: 'localhost' // default: localhost
   },

@@ -1,7 +1,7 @@
 <template>
   <div id="read">
-    <div style="position:relative;height:0;z-index:2147483647;">
-      <div class="view-fix-top-bar"  style="z-index:2147483647;" :style="{top: toolbar.top}">
+    <div style="position:relative;height:0;z-index:1;">
+      <div class="view-fix-top-bar"  style="z-index:1;" :style="{top: toolbar.top}">
         <NuxtLink :to="`/manga/${id}`">
           <img class="view-fix-top-bar-back" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-back-logo.png">
         </NuxtLink>
@@ -150,45 +150,282 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import "https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/css/reset.css";
-@import "https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/css/mstyle.css";
-@import "https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/css/pc_read.css";
-@import "https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/css/p.css";
+<style lang="scss" scoped>
 
 @import '../../../../assets/styles/init';
 
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre, form,fieldset,input,textarea,p,blockquote,th,td {
+  padding: 0;
+  margin: 0;
+}
+html {
+  height: 100%;
+  width: 100%;
+  font-family: sans-serif;
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%
+}
+
 body {
-  padding-top: 0 !important;
+  font-size: 16px;
+  color: #555;
+  font-family: "Microsoft Yahei",SimSun,Tahoma,arial,SimHei,sans-serif;
+  width: 100%;
 }
 
-#read {
-  padding-top: 0;
+body::-webkit-scrollbar-track-piece,body ::-webkit-scrollbar-track-piece {
+  background-color: transparent
+}
 
-  .view-fix-bottom-bar {
-    display: flex;
-    justify-content: space-between;
-  }
-  #cp_img {
-    min-height: 100vh;
+body::-webkit-scrollbar,body ::-webkit-scrollbar {
+  width: 8px;
+  height: 4px
+}
+
+body::-webkit-scrollbar-thumb,body ::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+  background-clip: padding-box;
+  min-height: 28px;
+  border-radius: 4px
+}
+
+
+fieldset {
+  border: 0;
+}
+
+ol,ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+  color: #555
+}
+
+svg:not(:root) {
+  overflow: hidden
+}
+
+img {
+  vertical-align: middle;
+  border: 0 none;
+}
+
+.view-main-1 {
+  font-size: 0;
+}
+
+.view-main-1 img {
+  width: 100%;
+}
+.view-fix-top-bar {
+  height: 60px;
+  line-height: 60px;
+  background-color: rgba(11, 6, 0, 0.9);
+  position: fixed;
+  top: -60px;
+  left: 0;
+  width: 100%;
+  z-index: 97;
+  transition: top 0.5s;
+  -moz-transition: top 0.5s;
+  -webkit-transition: top 0.5s;
+  -o-transition: top 0.5s;
+}
+.view-fix-top-bar-back {
+  height: 20px;
+  position: absolute;
+  left: 10px;
+  top: 20px;
+}
+.view-fix-top-bar-title {
+  font-size: 15px;
+  color: #999999;
+  letter-spacing: 0;
+  padding-left: 30px;
+  padding-right: 90px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.view-fix-top-bar-right {
+  width: 84px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.view-fix-top-bar-right-logo {
+  height: 24px;
+  vertical-align: top;
+  margin-top: 18px;
+  margin-right: 10px;
+}
+
+.view-fix-bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  background-color: rgba(11, 6, 0, 0.9);
+  position: fixed;
+  bottom: -60px;
+  left: 0;
+  width: 100%;
+  z-index: 97;
+  font-size: 0;
+  transition: bottom 0.5s;
+  -moz-transition: bottom 0.5s;
+  -webkit-transition: bottom 0.5s;
+  -o-transition: top 0.5s;
+}
+.view-fix-bottom-bar-item {
+  width: 20%;
+  text-align: center;
+  display: inline-block;
+}
+
+.view-fix-bottom-bar-logo {
+  height: 24px;
+  margin-top: 8px;
+}
+
+.view-fix-bottom-bar-title {
+  font-size: 12px;
+  color: #999999;
+  letter-spacing: 0;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.read-section {
+  height: 55vh;
+}
+
+.read-section.sidebar-main {
+  left: -212px;
+  width: 212px;
+}
+
+.sidebar-main {
+  position: fixed;
+  top: 165px;
+  bottom: 200px;
+  z-index: 9;
+}
+
+.read-section .sidebar-header {
+  border-top-right-radius: 4px;
+}
+
+.sidebar-header {
+  height: 40px;
+  line-height: 40px;
+  background: #333;
+}
+
+.sidebar-header-l {
+  float: left;
+  margin-left: 10px;
+  font-size: 16px;
+  color: #fff;
+  font-style: normal;
+}
+
+.sidebar-header-r {
+  float: right;
+  margin-right: 15px;
+  font-size: 14px;
+  color: #fff;
+  font-style: normal;
+}
+
+.read-section .sidebar-content {
+  padding-left: 20px;
+  bottom: 0;
+  border-bottom-right-radius: 4px;
+}
+.sidebar-content {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  left: 0;
+  background: #3c3c3c;
+}
+
+.mCustomScrollBox {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  max-width: 100%;
+  outline: 0;
+  direction: ltr;
+}
+.read-section .sidebar-content li {
+  position: relative;
+  height: 45px;
+  line-height: 45px;
+  padding-left: 10px;
+}
+
+.read-section .sidebar-content li a {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  width: 80%;
+  font-size: 14px;
+  color: #b0b0b0;
+}
+.read-section .sidebar-btn {
+  right: -40px;
+  border-radius: 0 8px 8px 0;
+}
+
+.sidebar-btn {
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: auto;
+  margin-top: -50px;
+  padding: 18px 0;
+  text-align: center;
+  font-size: 14px;
+  line-height: 16px;
+  color: #b0b0b0;
+  background: #3c3c3c;
+  cursor: pointer;
+}
+
+.sidebar-btn .read-icon-list {
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.read-icon-list {
+  width: 16px;
+  height: 13px;
+}
+
+#cp_img {
+  min-height: 100vh;
+  width: 100%;
+  margin: auto;
+  > img {
     width: 100%;
-    margin: auto;
-    > img {
-      width: 100%;
-    }
-  }
-  @media (min-width: 768px) {
-    #cp_img {
-      max-width: 768px;
-      margin: auto;
-    }
-  }
-
-  .read-section {
-    height: 55vh;
-  }
-  .sidebar-btn {
-    height: auto;
   }
 }
+@media (min-width: 768px) {
+  #cp_img {
+    max-width: 768px;
+    margin: auto;
+  }
+}
+
 </style>

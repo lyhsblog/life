@@ -100,23 +100,6 @@
         return this.$store.state.theme === 'dark'
       }
     },
-    mounted() {
-      this.init()
-    },
-    methods: {
-      init() {
-
-      }
-    },
-    watch: {
-      '$route'(to, from) {
-        if (to.fullPath !== from.fullPath) {
-          this.$nextTick(() => {
-            this.init()
-          })
-        }
-      }
-    }
   }
 </script>
 <style lang="scss" scoped>
