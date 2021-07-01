@@ -105,7 +105,7 @@ export default {
       query
     }
   },
-  watchQuery: ['page'],
+  watchQuery: ['page', 'searchword'],
 }
 </script>
 

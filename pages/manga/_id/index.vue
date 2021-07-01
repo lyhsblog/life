@@ -17,7 +17,6 @@
             />
             <div class="item-content">
               <div class="item-thumb">
-                <NuxtLink to="#">
             <span
               class="item-oirigin self"
             >
@@ -27,15 +26,10 @@
                     class="item-thumb-img"
                     :src="article.cover"
                     :alt="article.name">
-                </NuxtLink>
               </div>
               <div class="item-body">
                 <h5 class="item-title">
-                  <NuxtLink
-                    to="#"
-                  >
-                    {{ article.name }}
-                  </NuxtLink>
+                  {{ article.name }}
                 </h5>
                 <p
                   class="item-description"
@@ -65,11 +59,9 @@
               </span>
                   <span class="categories">
                 <i class="iconfont icon-list"></i>
-                <router-link
-                  to="/"
-                >
+                <span>
                   {{article.category || 'No category'}}
-                </router-link>
+                </span>
               </span>
                 </div>
               </div>

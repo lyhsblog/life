@@ -15,7 +15,7 @@
           </span>
           <img
             class="item-thumb-img"
-            :src="article.cover ? encodeURI(`https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${article.cover}/@webp`) : '/images/2020-08-14-sea-1.webp'"
+            :src="article.cover ? encodeURI(`https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${article.cover}@webp`) : '/images/2020-08-14-sea-1.webp'"
             :alt="article.name">
         </NuxtLink>
       </div>
@@ -56,7 +56,7 @@
           <span class="categories">
             <i class="iconfont icon-list"></i>
             <router-link
-              to="/"
+              :to="`/${article.category.name}`"
             >
               {{article.category.name || 'No category'}}
             </router-link>

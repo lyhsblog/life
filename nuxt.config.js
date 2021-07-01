@@ -1,8 +1,8 @@
 export default {
-  target: 'static',
-  generate: {
-    fallback: true
-  },
+  // target: 'static',
+  // generate: {
+  //   fallback: true
+  // },
   loading: {
     color: 'rgba(0, 136, 245, 0.5)',
     height: '5px',
@@ -47,10 +47,37 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-181437668-5'
+    }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/axios'],
+  modules: [
+    '@nuxtjs/axios',
+    ['nuxt-lazy-load', {
+      // These are the default values
+      images: true,
+      videos: true,
+      audios: true,
+      iframes: true,
+      native: false,
+      polyfill: true,
+      directiveOnly: false,
+
+      // Default image must be in the static folder
+      defaultImage: '/images/loading.gif',
+
+      // To remove class set value to false
+      loadingClass: 'isLoading',
+      loadedClass: 'isLoaded',
+      appendClass: 'lazyLoad',
+
+      observerConfig: {
+        // See IntersectionObserver documentation
+      }
+    }]
+  ],
 
   /*
    ** Runtime Config

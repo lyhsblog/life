@@ -120,7 +120,6 @@
           height: 100%;
           width: 15rem;
         }
-
         .content {
           margin-left: $lg-gap;
           flex-grow: 1;

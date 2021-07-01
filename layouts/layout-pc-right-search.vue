@@ -10,23 +10,23 @@
         list="keywords"
         class="search-input"
         :class="'zh'"
-        :placeholder="LANGUAGE_KEYS.SEARCH_PLACEHOLDER"
+        placeholder="input keywords"
         @keyup.enter="handleSearch"
       >
       <button class="search-btn" @click="handleSearch">
         <i class="iconfont icon-search" />
       </button>
-      <client-only>
-        <datalist v-if="tags.length" id="keywords">
-          <option
-            v-for="tag in tags"
-            :key="tag.slug"
-            :value="isZhLang ? tag.name : tag.slug"
-            :label="tag.description"
-            class="iiem"
-          />
-        </datalist>
-      </client-only>
+<!--      <client-only>-->
+<!--        <datalist v-if="tags.length" id="keywords">-->
+<!--          <option-->
+<!--            v-for="tag in tags"-->
+<!--            :key="tag.slug"-->
+<!--            :value="isZhLang ? tag.name : tag.slug"-->
+<!--            :label="tag.description"-->
+<!--            class="iiem"-->
+<!--          />-->
+<!--        </datalist>-->
+<!--      </client-only>-->
     </div>
     <router-link class="archive-btn" to="/">
       <i class="iconfont icon-peachblossom" />
@@ -35,25 +35,10 @@
 </template>
 
 <script>
-  import LANGUAGE_KEYS from '../language/key'
   export default {
     name: 'pc-aside-search',
     data () {
       return {
-        LANGUAGE_KEYS,
-        tags: [
-          {
-            name: 'tag1',
-            slug: 'tag1',
-            description: 'tag1',
-          },
-          {
-            name: 'tag2',
-            slug: 'tag2',
-            description: 'tag2',
-          }
-        ],
-        isZhLang: true,
         keywords: ''
       }
     },

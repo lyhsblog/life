@@ -82,11 +82,9 @@
                       </span>
                       <span class="categories">
                         <i class="iconfont icon-list"></i>
-                        <router-link
-                          to="/"
-                        >
+                        <span>
                           {{novel.category || 'No category'}}
-                        </router-link>
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -173,7 +171,7 @@
         query
       }
     },
-    watchQuery: ['page'],
+    watchQuery: ['page', 'searchword'],
   }
 </script>
 

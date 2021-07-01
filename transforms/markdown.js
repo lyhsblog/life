@@ -82,7 +82,7 @@ customRenderer.link = (href, title, text) => {
 // Image -> popup
 customRenderer.image = (src, title, alt) => {
   // HTTP -> proxy
-  const source = encodeURI(`https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${src}/@webp`)
+  const source = encodeURI(`https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${src}@webp`)
   //class="${LOZAD_CLASS_NAME}"
   return (`
     <img

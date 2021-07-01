@@ -6,12 +6,12 @@
     >
       <input
         ref="inputElement"
-        v-model="searchState.keyword"
+        v-model="searchState.keywords"
         type="text"
         class="input"
         required
-        :placeholder="t(LANGUAGE_KEYS.SEARCH_PLACEHOLDER)"
-        @keyup="submitSearch"
+        placeholder="input keywords"
+        @keyup.enter="handleSearch"
       >
       <span class="close" @click="cancelSearch">
         <i class="iconfont icon-cancel"></i>
@@ -40,7 +40,7 @@
         <i class="iconfont icon-menu"></i>
       </span>
       <router-link to="/" class="navbar-logo">
-        <img src="~/static/images/logo.svg"  alt="logo"/>
+        <img src="~/static/images/logo.svg"  alt="logo" data-not-lazy />
       </router-link>
       <span class="navbar-search" @click="openSearch">
         <i class="iconfont icon-search"></i>
@@ -51,38 +51,73 @@
 
 <script>
 
-  import LANGUAGE_KEYS from "../language/key";
-
   export default {
     name: 'layout-mobile-header',
     data() {
       const searchState = {
         open: false,
-        keyword: ''
+        keywords: ''
       }
 
-      const openSearch = () => {
-        searchState.open = true
-      }
-      const cancelSearch = () => {
-        searchState.open = false
-      }
-      const submitSearch = () => {
-      }
-
-      const openMobileSidebar = () => this.$store.commit("changeSlideOpened", true)
       return {
-        t: (key) => {
-          return LANGUAGE_KEYS[key]
-        },
-        LANGUAGE_KEYS,
         searchState,
-        openSearch,
-        submitSearch,
-        cancelSearch,
-        openMobileSidebar
       }
     },
+    mounted() {
+      this.init()
+    },
+    methods: {
+      init() {
+        const route = this.$route
+        switch (route.name) {
+          case "index":
+            this.path = "/"
+            break
+          case "category":
+            this.path = "/"
+            break
+          case "manga":
+            this.path = "/manga"
+            break
+          case "novel":
+            this.path = "/novel"
+            break
+          case "av":
+            this.path = "/av"
+            break
+          case "vlog":
+            this.path = "/vlog"
+            break
+          default:
+            this.path = "/"
+        }
+      },
+      handleSearch: function () {
+        this.$router.push({path: this.path, query: {
+            searchword: this.searchState.keywords
+          }
+        })
+      },
+      openSearch: function () {
+        this.searchState.open = true
+      },
+      cancelSearch: function () {
+        this.searchState.open = false
+      },
+      openMobileSidebar: function () {
+        this.$store.commit("changeSlideOpened", true)
+      }
+    },
+    watch: {
+      '$route'(to, from) {
+        if (to.fullPath !== from.fullPath) {
+          this.$nextTick(() => {
+            this.init()
+            this.searchState.open = false
+          })
+        }
+      }
+    }
   }
 </script>
 
