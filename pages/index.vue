@@ -35,7 +35,7 @@
       }
     },
     async asyncData({$axios, params, query}) {
-      const recommendedList = await $axios.$get("/article/hots").then(res => {
+      const recommendedList = await $axios.$get("/article/recommended").then(res => {
         return res.content
       })
       const articleList = await $axios.$get('/article', {

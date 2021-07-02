@@ -38,6 +38,7 @@
                       :src="article.cover ? `https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${encodeURI(article.cover)}@webp` : '/images/2020-08-14-sea-1.webp'"
                       :alt="article.name"
                       draggable="false"
+                      data-not-lazy
                     >
                     <div class="title">
                       <div class="background"></div>
@@ -114,8 +115,8 @@
   $mobile-carrousel-height: calc((100vw - 2rem) * .34);
 
   .carrousel {
-    height: $pc-carrousel-height;
-    margin-bottom: $lg-gap;
+    margin-bottom: $gap;
+    height: $mobile-carrousel-height;
     position: relative;
     @include common-bg-module();
     @include radius-box($lg-radius);
@@ -165,8 +166,8 @@
     }
 
     .swiper {
-      width: 595px;
-      height: $pc-carrousel-height;
+      width: 100%;
+      height: $mobile-carrousel-height;
 
       // Filter for slide when transitioning
       .swiper-wrapper[style*="300ms"] {
@@ -189,7 +190,7 @@
       .swiper-slide {
         .content {
           width: 100%;
-          height: $pc-carrousel-height;
+          height: $mobile-carrousel-height;
           position: relative;
           overflow: hidden;
 
@@ -226,7 +227,8 @@
             display: block;
             position: absolute;
             top: 2rem;
-            right: 2.6rem;
+            right: 1.7rem;
+            max-width: 70%;
             opacity: .8;
             transition: opacity $transition-time-normal;
 
@@ -277,33 +279,12 @@
       }
     }
 
-    @media (min-width: 320px) {
-      margin-bottom: $gap;
-      height: $mobile-carrousel-height;
-
-      > .swiper {
-        width: 100%;
-        height: $mobile-carrousel-height;
-
-        .swiper-slide {
-          > .content {
-            height: $mobile-carrousel-height;
-
-            > .title {
-              right: 1.7rem;
-              max-width: 70%;
-            }
-          }
-        }
-      }
-    }
-
     @media (min-width: 1024px) {
       margin-bottom: $gap;
       height: $pc-carrousel-height;
 
       > .swiper {
-        width: 100%;
+        width: 595px;
         height: $pc-carrousel-height;
 
         .swiper-slide {

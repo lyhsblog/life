@@ -3,9 +3,7 @@
     <div v-swiper:[dynamicSwiperName]="swiperOption" class="swiper">
       <div class="swiper-wrapper">
         <div class="swiper-slide" :key="ad.text" v-for="ad in ads">
-          <a class="content" :href="ad.url">
-            <img :src="ad.url" alt="aliyun-ad" />
-          </a>
+          <div style="height: 100%; display: flex; justify-content: center; align-items: center"><span style="font-size: 50px; text-align: center; ">AD</span></div>
         </div>
       </div>
       <div class="swiper-pagination"></div>
@@ -78,17 +76,6 @@
             text: 'ADSENSE',
             hot: true
           },
-          {
-            url: 'https://www.imgacademy.com/sites/default/files/footballfacilities1.jpg',
-            icon: '',
-            color: 'black',
-            i18n: {
-              zh: 'zh',
-              en: 'en',
-            },
-            text: 'EXO',
-            hot: true
-          }
         ],
       }
     },

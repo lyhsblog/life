@@ -43,8 +43,8 @@
             <div v-swiper="swiperOption" class="swiper" @transition-start="handleSwiperTransitionStart">
               <div class="swiper-wrapper">
                 <div class="swiper-slide" :key="an.content" v-for="an in announcements">
-                  <div class="content" v-html="1111111" />
-                  <div class="date">2021/06/10</div>
+                  <div class="content" v-html="an.content" />
+                  <div class="date">{{ an.time }}</div>
                 </div>
               </div>
             </div>
@@ -103,20 +103,41 @@
         fetching: false,
         announcements: [
           {
-            'content': '12223311'
+            'content': '也许高楼越漂亮，我们越痛苦',
+            'time': '1 days ago'
           },
           {
-            'content': '12223312'
+            'content': '失去希望，失去一切',
+            'time': '3 days ago'
           },
           {
-            'content': '12223313'
+            'content': '不想持有十年以上，就不要持有一分钟',
+            'time': '1 weeks ago'
           },
           {
-            'content': '12223314'
+            'content': '真的要 IFC 天台见了😢',
+            'time': '2 weeks ago'
           },
           {
-            'content': '12223315'
-          }
+            'content': '自由无价，但也很廉价',
+            'time': '4 months ago'
+          },
+          {
+            'content': '怎么也飞不出，花花的世界',
+            'time': '6 months ago'
+          },
+          {
+            'content': '我想表达的都在推上了',
+            'time': '1 years ago'
+          },
+          {
+            'content': '森吉德玛，长生天公主，影后是实至名归',
+            'time': '1 years ago'
+          },
+          {
+            'content': '真正的自由职业应该是自由而快乐的',
+            'time': '1 years ago'
+          },
         ],
         swiperOption,
         activeIndex: 0,

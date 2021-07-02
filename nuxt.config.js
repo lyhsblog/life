@@ -49,7 +49,18 @@ export default {
   buildModules: [
     ['@nuxtjs/google-analytics', {
       id: 'UA-181437668-5'
-    }]
+    }],
+    [
+      'nuxt-compress',
+      {
+        gzip: {
+          threshold: 8192,
+        },
+        brotli: {
+          threshold: 8192,
+        },
+      },
+    ],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

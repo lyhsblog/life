@@ -3,15 +3,15 @@
     <div style="position:relative;height:0;z-index:1;">
       <div class="view-fix-top-bar"  style="z-index:1;" :style="{top: toolbar.top}">
         <NuxtLink :to="`/manga/${id}`">
-          <img class="view-fix-top-bar-back" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-back-logo.png">
+          <img class="view-fix-top-bar-back" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-back-logo.png" data-not-lazy>
         </NuxtLink>
         <p class="view-fix-top-bar-title">{{ episode.name }}</p>
         <div class="view-fix-top-bar-right">
           <a href="javascript:void(0)" class="collection">
-            <img class="view-fix-top-bar-right-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-top-logo-1.png">
+            <img class="view-fix-top-bar-right-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-top-logo-1.png" data-not-lazy>
           </a>
           <NuxtLink to="/manga">
-            <img class="view-fix-top-bar-right-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-top-logo-2.png">
+            <img class="view-fix-top-bar-right-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-top-logo-2.png" data-not-lazy>
           </NuxtLink>
         </div>
       </div>
@@ -23,20 +23,20 @@
 
     <div class="view-fix-bottom-bar" :style="{bottom: toolbar.bottom}">
       <router-link v-if="eid > 0" :to="`/manga/ep/${id}/${eid - 1}`" class="view-fix-bottom-bar-item ad-button">
-        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-5.png">
+        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-5.png" data-not-lazy>
         <p class="view-fix-bottom-bar-title">上一章</p>
       </router-link>
       <a href="javascript: void(0)" v-else class="view-fix-bottom-bar-item ad-button" style="opacity: 0.6;">
-        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-5.png">
+        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-5.png" data-not-lazy>
         <p class="view-fix-bottom-bar-title">上一章</p>
       </a>
 
       <router-link v-if="eid < episodes.length - 1" :to="`/manga/ep/${id}/${eid + 1}`" class="view-fix-bottom-bar-item ad-button">
-        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-6.png">
+        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-6.png" data-not-lazy>
         <p class="view-fix-bottom-bar-title">下一章</p>
       </router-link>
       <a v-else href="javascript: void(0)" class="view-fix-bottom-bar-item ad-button" style="opacity: 0.6;">
-        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-6.png">
+        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-6.png" data-not-lazy>
         <p class="view-fix-bottom-bar-title">下一章</p>
       </a>
     </div>

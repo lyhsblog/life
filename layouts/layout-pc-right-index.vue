@@ -16,7 +16,9 @@
       class="module ali-ma-ma"
       :placeholder="t(LANGUAGE_KEYS.AD)"
     >
-      <img src="https://static.360buyimg.com/ad/temp/img/td/250-250.jpg" alt="ad">
+      <div style="height: 100%; display: flex; justify-content: center; align-items: center">
+        <span style="font-size: 50px">AD BIG</span>
+      </div>
     </div>
     <div :id="ASIDE_STICKY_ELEMENT_ID" class="aside-sticky-box">
       <client-only>
