@@ -2,7 +2,7 @@
   <div
     class="announcement"
     :class="{
-      mobile: false,
+      mobile: true,
       dark: isDark
     }"
   >
@@ -164,7 +164,7 @@
 
   .announcement {
     position: relative;
-    margin-bottom: $lg-gap;
+    margin-bottom: $gap;
     height: $announcement-height;
     line-height: $announcement-height;
     font-size: $font-size-h6;
@@ -192,19 +192,6 @@
       }
     }
 
-    &.mobile {
-      margin-bottom: $gap;
-      .swiper-box {
-        .swiper {
-          .swiper-slide {
-            .content {
-              max-width: 100%;
-            }
-          }
-        }
-      }
-    }
-
     &.dark {
       .background {
         &::after {
@@ -214,6 +201,7 @@
     }
 
     .background {
+      display: none;
       position: absolute;
       width: $demarcation-width;
       height: 100%;
@@ -293,7 +281,7 @@
           height: $announcement-height;
 
           .content {
-            max-width: 76%;
+            max-width: 100%;
             position: relative;
             font-weight: bold;
             @include text-overflow();
@@ -310,6 +298,7 @@
           }
 
           .date {
+            display: none;
             color: $text-dividers;
             margin-right: $xs-gap;
           }
@@ -345,6 +334,25 @@
 
           &.next {
             line-height: 1.4;
+          }
+        }
+      }
+    }
+
+    @media (min-width: 1024px) {
+      margin-bottom: $lg-gap;
+      .background {
+        display: block;
+      }
+      .swiper-box {
+        .swiper {
+          .swiper-slide {
+            .content {
+              max-width: 76%;
+            }
+            .date {
+              display: block;
+            }
           }
         }
       }

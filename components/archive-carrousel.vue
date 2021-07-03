@@ -110,7 +110,7 @@
 <style lang="scss" scoped>
   @import '/assets/styles/init.scss';
 
-  $pc-carrousel-height: 210px;
+  $pc-carrousel-height: 202px;
   $mobile-carrousel-height: calc((100vw - 2rem) * .34);
 
   .carrousel {
@@ -225,8 +225,8 @@
             $offset: 3px;
             display: block;
             position: absolute;
-            top: 2rem;
-            right: 1.7rem;
+            top: 1rem;
+            right: 0; //1.7rem;
             max-width: 70%;
             opacity: .8;
             transition: opacity $transition-time-normal;
@@ -283,7 +283,7 @@
       height: $pc-carrousel-height;
 
       > .swiper {
-        width: 595px;
+        width: 574px;
         height: $pc-carrousel-height;
 
         .swiper-slide {
@@ -291,7 +291,7 @@
             height: $pc-carrousel-height;
 
             > .title {
-              right: 2.6rem;
+              right: 0; //2.6rem;
               max-width: none;
             }
           }
