@@ -441,7 +441,7 @@
           }
 
           > .item-body {
-            width: 32rem;
+            width: 31rem;
             height: $content-height;
 
             > .item-description {
