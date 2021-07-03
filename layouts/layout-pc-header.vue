@@ -2,7 +2,7 @@
   <header id="pc-header">
     <div class="header-container container">
       <div class="header-header">
-        <img src="~/static/images/logo.svg" class="header-logo" data-not-lazy />
+        <img src="~/static/images/logo.svg" class="header-logo" />
         <span class="header-slogan">
           Because the mountain was there
         </span>

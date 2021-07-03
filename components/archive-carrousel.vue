@@ -38,7 +38,6 @@
                       :src="article.cover ? `https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${encodeURI(article.cover)}@webp` : '/images/2020-08-14-sea-1.webp'"
                       :alt="article.name"
                       draggable="false"
-                      data-not-lazy
                     >
                     <div class="title">
                       <div class="background"></div>

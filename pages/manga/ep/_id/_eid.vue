@@ -2,41 +2,45 @@
   <div id="read">
     <div style="position:relative;height:0;z-index:1;">
       <div class="view-fix-top-bar"  style="z-index:1;" :style="{top: toolbar.top}">
-        <NuxtLink :to="`/manga/${id}`">
-          <img class="view-fix-top-bar-back" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-back-logo.png" data-not-lazy>
-        </NuxtLink>
+        <div class="view-fix-top-bar-back">
+          <NuxtLink :to="`/manga/${id}`">
+            <i class="iconfont icon-reply"></i>
+          </NuxtLink>
+        </div>
+
         <p class="view-fix-top-bar-title">{{ episode.name }}</p>
         <div class="view-fix-top-bar-right">
           <a href="javascript:void(0)" class="collection">
-            <img class="view-fix-top-bar-right-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-top-logo-1.png" data-not-lazy>
+            <i class="iconfont icon-star"></i>
           </a>
           <NuxtLink to="/manga">
-            <img class="view-fix-top-bar-right-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-top-logo-2.png" data-not-lazy>
+            <i class="iconfont icon-home" style="margin-left: 10px"></i>
           </NuxtLink>
         </div>
       </div>
     </div>
 
     <div class="view-main-1 readForm" id="cp_img" @click="showToolBar">
-      <img v-if="episode.images" v-for="(image, index) in episode.images" :key="index" class="lazy" data-original="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/loading.gif" :src="image" style="min-height: 100px" alt="" />
+      <img v-if="episode.images" :src="episode.images[0]" width="0" height="0" :alt="episode.images[0]" style="min-height: 100vh" />
+      <img v-lazy-load v-if="episode.images && index > 0" v-for="(image, index) in episode.images" :key="index" :src="image" width="0" height="0" :alt="image" />
     </div>
 
     <div class="view-fix-bottom-bar" :style="{bottom: toolbar.bottom}">
       <router-link v-if="eid > 0" :to="`/manga/ep/${id}/${eid - 1}`" class="view-fix-bottom-bar-item ad-button">
-        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-5.png" data-not-lazy>
+        <i class="iconfont icon-music-prev"></i>
         <p class="view-fix-bottom-bar-title">上一章</p>
       </router-link>
       <a href="javascript: void(0)" v-else class="view-fix-bottom-bar-item ad-button" style="opacity: 0.6;">
-        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-5.png" data-not-lazy>
+        <i class="iconfont icon-music-prev"></i>
         <p class="view-fix-bottom-bar-title">上一章</p>
       </a>
 
       <router-link v-if="eid < episodes.length - 1" :to="`/manga/ep/${id}/${eid + 1}`" class="view-fix-bottom-bar-item ad-button">
-        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-6.png" data-not-lazy>
+        <i class="iconfont icon-music-next"></i>
         <p class="view-fix-bottom-bar-title">下一章</p>
       </router-link>
       <a v-else href="javascript: void(0)" class="view-fix-bottom-bar-item ad-button" style="opacity: 0.6;">
-        <img class="view-fix-bottom-bar-logo" src="https://cdn.jsdelivr.net/gh/ybzc-gg/sdfs@0.0.2/images/view-bottom-logo-6.png" data-not-lazy>
+        <i class="iconfont icon-music-next"></i>
         <p class="view-fix-bottom-bar-title">下一章</p>
       </a>
     </div>
@@ -237,10 +241,8 @@ img {
   -o-transition: top 0.5s;
 }
 .view-fix-top-bar-back {
-  height: 20px;
   position: absolute;
-  left: 10px;
-  top: 20px;
+  left: 5px;
 }
 .view-fix-top-bar-title {
   font-size: 15px;
@@ -428,4 +430,8 @@ img {
   }
 }
 
+.iconfont {
+  font-size: 2rem;
+  color: #c9c0c0;
+}
 </style>

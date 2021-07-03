@@ -179,7 +179,9 @@
         float: right;
         width: 100%;
         height: auto;
-
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
         > .item-title {
           margin-top: 3px;
           margin-bottom: $sm-gap;
@@ -286,8 +288,7 @@
           height: $content-height;
 
           > .item-description {
-            height: 5rem;
-            margin: 0 0 $xs-gap;
+            margin: 0 0 $gap;
           }
         }
       }

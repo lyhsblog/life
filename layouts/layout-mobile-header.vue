@@ -40,7 +40,7 @@
         <i class="iconfont icon-menu"></i>
       </span>
       <router-link to="/" class="navbar-logo">
-        <img src="~/static/images/logo.svg"  alt="logo" data-not-lazy />
+        <img src="~/static/images/logo.svg" width="96" height="15" alt="logo" />
       </router-link>
       <span class="navbar-search" @click="openSearch">
         <i class="iconfont icon-search"></i>

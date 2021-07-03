@@ -25,7 +25,9 @@
                   <img
                     class="item-thumb-img"
                     :src="article.cover"
-                    :alt="article.name">
+                    :alt="article.name"
+                    width="0"
+                    height="0">
               </div>
               <div class="item-body">
                 <h5 class="item-title">

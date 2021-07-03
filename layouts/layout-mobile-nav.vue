@@ -2,7 +2,7 @@
   <aside class="aside" :class="{ open: open }">
     <div class="aside-user">
       <div class="avatar">
-        <img src="~static/images/avatar.jpg" alt="SHUMON" data-not-lazy />
+        <img src="~/static/images/avatar.jpg" width="57" height="53" alt="SHUMON" />
       </div>
       <div class="profile">
         <h3 class="name">SHUMON</h3>
