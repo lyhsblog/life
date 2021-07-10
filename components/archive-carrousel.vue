@@ -16,7 +16,6 @@
       </template>
       <template #default>
         <div
-          key="swiper"
           class="swiper"
           v-swiper="swiperOption"
         >
@@ -283,7 +282,7 @@
       height: $pc-carrousel-height;
 
       > .swiper {
-        width: 574px;
+        width: $main-width;
         height: $pc-carrousel-height;
 
         .swiper-slide {

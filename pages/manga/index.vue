@@ -24,7 +24,7 @@
                 <div
                   class="thumb"
                   :style="{
-                  backgroundImage: `url('${manga.cover}')`
+                  backgroundImage: `url('https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${manga.cover}@webp')`
                 }"
                 />
                 <div class="title">{{manga.name}}</div>
@@ -66,7 +66,7 @@ export default {
   name: "MangaIndex",
   head() {
     return  {
-      title: 'MANGA-567WATCH',
+      title: 'MANGA-567.WATCH',
       meta: [
         { charset: 'utf-8' },
         {

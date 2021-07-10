@@ -13,6 +13,14 @@ export default {
     color: '#3B8070',
     background: 'white'
   },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        path: '/video/play/:id/:ep',
+        component: resolve(__dirname, 'pages/video/play/_id.vue')
+      })
+    }
+  },
   server: {
     host: 'localhost' // default: localhost
   },
@@ -40,6 +48,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     {src: '~/plugins/vue-awesome-swiper', ssr: false},
+    {src: '~/plugins/dplayer', ssr: false},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

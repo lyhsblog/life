@@ -182,6 +182,7 @@
       }
 
       #main-content {
+        min-height: 100vh;
         position: relative;
         overflow: hidden;
         width: 100%;

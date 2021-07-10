@@ -15,6 +15,19 @@ export default {
     ArticleList,
     ArchiveListHeader
   },
+  head() {
+    return  {
+      title: `Article about ${this.params.category}-567.WATCH`,
+      meta: [
+        { charset: 'utf-8' },
+        {
+          hid: 'description',
+          name: 'description',
+          content: `Article about ${this.params.category}`
+        }
+      ],
+    }
+  },
   data() {
     return {
       articleList: {},

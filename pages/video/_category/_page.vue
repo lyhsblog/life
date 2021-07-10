@@ -1,148 +1,98 @@
 <template>
-  <div class="video-index dark">
-    <placeholder
-      :data="avList.numberOfElements"
-      :loading="fetching"
-    >
-      <template #loading>
-        <ul class="article-list-skeleton" key="skeleton">
-          <li v-for="item in 5" :key="item" class="item">
-            <div class="thumb">
-              <skeleton-base />
-            </div>
-            <div class="content">
-              <div class="title">
-                <skeleton-line />
-              </div>
-              <div class="description">
-                <skeleton-paragraph :lines="4" />
-              </div>
-            </div>
-          </li>
-        </ul>
-      </template>
-      <template #placeholder>
-        <empty
-          class="empty"
-          i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
-        />
-      </template>
-      <template #default>
+  <placeholder
+    :data="videos.numberOfElements"
+  >
+    <template #placeholder>
+      <empty
+        class="empty"
+        i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
+      />
+    </template>
+    <template #default>
+      <div class="video-index dark">
         <div class="related">
-          <ul class="articles" key="avs">
+          <ul class="articles">
             <li
               class="item"
-              v-for="av in avList.content"
-              :key="av.id"
+              v-for="video in videos.content"
+              :key="video.id"
             >
               <router-link
                 class="item-article"
-                :to="`/manga/${av.id}`"
+                :to="`/video/play/${video.id}`"
               >
                 <div
                   class="thumb"
                   :style="{
-                  backgroundImage: `url('${av.cover}')`
-                }"
+                    backgroundImage: `url('https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/https://video.567.watch${video.cover}')`
+                  }"
                 />
-                <div class="title">{{av.name}}</div>
+                <div class="title">{{video.name}}</div>
               </router-link>
             </li>
           </ul>
           <div class="article-load">
-            <button
-              class="loadmore-button"
-              :disabled="avList.last"
-              @click="loadAvList(avList.number + 1)"
-            >
-                  <span class="icon">
-                    <i class="iconfont icon-peachblossom"></i>
-                  </span>
-              <div class="text">LOADMORE</div>
-            </button>
+            <div class="loadmore-button">
+              <span class="icon">
+                <i class="iconfont icon-peachblossom"></i>
+              </span>
+              <NuxtLink
+                class="text"
+                :to="{
+                path: `/video/${params.category}/${params.page}`,
+              }"
+              >NEXTPAGE</NuxtLink>
+            </div>
           </div>
         </div>
-      </template>
-    </placeholder>
-  </div>
+      </div>
+    </template>
+  </placeholder>
 </template>
 
 <script>
-import Placeholder from "../../components/widget-placeholder";
-import SkeletonLine from "../../components/skeleton/line";
-import SkeletonBase from "../../components/skeleton/base";
-import SkeletonParagraph from "../../components/skeleton/paragraph";
-import Empty from "../../components/widget-empty";
+import Placeholder from "../../../components/widget-placeholder";
+import Empty from "../../../components/widget-empty";
+
 export default {
-  name: "MangaIndex",
+  components: { Placeholder, Empty },
   head() {
     return  {
-      title: 'NOVEL-567WATCH',
+      title: `${this.params?.category.toUpperCase()}-567.WATCH`,
       meta: [
         { charset: 'utf-8' },
         {
           hid: 'description',
           name: 'description',
-          content: 'index for adult video'
+          content: `video for ${this.params?.category}`
         }
       ],
     }
   },
-  components: { Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty },
   data() {
     return {
-      fetching: true,
-      avList: {
-        content: []
-      },
+      videos: {},
+      params: {}
     }
   },
-  mounted() {
-    this.init()
-  },
-  methods: {
-    init() {
-      this.avList.content = []
-      this.loadAvList()
-    },
-    async loadAvList (page = 0) {
-      const avList = this.avList
-      if(!avList.last || avList.number === -1) {
-        this.fetching = true
-
-        const avs = await this.$axios.$get('/manga', {
-          params: {
-            ...this.$route.query,
-            page: page
-          }
-        })
-
-        avList.content.push(...avs.content)
-        avList.empty = avs.empty
-        avList.first = avs.first
-        avList.last = avs.last
-        avList.number = avs.number
-        avList.numberOfElements = avs.content.size
-        avList.totalElements = avs.totalElements
-        avList.totalPages = avs.totalElements
-        this.fetching = false
+  async asyncData({$axios, params}) {
+    const videos = await $axios.$get('/av', {
+      params: {
+        ...params
       }
+    }).then(res => res)
+
+    return {
+      videos,
+      params
     }
   },
-  watch: {
-    '$route'(to, from) {
-      if (to.fullPath !== from.fullPath) {
-        this.$nextTick(() => {
-          this.init()
-        })
-      }
-    }
-  }
 }
 </script>
 
 <style lang="scss">
-@import '/assets/styles/init.scss';
+
+@import '/assets/styles/init';
 
 .video-index {
   .article-list-skeleton {
@@ -311,7 +261,7 @@ export default {
         position: relative;
         height: $button-block-height;
         padding: 0 ($gap * 2) 0 ($gap * 3);
-        font-family: 'webfont-bolder', DINRegular;
+        font-family: 'webfont-bolder', DINRegular,serif;
         text-transform: uppercase;
         color: $white;
         background: rgba($red, .6);

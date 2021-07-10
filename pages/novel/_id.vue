@@ -27,7 +27,7 @@
     name: 'NovelDetail',
     head() {
       return  {
-        title: `${this.novel.name}-567WATCH`,
+        title: `${this.novel.name}-567.WATCH`,
         meta: [
           { charset: 'utf-8' },
           {

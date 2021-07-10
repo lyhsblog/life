@@ -29,9 +29,13 @@
           <i class="iconfont icon-peachblossom"></i>
           NEWS
         </router-link>
-        <router-link class="item" to="/vlog">
+        <router-link class="item" :to="{path: '/video/vlog/0'}">
           <i class="iconfont icon-lens"></i>
           VLOG
+        </router-link>
+        <router-link class="item" :to="{path: '/video/anime/0'}">
+          <i class="iconfont icon-lens"></i>
+          ANIME
         </router-link>
         <router-link class="item" to="/manga">
           <i class="iconfont icon-user"></i>
@@ -41,7 +45,7 @@
           <i class="iconfont icon-user"></i>
           NOVEL
         </router-link>
-        <router-link class="item" to="/video">
+        <router-link class="item" :to="{path: '/video/av/0'}">
           <i class="iconfont icon-user"></i>
           VIDEO
         </router-link>

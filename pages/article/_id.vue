@@ -29,7 +29,7 @@
     name: 'ArticleDetail',
     head() {
       return  {
-        title: this.article.name,
+        title: `${this.article.name}-567.WATCH`,
         meta: [
           { charset: 'utf-8' },
           {

@@ -24,7 +24,7 @@
             </span>
                   <img
                     class="item-thumb-img"
-                    :src="article.cover"
+                    :src="`https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${article.cover}@webp`"
                     :alt="article.name"
                     width="0"
                     height="0">
@@ -101,6 +101,7 @@
               <router-link
                 class="link"
                 :to="`/manga/ep/${episode.manga.id}/${index}`"
+                noindex
               >
                 <div class="title">{{episode.name}}</div>
               </router-link>
@@ -162,7 +163,7 @@
                 <div
                   class="thumb"
                   :style="{
-                    backgroundImage: `url('${manga.cover}')`
+                    backgroundImage: `url('https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${manga.cover}@webp')`
                   }"
                 />
                 <div class="title">{{manga.name}}</div>
@@ -187,7 +188,7 @@ export default {
   components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive},
   head() {
     return  {
-      title: `${this.article.name}-567WATCH`,
+      title: `${this.article.name}-567.WATCH`,
       meta: [
         { charset: 'utf-8' },
         {

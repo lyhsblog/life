@@ -14,7 +14,7 @@
     name: 'Index',
     head() {
       return  {
-        title: 'HOME-567WATCH',
+        title: 'HOME-567.WATCH',
         meta: [
           { charset: 'utf-8' },
           {

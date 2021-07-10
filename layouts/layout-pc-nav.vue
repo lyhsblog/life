@@ -23,11 +23,15 @@
           NEWS
         </span>
       </router-link>
-      <router-link class="item" to="/vlog">
+      <router-link class="item" :to="{path: '/video/vlog/0'}">
         <i class="iconfont icon-lens"></i>
         <span class="text">
           VLOG
         </span>
+      </router-link>
+      <router-link class="item" :to="{path: '/video/anime/0'}">
+        <i class="iconfont icon-lens"></i>
+        ANIME
       </router-link>
       <router-link class="item" to="/manga">
         <i class="iconfont icon-thinking"></i>
@@ -35,7 +39,7 @@
           MANGA(18+)
         </span>
       </router-link>
-      <router-link class="item" to="/av">
+      <router-link class="item" :to="{path: '/video/av/0'}">
         <i class="iconfont icon-thinking"></i>
         <span class="text">
           VIDEO(18+)

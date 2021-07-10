@@ -17,7 +17,6 @@
               class="empty"
               i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
             />
-            <empty
           </template>
           <template #default>
             <transition-group
@@ -128,7 +127,7 @@
     name: 'Novel',
     head() {
       return  {
-        title: 'NOVEL-567WATCH',
+        title: 'NOVEL-567.WATCH',
         meta: [
           { charset: 'utf-8' },
           {
@@ -441,7 +440,7 @@
           }
 
           > .item-body {
-            width: 31rem;
+            width: 30rem;
             height: $content-height;
 
             > .item-description {
