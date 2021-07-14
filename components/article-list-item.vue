@@ -35,7 +35,7 @@
         <div class="item-meta">
           <span class="date">
             <i class="iconfont icon-clock"></i>
-            <span>a day ago</span>
+            <span>{{ humanlizeDate(article.createTime) }}</span>
           </span>
           <span class="views">
             <i class="iconfont icon-eye"></i>
@@ -43,7 +43,7 @@
           </span>
           <span class="comments">
             <i class="iconfont icon-comment"></i>
-            <span>0</span>
+            <span>{{ article.comments || 0}}</span>
           </span>
           <span class="likes">
             <i class="iconfont icon-heart"></i>
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-
+  import { timeAgo } from '../transforms/moment'
   export default {
     name: 'ArticleListItem',
     props: {
@@ -77,6 +77,11 @@
         required: true,
       }
     },
+    methods: {
+      humanlizeDate: function (date) {
+        return timeAgo(date, 'en')
+      }
+    }
   }
 </script>
 

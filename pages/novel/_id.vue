@@ -1,17 +1,14 @@
 <template>
-  <div class="article-page">
+  <div class="article-page" :class="{dark: isDark}">
     <div class="module">
       <article-content
         :article="novel"
       />
     </div>
-    <div class="module">
-      <article-share :fetching="fetching" />
-    </div>
-    <div class="releted">
-      <article-related
-        :fetching="fetching"
-        :articles="relatedNovels"
+    <div class="comment">
+      <comment
+        :post-id="novel.id"
+        :likes="novel.tags.length"
       />
     </div>
   </div>
@@ -23,6 +20,7 @@
   import ArticleMammon from "../../components/article-mammon";
   import ArticleShare from "../../components/article-share";
   import ArticleRelated from "../../components/article-related";
+  import Comment from "../../components/comment";
   export default {
     name: 'NovelDetail',
     head() {
@@ -42,7 +40,8 @@
       ArticleRelated,
       ArticleShare,
       ArticleMammon,
-      ArticleContent
+      ArticleContent,
+      Comment
     },
 
     data() {
@@ -52,6 +51,11 @@
         relatedNovels: []
       }
     },
+    computed: {
+      isDark: function () {
+        return this.$store.state.theme === 'dark'
+      }
+    },
     async asyncData({ $axios, params }) {
       const id = params.id
       const novel = await $axios.$get("/novel/"+id).then(res => res)
@@ -59,20 +63,6 @@
       novel.content = novel.content.replace(regex, "\r\n\r\n")
       return { novel }
     },
-    mounted() {
-      this.fetchNovel()
-    },
-    methods: {
-      async fetchNovel() {
-        this.fetching = true
-        const id = this.$route.params.id
-        const relatedNovel = await this.$axios.get(`/novel/${id}/related`)
-        this.relatedNovels.push(...relatedNovel.data.content)
-        setTimeout(() => {
-          this.fetching = false
-        }, 1000)
-      }
-    }
   }
 </script>
 

@@ -22,12 +22,9 @@
             class="like"
             :class="{ liked: false }"
           >
-            <i class="iconfont icon-heart" />
+            <i class="iconfont icon-tag" />
             <strong class="count">{{ likes || 0 }}</strong>
-            <template v-if="isLike">赞</template>
-            <template v-else>
-              Like
-            </template>
+            Tags
           </button>
         </div>
         <div class="sort">
@@ -72,7 +69,7 @@
       },
       likes: {
         type: Number,
-        required: true
+        default: 0
       },
       postId: {
         type: Number,

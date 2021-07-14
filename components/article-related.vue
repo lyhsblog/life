@@ -11,13 +11,6 @@
             line-height="1em"
             :lines="4"
           />
-          <!--        <ul class="skeleton-list" v-else>-->
-          <!--          <skeleton-base-->
-          <!--            class="article"-->
-          <!--            v-for="item in 4"-->
-          <!--            :key="item"-->
-          <!--          />-->
-          <!--        </ul>-->
           <ul class="skeleton-list">
             <skeleton-base
               class="article"
@@ -42,7 +35,7 @@
             >
               <div
                 class="thumb"
-                :style="{ backgroundImage: article.cover ? `url(https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${encodeURI(article.cover)}@webp)` : '/images/2020-08-14-sea-1.webp'}"
+                :style="{ backgroundImage: article.cover ? `url(https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${encodeURI(article.cover)}@webp)` : 'url(/images/2020-08-14-sea-1.webp)'}"
               />
               <div class="title">{{ article.name }}</div>
             </router-link>
@@ -74,8 +67,15 @@
   .related {
     overflow: hidden;
 
+    padding: $gap;
+    @include common-bg-module();
+    @include radius-box($lg-radius);
+
+    .skeleton {
+      padding: $gap;
+    }
     .skeleton-list {
-      padding: 0;
+      padding: $gap;
       margin: 0;
       height: 9rem;
       overflow: hidden;
@@ -107,6 +107,9 @@
         @include radius-box($sm-radius);
         @include common-bg-module();
 
+        &:last-child,&:nth-last-child(2) {
+          display: none;
+        }
         &.disabled {
           pointer-events: none;
           opacity: .8;
@@ -159,6 +162,9 @@
       .articles {
         .item {
           width: calc((100% - #{$gap * 2}) / 3);
+          &:last-child,&:nth-last-child(2) {
+            display: block;
+          }
           .thumb {
             height: 7.4rem;
           }

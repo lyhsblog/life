@@ -18,7 +18,7 @@
         </span>
       </router-link>
       <router-link class="item" to="/news">
-        <i class="iconfont icon-thinking"></i>
+        <i class="iconfont icon-comment-discussion"></i>
         <span class="text">
           NEWS
         </span>
@@ -30,25 +30,27 @@
         </span>
       </router-link>
       <router-link class="item" :to="{path: '/video/anime/0'}">
-        <i class="iconfont icon-lens"></i>
-        ANIME
+        <i class="iconfont icon-vlog"></i>
+        <span class="text">
+          ANIME
+        </span>
       </router-link>
       <router-link class="item" to="/manga">
-        <i class="iconfont icon-thinking"></i>
+        <i class="iconfont icon-image"></i>
         <span class="text">
           MANGA(18+)
         </span>
       </router-link>
-      <router-link class="item" :to="{path: '/video/av/0'}">
-        <i class="iconfont icon-thinking"></i>
-        <span class="text">
-          VIDEO(18+)
-        </span>
-      </router-link>
       <router-link class="item" to="/novel">
-        <i class="iconfont icon-lens"></i>
+        <i class="iconfont icon-study"></i>
         <span class="text">
           NOVEL(18+)
+        </span>
+      </router-link>
+      <router-link class="item" :to="{path: '/video/av/0'}">
+        <i class="iconfont icon-video-play"></i>
+        <span class="text">
+          VIDEO(18+)
         </span>
       </router-link>
       <div v-for="(ad, index) in ads" :key="index">
@@ -73,7 +75,7 @@
         </a>
       </div>
       <span class="separator"></span>
-      <router-link class="item" to="/me">
+      <router-link class="item" to="/article/1620">
         <i class="iconfont icon-user"></i>
         <span class="text">
           ME

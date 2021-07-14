@@ -41,7 +41,7 @@
                       </span>
                       <img
                         class="item-thumb-img"
-                        :src="novel.cover || '/images/2020-08-14-sea-1.webp'"
+                        :src="novel.cover ? `https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/118/180/sm/0/plain/${novel.cover}@webp` : '/images/2020-08-14-sea-1.webp'"
                         :alt="novel.name">
                     </NuxtLink>
                   </div>
@@ -56,12 +56,11 @@
                     <p
                       class="item-description"
                       style="-webkit-box-orient: vertical;"
-                      v-html="novel.description || 'No description'"
                     ></p>
                     <div class="item-meta">
                       <span class="date">
                         <i class="iconfont icon-clock"></i>
-                        <span>a day ago</span>
+                        <span>{{ humanlizeDate(novel.createTime) }}</span>
                       </span>
                       <span class="views">
                         <i class="iconfont icon-eye"></i>
@@ -69,11 +68,7 @@
                       </span>
                       <span class="comments">
                         <i class="iconfont icon-comment"></i>
-                        <span>0</span>
-                      </span>
-                      <span class="likes">
-                        <i class="iconfont icon-heart"></i>
-                        <span>{{novel.likes || 0}}</span>
+                        <span>{{ novel.comments || 0 }}</span>
                       </span>
                       <span class="tags">
                         <i class="iconfont icon-tag"></i>
@@ -122,7 +117,7 @@
   import SkeletonBase from "../../components/skeleton/base";
   import SkeletonParagraph from "../../components/skeleton/paragraph";
   import Empty from "../../components/widget-empty";
-  import {nextScreen} from "../../utils/effects";
+  import {timeAgo} from "../../transforms/moment";
   export default {
     name: 'Novel',
     head() {
@@ -171,6 +166,11 @@
       }
     },
     watchQuery: ['page', 'searchword'],
+    methods: {
+      humanlizeDate: function (date) {
+        return timeAgo(date, 'en')
+      }
+    }
   }
 </script>
 

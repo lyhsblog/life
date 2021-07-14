@@ -3,8 +3,6 @@
     <div id="video-box" >
       <d-player
         :options="options"
-        @play="play"
-        @ended="ended"
         ref="player"
       >
       </d-player>
@@ -15,14 +13,14 @@
         <div class="item-body">
           <h5 class="item-title">
             {{ video.name }}
-            <span v-if="options.video.title">
-              {{`[EP:${options.video.title}]`}}
+            <span v-if="crrEp != null">
+              {{`[EP:${crrEp.title}]`}}
             </span>
           </h5>
           <div class="item-meta">
               <span class="date">
                 <i class="iconfont icon-clock"></i>
-                <span>a day ago</span>
+                <span>{{ humanlizeDate(video.updateTime) }}</span>
               </span>
             <span class="views">
                 <i class="iconfont icon-eye"></i>
@@ -30,11 +28,7 @@
               </span>
             <span class="comments">
                 <i class="iconfont icon-comment"></i>
-                <span>0</span>
-              </span>
-            <span class="likes">
-                <i class="iconfont icon-heart"></i>
-                <span>{{video.likes || 0}}</span>
+                <span>{{ video.comments || 0 }}</span>
               </span>
             <span class="tags">
                 <i class="iconfont icon-tag"></i>
@@ -42,10 +36,12 @@
               </span>
             <span class="categories">
                 <i class="iconfont icon-list"></i>
-                <span>
+                <router-link
+                  :to="`/video/${video.category.name}/0`"
+                >
                   {{ video.category.name || 'No category'}}
-                </span>
-              </span>
+                </router-link>
+            </span>
           </div>
         </div>
       </div>
@@ -79,22 +75,21 @@
           </li>
         </ul>
       </div>
-
-      <div class="comment">
-        <comment
-          :fetching="fetching"
-          :post-id="video.id"
-          :likes="video.likes"
-        />
-      </div>
     </div>
-
+    <div class="comment">
+      <comment
+        :fetching="fetching"
+        :post-id="video.id"
+        :likes="video.tags.length"
+      />
+    </div>
   </div >
 </template>
 
 <script>
 import Comment from "../../../components/comment";
 import Hls from "hls.js"
+import {timeAgo} from "../../../transforms/moment";
 export default {
   components: {Comment},
   head() {
@@ -115,11 +110,21 @@ export default {
       fetching: false,
       video: {},
       episodes: [],
+      crrEp: null,
       options: {
+        server: true,
         video: {
           url: 'http://static.smartisanos.cn/common/video/t1-ui.mp4',
+          type: 'customHls',
+          customType: {
+            customHls: function (video, player) {
+              const hls = new Hls();
+              hls.loadSource(video.src);
+              hls.attachMedia(video);
+            }
+          }
         },
-        autoplay: true,
+        autoplay: false,
         contextmenu: [
           {
             text: '@567WATCH',
@@ -137,26 +142,7 @@ export default {
   },
   async asyncData({$axios, params}) {
     const video = await $axios.$get(`/av/${params.id}`).then(res => res)
-    const options = {
-      video: {
-        url: `https://video.567.watch${video.content}`,
-        type: 'customHls',
-        customType: {
-          customHls: function (video, player) {
-            const hls = new Hls();
-            hls.loadSource(video.src);
-            hls.attachMedia(video);
-          },
-        },
-      },
-      autoplay: true,
-      contextmenu: [
-        {
-          text: '@567WATCH',
-          link: 'https://567.watch'
-        }
-      ]
-    }
+
     const c_arr = video.content.split("\r\n");
     let episodes = []
     if(c_arr.length > 0) {
@@ -167,21 +153,62 @@ export default {
             id: index,
             title: e_arr[0],
             url: `https://video.567.watch${e_arr[1]}`,
-            type: 'customHls',
-            customType: {
-              customHls: function (video, player) {
-                const hls = new Hls();
-                hls.loadSource(video.src);
-                hls.attachMedia(video);
-              },
-            },
+            pic: `https://video.567.watch${video.cover}`
           }
           episodes.push(episode)
         }
       })
     }
 
+    let crrEp = null
+
     if(episodes.length > 0) {
+      crrEp = episodes[0]
+
+      if(params.ep) {
+        crrEp = episodes[params.ep]
+      }
+    }
+
+    if(process.server) {
+      return {
+        video,
+        episodes,
+        crrEp,
+      }
+    }
+
+    const hls = {
+      type: 'customHls',
+      customType: {
+        customHls: function (video, player) {
+          const hls = new Hls();
+          hls.loadSource(video.src);
+          hls.attachMedia(video);
+        },
+      },
+    }
+    const options = {
+      server: false,
+      video: {
+        url: `https://video.567.watch${video.content}`,
+        ...hls
+      },
+      autoplay: true,
+      contextmenu: [
+        {
+          text: '@567WATCH',
+          link: 'https://567.watch'
+        }
+      ]
+    }
+
+    if(episodes.length > 0) {
+
+      for (let i = 0; i < episodes.length; i++) {
+        episodes[i] = {...episodes[i], ...hls}
+      }
+
       options.video = episodes[0]
 
       if(params.ep) {
@@ -192,25 +219,39 @@ export default {
     return {
       video,
       episodes,
+      crrEp,
       options
     }
   },
   mounted() {
     this.player = this.$refs.player.dp
-  },
-  methods: {
-    play() {
-      console.log('play callback')
-    },
-    ended() {
-      if(this.$route.params.ep && this.$route.params.ep < this.episodes.length - 1) {
-        this.$router.push({path: `/video/play/${this.video.id}/${this.options.video.id + 1}`})
+    if(this.options.server) {
+      const hls = {
+        type: 'customHls',
+        customType: {
+          customHls: function (video, player) {
+            const hls = new Hls();
+            hls.loadSource(video.src);
+            hls.attachMedia(video);
+          }
+        }
       }
-
-      if(this.episodes.length > 1 && this.options.video.id === 0) {
-        this.$router.push({path: `/video/play/${this.video.id}/${this.options.video.id + 1}`})
+      if(this.crrEp != null) {
+        this.crrEp = {...this.crrEp, ...hls}
+        this.player.switchVideo(this.crrEp)
+      } else {
+        let video = {
+          url: `https://video.567.watch${this.video.content}`,
+          ...hls
+        }
+        this.player.switchVideo(video)
       }
     }
+  },
+  methods: {
+    humanlizeDate: function (date) {
+      return timeAgo(date, 'en')
+    },
   },
 }
 </script>

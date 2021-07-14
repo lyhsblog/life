@@ -14,6 +14,12 @@
         :articles="relatedArticles"
       />
     </div>
+    <div class="comment">
+      <comment
+        :post-id="article.id"
+        :likes="article.tags.length"
+      />
+    </div>
   </div>
 </template>
 
@@ -24,6 +30,7 @@
   import ArticleShare from "../../components/article-share";
   import ArticleMeta from "../../components/article-meta";
   import ArticleRelated from "../../components/article-related";
+  import Comment from "../../components/comment";
 
   export default {
     name: 'ArticleDetail',
@@ -45,7 +52,8 @@
       ArticleMeta,
       ArticleShare,
       ArticleMammon,
-      ArticleContent
+      ArticleContent,
+      Comment
     },
 
     data() {
@@ -69,9 +77,7 @@
         const id = this.$route.params.id
         const relatedArticles = await this.$axios.$get(`/article/${id}/related`)
         this.relatedArticles.push(...relatedArticles.content)
-        setTimeout(() => {
-          this.fetching = false
-        }, 1000)
+        this.fetching = false
       }
     }
   }

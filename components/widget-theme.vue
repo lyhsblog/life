@@ -1,7 +1,7 @@
 <template>
   <div id="theme">
     <div class="switcher" :class="theme" @click="switchTheme">
-      <i class="iconfont icon-sunny"></i>
+      <i class="iconfont" :class="'icon-sunny'"></i>
     </div>
   </div>
 </template>
@@ -14,11 +14,15 @@
         return this.$store.state.theme
       }
     },
+    mounted() {
+      this.$store.commit('cahngeTheme', localStorage.theme)
+    },
     methods: {
       switchTheme: function () {
+        localStorage.setItem('theme', localStorage.theme === 'dark' ? 'default' : 'dark');
         this.$store.commit('cahngeTheme', this.$store.state.theme === 'dark' ? 'default' : 'dark')
       }
-    }
+    },
   }
 </script>
 

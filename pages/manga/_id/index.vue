@@ -1,76 +1,55 @@
 <template>
   <div id="manga-detail" :class="{dark: isDark}">
-    <placeholder
-      :data="article.id != null"
-    >
-      <template #placeholder>
-        <empty class="article-empty" key="empty">
-          NO DATA,TRY OTHER MENU
-        </empty>
-      </template>
-      <template #default>
-          <div
-            class="info"
-          >
-            <div
-              class="item-background"
-            />
-            <div class="item-content">
-              <div class="item-thumb">
-            <span
-              class="item-oirigin self"
-            >
+    <div class="info">
+      <div class="item-background" />
+      <div class="item-content">
+        <div class="item-thumb">
+            <span class="item-oirigin self">
               Origin
             </span>
-                  <img
-                    class="item-thumb-img"
-                    :src="`https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${article.cover}@webp`"
-                    :alt="article.name"
-                    width="0"
-                    height="0">
-              </div>
-              <div class="item-body">
-                <h5 class="item-title">
-                  {{ article.name }}
-                </h5>
-                <p
-                  class="item-description"
-                  style="-webkit-box-orient: vertical;"
-                  v-html="article.description || 'No description'"
-                ></p>
-                <div class="item-meta">
+          <img
+            class="item-thumb-img"
+            :src="`https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${article.cover}@webp`"
+            :alt="article.name"
+            width="0"
+            height="0">
+        </div>
+        <div class="item-body">
+          <h5 class="item-title">
+            {{ article.name }}
+          </h5>
+          <p
+            class="item-description"
+            style="-webkit-box-orient: vertical;"
+            v-html="article.description || 'No description'"
+          ></p>
+          <div class="item-meta">
               <span class="date">
                 <i class="iconfont icon-clock"></i>
-                <span>a day ago</span>
+                <span> {{ humanlizeDate(article.updateTime) }} </span>
               </span>
-                  <span class="views">
+            <span class="views">
                 <i class="iconfont icon-eye"></i>
                 <span>{{article.clicks || 0}}</span>
               </span>
-                  <span class="comments">
+            <span class="comments">
                 <i class="iconfont icon-comment"></i>
-                <span>0</span>
+                <span>{{ article.comments || 0 }}</span>
               </span>
-                  <span class="likes">
-                <i class="iconfont icon-heart"></i>
-                <span>{{article.likes || 0}}</span>
-              </span>
-                  <span class="tags">
+            <span class="tags">
                 <i class="iconfont icon-tag"></i>
                 <span>{{article.tags.length}}</span>
               </span>
-                  <span class="categories">
+            <span class="categories">
                 <i class="iconfont icon-list"></i>
                 <span>
                   {{article.category || 'No category'}}
                 </span>
               </span>
-                </div>
-              </div>
-            </div>
           </div>
-      </template>
-    </placeholder>
+        </div>
+      </div>
+    </div>
     <div class="block-title">
       <button
         class="block-button"
@@ -82,97 +61,30 @@
         <div class="text">EPISODES</div>
       </button>
     </div>
-    <placeholder
-      :data="episodes.length"
-    >
-      <template #placeholder>
-        <empty class="article-empty" key="empty">
-          NO DATA,TRY OTHER MENU
-        </empty>
-      </template>
-      <template #default>
-        <div class="episodes">
-          <ul class="container">
-            <li
-              class="item"
-              v-for="(episode, index) in episodes"
-              :key="episode.id"
-            >
-              <router-link
-                class="link"
-                :to="`/manga/ep/${episode.manga.id}/${index}`"
-                noindex
-              >
-                <div class="title">{{episode.name}}</div>
-              </router-link>
-            </li>
-          </ul>
-        </div>
-      </template>
-    </placeholder>
-
-    <div class="block-title">
-      <button
-        class="block-button"
-        :disabled="false"
-      >
-          <span class="icon">
-            <i class="iconfont icon-peachblossom"></i>
-          </span>
-        <div class="text">RELATED</div>
-      </button>
+    <div class="episodes">
+      <ul class="container">
+        <li
+          class="item"
+          v-for="(episode, index) in episodes"
+          :key="episode.id"
+        >
+          <router-link
+            class="link"
+            :to="`/manga/ep/${episode.manga.id}/${index}`"
+            noindex
+          >
+            <div class="title">{{episode.name}}</div>
+          </router-link>
+        </li>
+      </ul>
     </div>
-    <placeholder
-      :data="related.length"
-      :loading="fetching"
-    >
-      <template #loading>
-        <ul class="article-list-skeleton" key="skeleton">
-          <li v-for="item in 5" :key="item" class="item">
-            <div class="thumb">
-              <skeleton-base />
-            </div>
-            <div class="content">
-              <div class="title">
-                <skeleton-line />
-              </div>
-              <div class="description">
-                <skeleton-paragraph :lines="4" />
-              </div>
-            </div>
-          </li>
-        </ul>
-      </template>
-      <template #placeholder>
-        <empty class="article-empty" key="empty">
-          NO DATA,TRY OTHER MENU
-        </empty>
-      </template>
-      <template #default>
-        <div class="related">
-          <ul class="container">
-            <li
-              class="item"
-              v-for="manga in related"
-              :key="manga.id"
-            >
-              <router-link
-                class="link"
-                :to="`/manga/${manga.id}`"
-              >
-                <div
-                  class="thumb"
-                  :style="{
-                    backgroundImage: `url('https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${manga.cover}@webp')`
-                  }"
-                />
-                <div class="title">{{manga.name}}</div>
-              </router-link>
-            </li>
-          </ul>
-        </div>
-      </template>
-    </placeholder>
+
+    <div class="comment">
+      <comment
+        :post-id="article.id"
+        :likes="article.tags.length"
+      />
+    </div>
   </div>
 </template>
 
@@ -182,10 +94,13 @@ import SkeletonLine from "../../../components/skeleton/line";
 import Placeholder from "../../../components/widget-placeholder";
 import Empty from "../../../components/widget-empty";
 import Responsive from "../../../components/widget-responsive";
+import {timeAgo} from "../../../transforms/moment";
+import Comment from "../../../components/comment";
 
 export default {
   name: "MangaDetailIndex",
-  components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive},
+  components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive, Comment},
+  scrollToTop: true,
   head() {
     return  {
       title: `${this.article.name}-567.WATCH`,
@@ -201,7 +116,6 @@ export default {
   },
   data() {
     return {
-      fetching: true,
       article: {},
       episodes: [],
       related: [],
@@ -213,94 +127,31 @@ export default {
     }
   },
   async asyncData({$axios, params}) {
-    const article = await $axios.$get("/manga/" + params.id).then(res => res)
-    const episodes = await $axios.$get("/manga/" + params.id+"/episodes").then(res => res)
+    const [article, episodes] = await Promise.all([
+      $axios.$get("/manga/" + params.id),
+      $axios.$get("/manga/" + params.id+"/episodes")
+    ])
     return {
       article,
       episodes
     }
   },
   mounted() {
-    this.loadRelated()
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+      setTimeout(() => this.$nuxt.$loading.finish(), 1500)
+    })
   },
   methods: {
-    async loadRelated() {
-      this.fetching = true
-      const related = await this.$axios.get("/manga/"+this.$route.params.id+"/related")
-      this.related.push(...related.data.content)
-      this.fetching = false
-    },
-  }
+    humanlizeDate: function (date) {
+      return timeAgo(date, 'en')
+    }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 @import '../../../assets/styles/init';
-
-.article-list-skeleton {
-  padding: 0;
-  margin: $gap 0;
-  list-style: none;
-  overflow: hidden;
-
-  .item {
-    display: flex;
-    height: 10rem;
-    padding: $sm-gap;
-    margin-bottom: $lg-gap;
-    @include common-bg-module();
-    @include radius-box($sm-radius);
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    .thumb {
-      height: 100%;
-      width: 15rem;
-    }
-
-    .content {
-      margin-left: $lg-gap;
-      flex-grow: 1;
-
-      .title {
-        height: 1.4em;
-        width: 36%;
-      }
-      .description {
-        margin-top: $sm-gap;
-      }
-    }
-  }
-}
-
-.article-skeleton {
-  background: var(--module-bg);
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
-
-  .content {
-    width: 50%;
-    margin-top: 2.6rem;
-    margin-left: 1rem;
-
-    .first {
-      width: 8rem;
-      height: $gap * 2;
-      margin-bottom: $gap;
-    }
-  }
-
-  .title {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-    height: 2.6rem;
-    width: 18rem;
-  }
-}
 
 #manga-detail {
   .info {
@@ -661,100 +512,8 @@ export default {
     }
   }
 
-  .related {
-    margin-top: 1rem;
-    overflow: hidden;
-    .skeleton-list {
-      padding: 0;
-      margin: 0;
-      height: 9rem;
-      overflow: hidden;
-      display: flex;
-
-      .article {
-        width: 12rem;
-        margin-right: 1rem;
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-    }
-
-    .container {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-      overflow: hidden;
-      margin-bottom: -$gap;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      .item {
-        width: calc((100% - #{$gap}) / 3);
-        margin-bottom: $gap;
-        @include radius-box($sm-radius);
-        @include common-bg-module();
-
-        &.disabled {
-          pointer-events: none;
-          opacity: .8;
-        }
-
-        .link {
-          display: block;
-          position: relative;
-          overflow: hidden;
-          opacity: .8;
-          transition: opacity $transition-time-normal;
-
-          .thumb {
-            width: 100%;
-            height: 10.5rem;
-            background-color: $module-bg-darker-2;
-            background-size: cover;
-            background-position: 50% 40%;
-            transition: background-position $transition-time-fast * 2;
-          }
-
-          .title {
-            display: block;
-            width: 100%;
-            padding: 0 1em;
-            line-height: 2.4;
-            text-align: center;
-            font-size: $font-size-small;
-            color: $text-secondary;
-            transition: color $transition-time-fast;
-            @include text-overflow();
-          }
-
-          &:hover {
-            opacity: 1;
-
-            .thumb {
-              background-position: 50% 50%;
-            }
-
-            .title {
-              color: $link-color;
-            }
-          }
-        }
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .container {
-        .item {
-          width: calc((100% - #{$gap * 3}) / 4);
-          .thumb {
-            height: 15rem !important;
-          }
-        }
-      }
-    }
+  .comment {
+    margin-top: $gap;
   }
 }
 

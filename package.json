@@ -25,6 +25,7 @@
     "vue-dplayer": "0.0.10"
   },
   "devDependencies": {
+    "@nuxtjs/device": "^2.1.0",
     "fibers": "^5.0.0",
     "node-sass": "^6.0.0",
     "nuxt-compress": "^5.0.0",

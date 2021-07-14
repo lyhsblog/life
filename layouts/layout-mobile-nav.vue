@@ -26,7 +26,7 @@
           LIFE
         </router-link>
         <router-link class="item" to="/news">
-          <i class="iconfont icon-peachblossom"></i>
+          <i class="iconfont icon-comment-discussion"></i>
           NEWS
         </router-link>
         <router-link class="item" :to="{path: '/video/vlog/0'}">
@@ -34,22 +34,22 @@
           VLOG
         </router-link>
         <router-link class="item" :to="{path: '/video/anime/0'}">
-          <i class="iconfont icon-lens"></i>
+          <i class="iconfont icon-vlog"></i>
           ANIME
         </router-link>
         <router-link class="item" to="/manga">
-          <i class="iconfont icon-user"></i>
+          <i class="iconfont icon-image"></i>
           MANGA
         </router-link>
         <router-link class="item" to="/novel">
-          <i class="iconfont icon-user"></i>
+          <i class="iconfont icon-study"></i>
           NOVEL
         </router-link>
         <router-link class="item" :to="{path: '/video/av/0'}">
-          <i class="iconfont icon-user"></i>
+          <i class="iconfont icon-video-play"></i>
           VIDEO
         </router-link>
-        <router-link class="item" to="/me">
+        <router-link class="item" to="/article/1620">
           <i class="iconfont icon-user"></i>
           ME
         </router-link>

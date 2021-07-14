@@ -46,7 +46,7 @@
           >
             <Nuxt />
           </div>
-          <pc-right />
+          <layout-pc-right v-if="$device.isDesktopOrTablet" />
         </main>
         <pc-footer />
       </div>
@@ -62,7 +62,7 @@
   import Toolbox from "../components/widget-toolbox";
   import PcFooter from "./layout-pc-footer";
   import LayoutMobileNav from "./layout-mobile-nav";
-  import PcRight from "./layout-pc-right-index";
+  import LayoutPcRight from "./layout-pc-right-index";
   import LayoutPcNav from "./layout-pc-nav";
   import LayoutMobileHeader from "./layout-mobile-header";
   import LayoutPcHeader from "./layout-pc-header";
@@ -71,7 +71,7 @@
       LayoutPcHeader,
       LayoutMobileHeader,
       LayoutPcNav,
-      PcRight,
+      LayoutPcRight,
       LayoutMobileNav,
       PcFooter, Toolbox, Wallpaper, Share, Theme, Language, Background},
     data () {
