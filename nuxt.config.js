@@ -1,8 +1,8 @@
 export default {
-  // target: 'static',
-  // generate: {
-  //   fallback: true
-  // },
+  target: 'static',
+  generate: {
+    fallback: true
+  },
   loading: {
     color: 'rgba(0, 136, 245, 0.5)',
     height: '5px',
