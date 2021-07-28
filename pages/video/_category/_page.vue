@@ -49,7 +49,7 @@
 <script>
 
 export default {
-  components: { Empty: import('@/components/widget-empty') },
+  components: { Empty: () => import('@/components/widget-empty') },
   head() {
     return  {
       title: `${this.params?.category.toUpperCase()}-567.WATCH`,

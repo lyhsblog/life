@@ -1,4 +1,4 @@
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+// const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 export default {
   // target: 'static',
   // generate: {
@@ -144,7 +144,7 @@ export default {
 
   publicRuntimeConfig: {
     axios: {
-      baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8000/api' : 'https://api.567.watch/api'
+      baseURL: process.env.NODE_ENV === 'production' ? 'http://localhost:8000/api' : 'https://api.567.watch/api'
     }
   },
 
@@ -157,9 +157,9 @@ export default {
         maxSize: 250000,
       },
     },
-    extend(config,ctx){
-      config.plugins.unshift(new LodashModuleReplacementPlugin)
-      config.module.rules[2].use[0].options.plugins = ['lodash']
-    },
+    // extend(config,ctx){
+    //   config.plugins.unshift(new LodashModuleReplacementPlugin)
+    //   config.module.rules[2].use[0].options.plugins = ['lodash']
+    // },
   }
 }
