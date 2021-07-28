@@ -118,8 +118,8 @@ export default {
       episode: {},
       toolbar: {
         mode: 0,
-        top: '0px',
-        bottom: '0px'
+        top: '-60px',
+        bottom: '-60px'
       },
       menu: {
         left: "-212px"

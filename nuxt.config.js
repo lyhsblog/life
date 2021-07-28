@@ -47,6 +47,7 @@ export default {
   plugins: [
     // {src: '~/plugins/vue-awesome-swiper', ssr: false},
     // {src: '~/plugins/dplayer', ssr: false},
+    {src: '~/plugins/vue-loading-overlay', ssr: false, mode: 'client'},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
