@@ -75,10 +75,8 @@
 </template>
 
 <script>
-  import Vue from 'vue';
-  import VueAwesomeSwiper from 'vue-awesome-swiper';
   import 'swiper/css/swiper.css';
-  Vue.use(VueAwesomeSwiper);
+  import VueAwesomeSwiper from 'vue-awesome-swiper';
   import { directive } from "vue-awesome-swiper";
   import Placeholder from "./widget-placeholder";
   import Empty from "./widget-empty";
@@ -86,7 +84,7 @@
   import API from "../config/api.config"
   export default {
     name: 'ArchiveCarrousel',
-    components: {Placeholder, Empty, Responsive},
+    components: {Placeholder, Empty, Responsive, VueAwesomeSwiper},
     directives: {
       swiper: directive,
     },

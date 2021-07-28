@@ -78,12 +78,6 @@
         </li>
       </ul>
     </div>
-<!--    <div class="comment">-->
-<!--      <comment-->
-<!--        :post-id="article.id"-->
-<!--        :likes="article.tags.length"-->
-<!--      />-->
-<!--    </div>-->
   </div>
 </template>
 
@@ -118,7 +112,10 @@ export default {
     }
   },
   async asyncData({$axios, params}) {
-    const [article, episodes] = await Promise.all([
+    const [
+      article,
+      episodes
+    ] = await Promise.all([
       $axios.$get("/manga/" + params.id),
       $axios.$get("/manga/" + params.id+"/episodes")
     ])

@@ -72,17 +72,14 @@
 </template>
 
 <script>
-  import Vue from 'vue';
   import VueAwesomeSwiper from 'vue-awesome-swiper';
   import 'swiper/css/swiper.css';
-  Vue.use(VueAwesomeSwiper);
   import { directive } from "vue-awesome-swiper";
   import Placeholder from "./widget-placeholder";
   import SkeletonLine from "./skeleton/line";
-
   export default {
     name: 'ArchiveAnnouncement',
-    components: {SkeletonLine, Placeholder},
+    components: {SkeletonLine, Placeholder, VueAwesomeSwiper},
     directives: {
       swiper: directive,
     },

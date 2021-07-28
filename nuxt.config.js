@@ -150,15 +150,12 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    //extractCSS: true,
-    extractCSS: {
-      ignoreOrder: true
-    },
+    // extractCSS: true,
     optimization: {
       splitChunks: {
         minSize: 10000,
-        maxSize: 250000
-      }
+        maxSize: 250000,
+      },
     },
     extend(config,ctx){
       config.plugins.unshift(new LodashModuleReplacementPlugin)
