@@ -80,6 +80,10 @@
 </template>
 
 <script>
+import Vue from 'vue';
+import DPlayer from 'vue-dplayer';
+import 'vue-dplayer/dist/vue-dplayer.css'
+Vue.use(DPlayer);
 import Hls from "hls.js"
 import {timeAgo} from "@/transforms/moment";
 export default {
