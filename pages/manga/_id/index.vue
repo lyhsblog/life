@@ -88,16 +88,9 @@
 </template>
 
 <script>
-import SkeletonParagraph from "../../../components/skeleton/paragraph";
-import SkeletonLine from "../../../components/skeleton/line";
-import Placeholder from "../../../components/widget-placeholder";
-import Empty from "../../../components/widget-empty";
-import Responsive from "../../../components/widget-responsive";
-import {timeAgo} from "../../../transforms/moment";
-import Comment from "../../../components/comment";
+import { timeAgo } from "@/transforms/moment";
 export default {
   name: "MangaDetailIndex",
-  components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive, Comment },
   scrollToTop: true,
   head() {
     return  {
@@ -143,7 +136,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../assets/styles/init';
+@import '/assets/styles/init';
 
 #manga-detail {
   .info {

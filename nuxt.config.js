@@ -1,3 +1,4 @@
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 export default {
   // target: 'static',
   // generate: {
@@ -149,5 +150,16 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extractCSS: true,
+    optimization: {
+      splitChunks: {
+        minSize: 10000,
+        maxSize: 250000
+      }
+    },
+    extend(config,ctx){
+      config.plugins.unshift(new LodashModuleReplacementPlugin)
+      config.module.rules[2].use[0].options.plugins = ['lodash']
+    },
   }
 }

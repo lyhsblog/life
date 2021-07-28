@@ -48,7 +48,7 @@
     overflow: hidden;
 
     .mammon-box,
-    ::v-deep(.mammon-ins) {
+    ::v-deep .mammon-ins {
       width: 100%;
       height: 16rem;
       min-height: 16rem;

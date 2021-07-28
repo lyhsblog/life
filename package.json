@@ -23,12 +23,13 @@
     "prettier": "^2.3.1",
     "swiper": "5.4.5",
     "vue-awesome-swiper": "^4.1.1",
-    "vue-dplayer": "0.0.10",
-    "vue-lazy-hydration": "^2.0.0-beta.4"
+    "vue-dplayer": "0.0.10"
   },
   "devDependencies": {
     "@nuxtjs/device": "^2.1.0",
+    "babel-plugin-lodash": "^3.3.4",
     "fibers": "^5.0.0",
+    "lodash-webpack-plugin": "^0.11.6",
     "node-sass": "^6.0.0",
     "nuxt-compress": "^5.0.0",
     "pug": "^3.0.2",

@@ -1,61 +1,55 @@
 <template>
-  <placeholder
-    :data="videos.numberOfElements"
+  <empty
+    v-if="videos.numberOfElements === 0"
+    class="empty"
+    i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
+  />
+  <div
+    v-else
+    class="video-index dark"
   >
-    <template #placeholder>
-      <empty
-        class="empty"
-        i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
-      />
-    </template>
-    <template #default>
-      <div class="video-index dark">
-        <div class="related">
-          <ul class="articles">
-            <li
-              class="item"
-              v-for="video in videos.content"
-              :key="video.id"
-            >
-              <router-link
-                class="item-article"
-                :to="`/video/play/${video.id}`"
-              >
-                <div
-                  class="thumb"
-                  :style="{
+    <div class="related">
+      <ul class="articles">
+        <li
+          class="item"
+          v-for="video in videos.content"
+          :key="video.id"
+        >
+          <router-link
+            class="item-article"
+            :to="`/video/play/${video.id}`"
+          >
+            <div
+              class="thumb"
+              :style="{
                     backgroundImage: `url('https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/https://video.567.watch${video.cover}')`
                   }"
-                />
-                <div class="title">{{video.name}}</div>
-              </router-link>
-            </li>
-          </ul>
-          <div class="article-load">
-            <div class="loadmore-button">
+            />
+            <div class="title">{{video.name}}</div>
+          </router-link>
+        </li>
+      </ul>
+      <div class="article-load">
+        <div class="loadmore-button">
               <span class="icon">
                 <i class="iconfont icon-peachblossom"></i>
               </span>
-              <NuxtLink
-                class="text"
-                :to="{
+          <NuxtLink
+            class="text"
+            :to="{
                 path: `/video/${params.category}/${params.page}`,
               }"
-              >NEXTPAGE</NuxtLink>
-            </div>
-          </div>
+          >NEXTPAGE</NuxtLink>
         </div>
       </div>
-    </template>
-  </placeholder>
+    </div>
+  </div>
 </template>
 
 <script>
-import Placeholder from "../../../components/widget-placeholder";
-import Empty from "../../../components/widget-empty";
 
 export default {
-  components: { Placeholder, Empty },
+  components: { Empty: import('@/components/widget-empty') },
   head() {
     return  {
       title: `${this.params?.category.toUpperCase()}-567.WATCH`,
@@ -90,7 +84,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 @import '/assets/styles/init';
 

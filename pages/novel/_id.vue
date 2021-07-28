@@ -5,22 +5,11 @@
         :article="novel"
       />
     </div>
-<!--    <div class="comment">-->
-<!--      <comment-->
-<!--        :post-id="novel.id"-->
-<!--        :likes="novel.tags.length"-->
-<!--      />-->
-<!--    </div>-->
   </div>
 </template>
 
 <script>
 
-  import ArticleContent from "../../components/article-content";
-  import ArticleMammon from "../../components/article-mammon";
-  import ArticleShare from "../../components/article-share";
-  import ArticleRelated from "../../components/article-related";
-  import Comment from "../../components/comment";
   export default {
     name: 'NovelDetail',
     head() {
@@ -37,11 +26,7 @@
       }
     },
     components: {
-      ArticleRelated,
-      ArticleShare,
-      ArticleMammon,
-      ArticleContent,
-      Comment
+      ArticleContent: () => import('@/components/article-content'),
     },
 
     data() {
@@ -66,7 +51,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import '/assets/styles/init.scss';
 
   .article-page {

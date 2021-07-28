@@ -290,7 +290,7 @@
             font-weight: bold;
             @include text-overflow();
 
-            ::v-deep(p) {
+            ::v-deep p {
               margin: 0;
               max-width: 100%;
               @include text-overflow();

@@ -1,69 +1,60 @@
 <template>
   <div class="manga-index dark">
-    <placeholder
-      :data="mangaList.numberOfElements"
+    <empty
+      v-if="mangaList.numberOfElements === 0"
+      class="empty"
+      i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
+    />
+    <div
+      v-else
+      class="related"
     >
-      <template #placeholder>
-        <empty
-          class="empty"
-          i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
-        />
-      </template>
-      <template #default>
-        <div class="related">
-          <ul class="articles" key="mangas">
-            <li
-              class="item"
-              v-for="manga in mangaList.content"
-              :key="manga.id"
-            >
-              <router-link
-                class="item-article"
-                :to="`/manga/${manga.id}`"
-              >
-                <div
-                  class="thumb"
-                  :style="{
+      <ul class="articles" key="mangas">
+        <li
+          class="item"
+          v-for="manga in mangaList.content"
+          :key="manga.id"
+        >
+          <router-link
+            class="item-article"
+            :to="`/manga/${manga.id}`"
+          >
+            <div
+              class="thumb"
+              :style="{
                   backgroundImage: `url('https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${manga.cover}@webp')`
                 }"
-                />
-                <div class="title">{{manga.name}}</div>
-              </router-link>
-            </li>
-          </ul>
-          <div class="article-load">
-            <div class="loadmore-button">
+            />
+            <div class="title">{{manga.name}}</div>
+          </router-link>
+        </li>
+      </ul>
+      <div class="article-load">
+        <div class="loadmore-button">
               <span class="icon">
                 <i class="iconfont icon-peachblossom"></i>
               </span>
-              <NuxtLink
-                class="text"
-                :to="{
+          <NuxtLink
+            class="text"
+            :to="{
                   path: '/manga',
                   query: {
                     ...query,
                     page: mangaList.number < mangaList.totalPages - 1 ? mangaList.number + 1 : mangaList.number
                   }
               }"
-              >LOADMORE</NuxtLink>
-            </div>
-          </div>
+          >LOADMORE</NuxtLink>
         </div>
-      </template>
-    </placeholder>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Placeholder from "../../components/widget-placeholder";
-import SkeletonLine from "../../components/skeleton/line";
-import SkeletonBase from "../../components/skeleton/base";
-import SkeletonParagraph from "../../components/skeleton/paragraph";
-import Empty from "../../components/widget-empty";
-import { nextScreen } from "../../utils/effects"
 
 export default {
   name: "MangaIndex",
+  components: { Empty: () => import('@/components/widget-empty') },
   head() {
     return  {
       title: 'MANGA-567.WATCH',
@@ -77,7 +68,6 @@ export default {
       ],
     }
   },
-  components: { Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty },
   data() {
     return {
       mangaList: {
@@ -108,7 +98,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '/assets/styles/init.scss';
 
 .manga-index {

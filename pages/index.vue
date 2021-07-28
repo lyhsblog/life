@@ -7,11 +7,12 @@
 </template>
 
 <script>
-  import ArchiveCarrousel from "../components/archive-carrousel";
-  import ArchiveAnnouncement from "../components/archive-announcement";
-  import ArticleList from "../components/article-list";
   export default {
     name: 'Index',
+    components: {
+      ArticleList: () => import('@/components/article-list'),
+      ArchiveAnnouncement: () => import('@/components/archive-announcement'),
+      ArchiveCarrousel: () => import('@/components/archive-carrousel')},
     head() {
       return  {
         title: 'HOME-567.WATCH',
@@ -25,7 +26,6 @@
         ],
       }
     },
-    components: {ArticleList, ArchiveAnnouncement, ArchiveCarrousel},
     data: function () {
       return {
         recommendedList: [],

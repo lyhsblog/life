@@ -98,15 +98,8 @@
 </template>
 
 <script>
-import SkeletonParagraph from "../../../../components/skeleton/paragraph";
-import SkeletonLine from "../../../../components/skeleton/line";
-import Placeholder from "../../../../components/widget-placeholder";
-import Empty from "../../../../components/widget-empty";
-import Responsive from "../../../../components/widget-responsive";
-
 export default {
   name: "MangaEpisode",
-  components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive},
   scrollToTop: true,
   head() {
     return  {
@@ -181,7 +174,7 @@ export default {
 
 <style lang="scss" scoped>
 
-@import '../../../../assets/styles/init';
+@import '/assets/styles/init';
 
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre, form,fieldset,input,textarea,p,blockquote,th,td {
   padding: 0;

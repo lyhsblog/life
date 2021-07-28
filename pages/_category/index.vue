@@ -6,14 +6,12 @@
 </template>
 
 <script>
-import ArticleList from "../../components/article-list";
-import ArchiveListHeader from "../../components/archive-header";
 
 export default {
   name: "ArticleIndex",
   components: {
-    ArticleList,
-    ArchiveListHeader
+    ArticleList: () => import('@/components/article-list'),
+    ArchiveListHeader: () => import('@/components/archive-header')
   },
   head() {
     return  {
@@ -51,7 +49,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '/assets/styles/init.scss';
 
 .article-index {

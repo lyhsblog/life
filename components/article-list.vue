@@ -91,7 +91,7 @@
       @include common-bg-module();
       @include radius-box($sm-radius);
 
-      &::v-deep(.mammon-ins) {
+      &::v-deep .mammon-ins {
         margin: $xs-gap 0;
         height: 100px;
       }
@@ -222,7 +222,7 @@
       > .article-list-mammon {
         padding: $sm-gap;
 
-        &::v-deep(.mammon-ins) {
+        &::v-deep .mammon-ins {
           margin: 0;
           height: 81px;
         }

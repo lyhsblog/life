@@ -76,22 +76,13 @@
         </ul>
       </div>
     </div>
-<!--    <div class="comment">-->
-<!--      <comment-->
-<!--        :fetching="fetching"-->
-<!--        :post-id="video.id"-->
-<!--        :likes="video.tags.length"-->
-<!--      />-->
-<!--    </div>-->
   </div >
 </template>
 
 <script>
-import Comment from "../../../components/comment";
 import Hls from "hls.js"
-import {timeAgo} from "../../../transforms/moment";
+import {timeAgo} from "@/transforms/moment";
 export default {
-  components: {Comment},
   head() {
     return  {
       title: `${this.video?.name}-567.WATCH`,
@@ -257,7 +248,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../../assets/styles/init';
+@import '/assets/styles/init';
 
 #video-page {
   #video-box {

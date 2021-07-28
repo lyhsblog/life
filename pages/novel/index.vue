@@ -9,84 +9,79 @@
     >
       <!-- list -->
       <div class="article-list">
-        <placeholder
-          :data="novelList.numberOfElements"
+        <empty
+          v-if="novelList.numberOfElements === 0"
+          class="empty"
+          i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
+
+        />
+        <transition-group
+          v-else
+          key="list"
+          name="list-fade"
+          tag="div"
         >
-          <template #placeholder>
-            <empty
-              class="empty"
-              i18n-ley="LANGUAGE_KEYS.ARTICLE_PLACEHOLDER"
+          <div
+            class="article-list-item"
+            v-for="novel in novelList.content" :key="novel.id"
+          >
+            <div
+              class="item-background"
             />
-          </template>
-          <template #default>
-            <transition-group
-              key="list"
-              name="list-fade"
-              tag="div"
-            >
-              <div
-                class="article-list-item"
-                v-for="novel in novelList.content" :key="novel.id"
-              >
-                <div
-                  class="item-background"
-                />
-                <div class="item-content">
-                  <div class="item-thumb">
-                    <NuxtLink :to="`/article/${novel.id}`">
+            <div class="item-content">
+              <div class="item-thumb">
+                <NuxtLink :to="`/article/${novel.id}`">
                       <span
                         class="item-oirigin self"
                       >
                         Origin
                       </span>
-                      <img
-                        class="item-thumb-img"
-                        :src="novel.cover ? `https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/118/180/sm/0/plain/${novel.cover}@webp` : '/images/2020-08-14-sea-1.webp'"
-                        :alt="novel.name">
-                    </NuxtLink>
-                  </div>
-                  <div class="item-body">
-                    <h5 class="item-title">
-                      <NuxtLink
-                        :to="`/novel/${novel.id}`"
-                      >
-                        {{ novel.name }}
-                      </NuxtLink>
-                    </h5>
-                    <p
-                      class="item-description"
-                      style="-webkit-box-orient: vertical;"
-                    ></p>
-                    <div class="item-meta">
+                  <img
+                    class="item-thumb-img"
+                    :src="novel.cover ? `https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/118/180/sm/0/plain/${novel.cover}@webp` : '/images/2020-08-14-sea-1.webp'"
+                    :alt="novel.name">
+                </NuxtLink>
+              </div>
+              <div class="item-body">
+                <h5 class="item-title">
+                  <NuxtLink
+                    :to="`/novel/${novel.id}`"
+                  >
+                    {{ novel.name }}
+                  </NuxtLink>
+                </h5>
+                <p
+                  class="item-description"
+                  style="-webkit-box-orient: vertical;"
+                ></p>
+                <div class="item-meta">
                       <span class="date">
                         <i class="iconfont icon-clock"></i>
                         <span>{{ humanlizeDate(novel.createTime) }}</span>
                       </span>
-                      <span class="views">
+                  <span class="views">
                         <i class="iconfont icon-eye"></i>
                         <span>{{novel.clicks || 0}}</span>
                       </span>
-                      <span class="comments">
+                  <span class="comments">
                         <i class="iconfont icon-comment"></i>
                         <span>{{ novel.comments || 0 }}</span>
                       </span>
-                      <span class="tags">
+                  <span class="tags">
                         <i class="iconfont icon-tag"></i>
                         <span>{{novel.tags.length}}</span>
                       </span>
-                      <span class="categories">
+                  <span class="categories">
                         <i class="iconfont icon-list"></i>
                         <span>
                           {{novel.category || 'No category'}}
                         </span>
                       </span>
-                    </div>
-                  </div>
                 </div>
               </div>
-            </transition-group>
-          </template>
-        </placeholder>
+            </div>
+          </div>
+        </transition-group>
       </div>
 
       <!-- loadmore -->
@@ -112,14 +107,12 @@
 </template>
 
 <script>
-  import Placeholder from "../../components/widget-placeholder";
-  import SkeletonLine from "../../components/skeleton/line";
-  import SkeletonBase from "../../components/skeleton/base";
-  import SkeletonParagraph from "../../components/skeleton/paragraph";
-  import Empty from "../../components/widget-empty";
   import {timeAgo} from "../../transforms/moment";
   export default {
     name: 'Novel',
+    components: {
+      Empty: () => import('@/components/widget-empty')
+    },
     head() {
       return  {
         title: 'NOVEL-567.WATCH',
@@ -133,7 +126,6 @@
         ],
       }
     },
-    components: {Placeholder, SkeletonLine, SkeletonBase, SkeletonParagraph, Empty},
     data() {
       return {
         novelList: {
@@ -185,7 +177,7 @@
     @include common-bg-module();
     @include radius-box($sm-radius);
 
-    &::v-deep(.mammon-ins) {
+    &::v-deep .mammon-ins {
       margin: $xs-gap 0;
       height: 100px;
     }
@@ -529,7 +521,7 @@
     > .article-list-mammon {
       padding: $sm-gap;
 
-      &::v-deep(.mammon-ins) {
+      &::v-deep .mammon-ins {
         margin: 0;
         height: 81px;
       }

@@ -14,26 +14,18 @@
         :articles="relatedArticles"
       />
     </div>
-<!--    <div class="comment">-->
-<!--      <comment-->
-<!--        :post-id="article.id"-->
-<!--        :likes="article.tags.length"-->
-<!--      />-->
-<!--    </div>-->
   </div>
 </template>
 
 <script>
-
-  import ArticleContent from "../../components/article-content";
-  import ArticleMammon from "../../components/article-mammon";
-  import ArticleShare from "../../components/article-share";
-  import ArticleMeta from "../../components/article-meta";
-  import ArticleRelated from "../../components/article-related";
-  import Comment from "../../components/comment";
-
   export default {
     name: 'ArticleDetail',
+    components: {
+      ArticleRelated: () => import('@/components/article-related'),
+      ArticleShare: () => import('@/components/article-share'),
+      ArticleContent: () => import('@/components/article-content'),
+    },
+
     head() {
       return  {
         title: `${this.article.name}-567.WATCH`,
@@ -47,15 +39,6 @@
         ],
       }
     },
-    components: {
-      ArticleRelated,
-      ArticleMeta,
-      ArticleShare,
-      ArticleMammon,
-      ArticleContent,
-      Comment
-    },
-
     data() {
       return {
         fetching: true,
@@ -83,7 +66,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import '/assets/styles/init.scss';
 
   .article-page {
