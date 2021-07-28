@@ -5,12 +5,12 @@
         :article="novel"
       />
     </div>
-    <div class="comment">
-      <comment
-        :post-id="novel.id"
-        :likes="novel.tags.length"
-      />
-    </div>
+<!--    <div class="comment">-->
+<!--      <comment-->
+<!--        :post-id="novel.id"-->
+<!--        :likes="novel.tags.length"-->
+<!--      />-->
+<!--    </div>-->
   </div>
 </template>
 

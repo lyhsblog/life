@@ -99,7 +99,6 @@ export default {
         ...query,
       }
     }).then(res => res)
-
     return {
       mangaList,
       query

@@ -63,50 +63,40 @@
         tags: [],
       }
     },
-    mounted() {
-      this.init()
-    },
-    methods: {
-      init() {
+    async fetch() {
+      if(this.$device.isDesktopOrTablet) {
         const route = this.$route
         switch (route.name) {
           case "index":
             this.path = "/article"
-                break
+            break
           case "category":
             this.path = "/article"
-                break
+            break
           case "manga":
             this.path = "/manga"
-                break
+            break
           case "novel":
             this.path = "/novel"
-                break
+            break
           case "av":
             this.path = "/av"
-                break
+            break
           case "vlog":
             this.path = "/vlog"
-                break
+            break
           default:
             this.path = "/article"
         }
-
-        this.loadTags()
-      },
-      async loadTags() {
-        this.fetching = true
-        const res = await this.$axios.get(`${this.path}/tags`)
-        this.tags = []
-        this.tags.push(...res.data)
-        this.fetching = false
+        this.tags = await this.$axios.$get(`${this.path}/tags`).then(res => res)
       }
+      this.fetching = false
     },
     watch: {
       '$route'(to, from) {
         if (to.fullPath !== from.fullPath) {
           this.$nextTick(() => {
-            this.init()
+            this.$fetch()
           })
         }
       }

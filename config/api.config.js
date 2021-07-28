@@ -8,7 +8,7 @@ export default {
   FE: '',
   SOCKET: '',
   CDN: '',
-  PROXY: '',
+  PROXY: 'https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM',
   GRAVATAR: '',
   TUNNEL: '',
   NODEPRESS: '',

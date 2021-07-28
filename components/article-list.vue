@@ -27,7 +27,6 @@
         </template>
       </placeholder>
     </div>
-
     <!-- loadmore -->
     <div class="article-load">
       <div
@@ -83,7 +82,6 @@
 
 <style lang="scss" scoped>
   @import '/assets/styles/init.scss';
-
   .articles {
     margin-top: $gap;
     .article-list-mammon {

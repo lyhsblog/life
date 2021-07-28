@@ -26,29 +26,43 @@
               :key="index"
             >
               <div class="content">
-                <template v-if="article.ad">
-                  <empty class="article-empty" key="empty">
-                    NO DATA
-                  </empty>
-                </template>
-                <template v-else>
-                  <router-link :to="`/article/${article.id}`" class="link">
-                    <img
-                      :src="article.cover ? `https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${encodeURI(article.cover)}@webp` : '/images/2020-08-14-sea-1.webp'"
-                      :alt="article.name"
-                      draggable="false"
-                    >
-                    <div class="title">
-                      <div class="background"></div>
-                      <div class="prospect">
+                <router-link :to="`/article/${article.id}`" class="link">
+                  <img
+                    :src="article.cover ? `${API.PROXY}/fill/569/201/ce/1/plain/${encodeURI(article.cover)}@webp` : '/images/2020-08-14-sea-1.webp'"
+                    :alt="article.name"
+                    draggable="false"
+                  >
+                  <div class="title">
+                    <div class="background"></div>
+                    <div class="prospect">
                         <span
                           class="text"
-                          :style="{ backgroundImage: article.cover ? `url(https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${encodeURI(article.cover)}@webp)` : '/images/2020-08-14-sea-1.webp'}"
+                          :style="{ backgroundImage: article.cover ? `url(${API.PROXY}/fill/569/201/ce/1/plain/${encodeURI(article.cover)}@webp)` : '/images/2020-08-14-sea-1.webp'}"
                         >{{ article.name }}</span>
-                      </div>
                     </div>
-                  </router-link>
-                </template>
+                  </div>
+                </router-link>
+              </div>
+            </div>
+            <div
+              class="swiper-slide"
+              key="youtube">
+              <div class="content">
+                <a class="link" target="_blank" href='https://www.youtube.com/channel/UCCavtjmH0r9BbtwRqTrSEKw'>
+                  <img
+                    :src="`${API.PROXY}/fit/569/201/ce/1/plain/${encodeURI('https://567.watch/images/5eb13e3a74bb7d0004ae6195.png')}@webp`"
+                    draggable="false"
+                  />
+                  <div class="title">
+                    <div class="background"></div>
+                    <div class="prospect">
+                        <span
+                          class="text"
+                          :style="{ backgroundColor: '#555'}"
+                        >請訂閱我，謝謝</span>
+                    </div>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
@@ -65,7 +79,7 @@
   import Placeholder from "./widget-placeholder";
   import Empty from "./widget-empty";
   import Responsive from "./widget-responsive"
-
+  import API from "../config/api.config"
   export default {
     name: 'ArchiveCarrousel',
     components: {Placeholder, Empty, Responsive},
@@ -96,6 +110,7 @@
           preloadImages: false,
           lazy: true
         },
+        API
       }
     },
     computed: {
@@ -108,6 +123,18 @@
 
 <style lang="scss" scoped>
   @import '/assets/styles/init.scss';
+
+  #home-ad{
+    width: auto;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    div {
+      margin: auto;
+    }
+  }
 
   $pc-carrousel-height: 202px;
   $mobile-carrousel-height: calc((100vw - 2rem) * .34);

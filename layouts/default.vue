@@ -46,7 +46,7 @@
           >
             <Nuxt />
           </div>
-          <layout-pc-right v-if="$device.isDesktopOrTablet" />
+          <layout-pc-right />
         </main>
         <pc-footer />
       </div>

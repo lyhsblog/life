@@ -103,6 +103,10 @@
         fetching: false,
         announcements: [
           {
+            'content': '我想要1000YOUTUBE訂閱，拜託了',
+            'time': 'now'
+          },
+          {
             'content': '也许高楼越漂亮，我们越痛苦',
             'time': '1 days ago'
           },

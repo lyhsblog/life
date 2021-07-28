@@ -5,7 +5,7 @@
  */
 import marked from "marked"
 import { META } from "../config/app.config"
-import API_CONFIG from '../config/api.config'
+import API from '../config/api.config'
 import { LOZAD_CLASS_NAME } from '../service/lozad'
 import highlight from '../service/highlight'
 import relink from "./relink";
@@ -82,7 +82,7 @@ customRenderer.link = (href, title, text) => {
 // Image -> popup
 customRenderer.image = (src, title, alt) => {
   // HTTP -> proxy
-  const source = encodeURI(`https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${src}@webp`)
+  const source = encodeURI(`${API.PROXY}/fit/0/0/ce/0/plain/${src}@webp`)
   //class="${LOZAD_CLASS_NAME}"
   return (`
     <img

@@ -15,7 +15,7 @@
           </span>
           <img
             class="item-thumb-img"
-            :src="article.cover ? encodeURI(`https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${article.cover}@webp`) : '/images/2020-08-14-sea-1.webp'"
+            :src="article.cover ? encodeURI(`${API.PROXY}/fill/183/117/ce/1/plain/${article.cover}@webp`) : '/images/2020-08-14-sea-1.webp'"
             :alt="article.name">
         </NuxtLink>
       </div>
@@ -69,12 +69,18 @@
 
 <script>
   import { timeAgo } from '../transforms/moment'
+  import API from "../config/api.config";
   export default {
     name: 'ArticleListItem',
     props: {
       article: {
         type: Object,
         required: true,
+      }
+    },
+    data() {
+      return {
+        API
       }
     },
     methods: {

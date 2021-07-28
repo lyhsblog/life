@@ -38,7 +38,7 @@
               </span>
             <span class="tags">
                 <i class="iconfont icon-tag"></i>
-                <span>{{article.tags.length}}</span>
+                <span>{{ article.tags != null ? article.tags.length : 0 }}</span>
               </span>
             <span class="categories">
                 <i class="iconfont icon-list"></i>
@@ -78,13 +78,12 @@
         </li>
       </ul>
     </div>
-
-    <div class="comment">
-      <comment
-        :post-id="article.id"
-        :likes="article.tags.length"
-      />
-    </div>
+<!--    <div class="comment">-->
+<!--      <comment-->
+<!--        :post-id="article.id"-->
+<!--        :likes="article.tags.length"-->
+<!--      />-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -96,10 +95,9 @@ import Empty from "../../../components/widget-empty";
 import Responsive from "../../../components/widget-responsive";
 import {timeAgo} from "../../../transforms/moment";
 import Comment from "../../../components/comment";
-
 export default {
   name: "MangaDetailIndex",
-  components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive, Comment},
+  components: {SkeletonParagraph, SkeletonLine, Placeholder, Empty, Responsive, Comment },
   scrollToTop: true,
   head() {
     return  {
@@ -135,12 +133,6 @@ export default {
       article,
       episodes
     }
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.$nuxt.$loading.start()
-      setTimeout(() => this.$nuxt.$loading.finish(), 1500)
-    })
   },
   methods: {
     humanlizeDate: function (date) {

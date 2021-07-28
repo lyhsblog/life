@@ -14,12 +14,12 @@
         :articles="relatedArticles"
       />
     </div>
-    <div class="comment">
-      <comment
-        :post-id="article.id"
-        :likes="article.tags.length"
-      />
-    </div>
+<!--    <div class="comment">-->
+<!--      <comment-->
+<!--        :post-id="article.id"-->
+<!--        :likes="article.tags.length"-->
+<!--      />-->
+<!--    </div>-->
   </div>
 </template>
 

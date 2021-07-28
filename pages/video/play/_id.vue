@@ -76,13 +76,13 @@
         </ul>
       </div>
     </div>
-    <div class="comment">
-      <comment
-        :fetching="fetching"
-        :post-id="video.id"
-        :likes="video.tags.length"
-      />
-    </div>
+<!--    <div class="comment">-->
+<!--      <comment-->
+<!--        :fetching="fetching"-->
+<!--        :post-id="video.id"-->
+<!--        :likes="video.tags.length"-->
+<!--      />-->
+<!--    </div>-->
   </div >
 </template>
 

@@ -35,7 +35,7 @@
             >
               <div
                 class="thumb"
-                :style="{ backgroundImage: article.cover ? `url(https://img.567.watch/AfrOrF3gWeDA6VOlDG4TzxMv39O7MXnF4CXpKUwGqRM/fit/400/300/sm/0/plain/${encodeURI(article.cover)}@webp)` : 'url(/images/2020-08-14-sea-1.webp)'}"
+                :style="{ backgroundImage: article.cover ? `url(${API.PROXY}/fill/176/72/ce/1/plain/${encodeURI(article.cover)}@webp)` : 'url(/images/2020-08-14-sea-1.webp)'}"
               />
               <div class="title">{{ article.name }}</div>
             </router-link>
@@ -50,6 +50,7 @@
   import Placeholder from "./widget-placeholder";
   import SkeletonBase from "./skeleton/base";
   import SkeletonParagraph from "./skeleton/paragraph";
+  import API from "../config/api.config";
 
   export default {
     name: 'ArticleRelated',
@@ -58,6 +59,11 @@
       articles: Array
     },
     components: {Placeholder, SkeletonBase, SkeletonParagraph},
+    data() {
+      return {
+        API
+      }
+    }
   }
 </script>
 

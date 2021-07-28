@@ -6,26 +6,26 @@
     <div class="module">
       <pc-aside-article />
     </div>
-    <div class="module mammon">
-      <pc-aside-mammon dynamic-swiper-name="ad1" />
-    </div>
+<!--    <div class="module mammon">-->
+<!--      <pc-aside-mammon dynamic-swiper-name="ad1" />-->
+<!--    </div>-->
     <div class="module calendar">
       <pc-aside-calendar />
     </div>
-    <div
-      class="module ali-ma-ma"
-      :placeholder="t(LANGUAGE_KEYS.AD)"
-    >
-      <div style="height: 100%; display: flex; justify-content: center; align-items: center">
-        <span style="font-size: 50px">AD BIG</span>
-      </div>
-    </div>
+<!--    <div-->
+<!--      class="module ali-ma-ma"-->
+<!--      :placeholder="t(LANGUAGE_KEYS.AD)"-->
+<!--    >-->
+<!--      <div style="height: 100%; display: flex; justify-content: center; align-items: center">-->
+<!--        <span style="font-size: 50px">AD BIG</span>-->
+<!--      </div>-->
+<!--    </div>-->
     <div :id="ASIDE_STICKY_ELEMENT_ID" class="aside-sticky-box">
-      <client-only>
-        <div class="module mammon">
-          <pc-aside-mammon dynamic-swiper-name="ad2" />
-        </div>
-      </client-only>
+<!--      <client-only>-->
+<!--        <div class="module mammon">-->
+<!--          <pc-aside-mammon dynamic-swiper-name="ad2" />-->
+<!--        </div>-->
+<!--      </client-only>-->
       <div class="module">
         <pc-aside-tag />
       </div>
