@@ -100,30 +100,24 @@
         return this.$store.state.theme === 'dark'
       }
     },
-    async fetch() {
-      this.holder()
-    },
     methods: {
       holder: function () {
-        const holder = this.$loading.show({
-          // Optional parameters
-          loader: 'bars',
-          container: null,
+        this.$nextTick(() => {
+          this.$nuxt.$loading.start()
+          setTimeout(() => this.$nuxt.$loading.finish(), 2000)
         })
-        setTimeout(() => {
-          holder.hide()
-        },1000)
       }
     },
     watch: {
       '$route'(to, from) {
         if (to.fullPath !== from.fullPath) {
-          this.$nextTick(() => {
-            this.holder()
-          })
+          this.holder()
         }
       }
-    }
+    },
+    mounted() {
+      this.holder()
+    },
   }
 </script>
 <style lang="scss" scoped>

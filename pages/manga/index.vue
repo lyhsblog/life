@@ -55,6 +55,7 @@
 export default {
   name: "MangaIndex",
   components: { Empty: () => import('@/components/widget-empty') },
+  watchQuery: ['page', 'searchword'],
   head() {
     return  {
       title: 'MANGA-567.WATCH',
@@ -94,7 +95,6 @@ export default {
       query
     }
   },
-  watchQuery: ['page', 'searchword'],
 }
 </script>
 

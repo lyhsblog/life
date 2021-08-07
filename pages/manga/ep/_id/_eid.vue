@@ -21,8 +21,10 @@
     </div>
 
     <div class="view-main-1 readForm" id="cp_img" @click="showToolBar">
-      <img v-if="episode.images" :src="episode.images[0]" width="0" height="0" :alt="episode.images[0]" style="min-height: 100vh" />
-      <img v-if="episode.images && index > 0" v-for="(image, index) in episode.images" :key="index" :data-src="image" width="0" height="0" :alt="image" v-lazy-load />
+      <div v-for="(image, index) in episode.images" :key="index">
+        <img v-if="index === 0" :src="image" width="0" height="0" :alt="image" />
+        <img v-else :data-src="image" width="0" height="0" :alt="image" v-lazy-load />
+      </div>
     </div>
 
     <div class="view-fix-bottom-bar" :style="{bottom: toolbar.bottom}">
@@ -137,10 +139,11 @@ export default {
     if(episodes.length > eid) {
       episode = episodes[eid]
       const images = episode.content.split("\r\n");
+      const temp = []
       for (let i = 0; i < images.length - 1; i++) {
-        images[i] = 'https://manga.567.watch/manga'+images[i]
+        temp[i] = 'https://manga.567.watch/manga'+images[i]
       }
-      episode.images = images
+      episode.images = temp
     }
     return {
       id,
@@ -437,9 +440,19 @@ img {
   min-height: 100vh;
   width: 100%;
   margin: auto;
-  > img {
-    width: 100%;
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    &:first-child {
+      min-height: 100vh;
+    }
+    > img {
+      width: 100%;
+    }
   }
+
 }
 @media (min-width: 768px) {
   #cp_img {

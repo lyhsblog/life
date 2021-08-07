@@ -4,16 +4,17 @@ export default {
   // generate: {
   //   fallback: true
   // },
-  loading: {
-    color: 'rgba(0, 136, 245, 0.5)',
-    height: '5px',
-    continuous: true,
-  },
-  loadingIndicator: {
-    name: 'circle',
-    color: '#3B8070',
-    background: 'white'
-  },
+  // loading: {
+  //   color: 'rgba(0, 136, 245, 0.5)',
+  //   height: '5px',
+  //   continuous: true,
+  // },
+  loading: '~/components/LoadingBar.vue',
+  // loadingIndicator: {
+  //   name: 'circle',
+  //   color: '#3B8070',
+  //   background: 'white'
+  // },
   router: {
     extendRoutes(routes, resolve) {
       routes.push({
@@ -47,7 +48,7 @@ export default {
   plugins: [
     // {src: '~/plugins/vue-awesome-swiper', ssr: false},
     // {src: '~/plugins/dplayer', ssr: false},
-    {src: '~/plugins/vue-loading-overlay', ssr: false, mode: 'client'},
+    // {src: '~/plugins/vue-loading-overlay', ssr: false, mode: 'client'},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -145,7 +146,7 @@ export default {
 
   publicRuntimeConfig: {
     axios: {
-      baseURL: process.env.NODE_ENV === 'production' ? 'http://localhost:8000/api' : 'https://api.567.watch/api'
+      baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:8000/api' : 'https://567pic.com/api'
     }
   },
 
